@@ -11,7 +11,8 @@ namespace ITech.Data
     public class Seeder
     {
         private readonly ICategoryRepository _categoryRepository;
-        private static int NumOfCategorySeeds = 0;
+        private static int NumOfCategorySeeds;
+        private static int NumOfProductSeeds;
         public Seeder(ICategoryRepository categoryRepository)
         {
             _categoryRepository = categoryRepository;
@@ -19,25 +20,34 @@ namespace ITech.Data
         //this method seed products 
         //desiredSeed is which seed you want
         //return affected rows in Database
-        public int SeedProducts(int desiredSeed)
-        {
-            if (desiredSeed == 1)
-            {
-                int affectedRows = SeedCategoriesInDbManually();
-                return affectedRows;
-            }
-            return 0;
-        }
+        //public int SeedProducts(int desiredSeed)
+        //{
+        //    if (desiredSeed == 1)
+        //    {
+
+        //        if (NumOfProductSeeds == 0)
+        //        {
+        //            NumOfProductSeeds += 1;
+
+        //            return SeedProductsInDbManually();
+        //        }
+        //    }
+        //    return 0;
+        //}
+
+        //this method seed Categories 
+        //desiredSeed is which seed you want
+        //return affected rows in Database
         public int SeedCategories(int desiredSeed)
         {
             if (desiredSeed == 1)
             {
+                                
                 if (NumOfCategorySeeds == 0)
                 {
                     NumOfCategorySeeds += 1;
                     return SeedCategoriesInDbManually();
-                }
-
+              }
             }
             return 0;
         }
