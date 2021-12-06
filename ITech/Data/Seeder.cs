@@ -12,30 +12,39 @@ namespace ITech.Data
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IProductRepository _productRepository;
-        private static int NumOfCategorySeeds;
-        private static int NumOfProductSeeds;
+        private readonly ApplicationDbContext _context;
+
         public Seeder(ICategoryRepository categoryRepository,
-                        IProductRepository productRepository)
+                        IProductRepository productRepository,
+                        ApplicationDbContext context)
         {
             _categoryRepository = categoryRepository;
             _productRepository = productRepository;
+            _context = context;
         }
         //this method seed products 
         //desiredSeed is which seed you want
         //return affected rows in Database
         public int SeedProducts(int desiredSeed)
         {
-            if (desiredSeed == 1)
+            //if no seeds already in db create the desired one for products
+            var seed = _context.Seeds.FirstOrDefault(s => s.NameOfSeedType == "Products" && s.DesiredSeed == desiredSeed);
+            if (seed == null)
             {
+                seed = new Seed();
+                seed.DesiredSeed = desiredSeed;
+                seed.NameOfSeedType = "Products";
+                seed.SeedAttempts = 1;
+                seed.Seeded = true;
+                _context.Seeds.Add(seed);
+                _context.SaveChanges();
+                return SeedProductsInDbManually();
 
-                if (NumOfProductSeeds == 0)
-                {
-                    NumOfProductSeeds += 1;
-
-                    return SeedProductsInDbManually();
-                }
             }
+            seed.SeedAttempts += 1;
+            _context.SaveChanges();
             return 0;
+
         }
 
         //this method seed Categories 
@@ -43,15 +52,24 @@ namespace ITech.Data
         //return affected rows in Database
         public int SeedCategories(int desiredSeed)
         {
-            if (desiredSeed == 1)
+            //if no seeds already in db create the desired one for categories
+            var seed = _context.Seeds.FirstOrDefault(s => s.NameOfSeedType == "Categories" && s.DesiredSeed == desiredSeed);
+            if (seed == null)
             {
+                seed = new Seed();
+                seed.DesiredSeed = desiredSeed;
+                seed.NameOfSeedType = "Categories";
+                seed.SeedAttempts = 1;
+                seed.Seeded = true;
+                _context.Seeds.Add(seed);
+                _context.SaveChanges();
+                return SeedCategoriesInDbManually();
 
-                if (NumOfCategorySeeds == 0)
-                {
-                    NumOfCategorySeeds += 1;
-                    return SeedCategoriesInDbManually();
-                }
             }
+
+
+            seed.SeedAttempts += 1;
+            _context.SaveChanges();
             return 0;
         }
         //seed then return affected rows
