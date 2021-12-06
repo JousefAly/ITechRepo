@@ -22,4 +22,6 @@ here is example of my connection string
 
 `"Server=(localdb)\\mssqllocaldb;Database=ITechAppData;Trusted_Connection=True;MultipleActiveResultSets=true"`
 
-3.update-database in package manager console
+3.open package manager console from Tools -> Nuget package manager
+  write the following command 
+  ```update-database```
