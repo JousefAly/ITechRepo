@@ -19,6 +19,7 @@ namespace ITech.Data.Entites
         public bool InStock { get; set; }
         public int SoldCount { get; set; }
         public Category Category { get; set; }
+        public Seller Seller { get; set; }
         public List<ProductDetail> ProductDetails { get; set; }
 
 
