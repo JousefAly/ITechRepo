@@ -11,11 +11,14 @@ namespace ITech.Data
     public class Seeder
     {
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IProductRepository _productRepository;
         private static int NumOfCategorySeeds;
         private static int NumOfProductSeeds;
-        public Seeder(ICategoryRepository categoryRepository)
+        public Seeder(ICategoryRepository categoryRepository,
+                        IProductRepository productRepository)
         {
             _categoryRepository = categoryRepository;
+            _productRepository = productRepository;
         }
         //this method seed products 
         //desiredSeed is which seed you want
@@ -76,7 +79,7 @@ namespace ITech.Data
         //seed then return affected rows
         private int SeedProductsInDbManually()
         {
-            var categories = new List<Product>()
+            var products = new List<Product>()
             {
                 new Product
                 {
@@ -262,9 +265,9 @@ namespace ITech.Data
               }
 
             };
-            foreach (var category in categories)
+            foreach (var product in products)
             {
-                _categoryRepository.AddCategory(category);
+                _productRepository.AddProduct(product);
             }
             return _categoryRepository.SaveChanges();
         }
