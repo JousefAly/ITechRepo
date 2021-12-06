@@ -18,7 +18,7 @@
 }
 
 ```
-here is example of my connection string
+here is an example of my connection string
 
 `"Server=(localdb)\\mssqllocaldb;Database=ITechAppData;Trusted_Connection=True;MultipleActiveResultSets=true"`
 
