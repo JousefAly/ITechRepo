@@ -16,6 +16,11 @@ namespace ITech.Data.Entites
         public string Image1Url { get; set; }
         public string Image2Url { get; set; }
         public string Image3Url { get; set; }
+        public string Image4Url { get; set; }
+        public string Image5Url { get; set; }
+        public string Image6Url { get; set; }
+        public string Image7Url { get; set; }
+        public string Image8Url { get; set; }
         public bool InStock { get; set; }
         public int SoldCount { get; set; }
         public Category Category { get; set; }

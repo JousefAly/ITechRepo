@@ -86,6 +86,12 @@ namespace ITech.Data
                   Image1Url = "~/img/mockImages/Mock1.1",
                   Image2Url = "~/img/mockImages/MockEmpty",
                   Image3Url = "~/img/mockImages/MockEmpty",
+                  Image4Url = "~/img/mockImages/MockEmpty",
+                  Image5Url = "~/img/mockImages/MockEmpty",
+                  Image6Url = "~/img/mockImages/MockEmpty",
+                  Image7Url = "~/img/mockImages/MockEmpty",
+                  Image8Url = "~/img/mockImages/MockEmpty",
+
                   Category = _categoryRepository.GetCategoryByName("Phones"),
                   ProductDetails = new List<ProductDetail>()
                   {
@@ -104,7 +110,7 @@ namespace ITech.Data
                           Title = "Display Type",
                           Content = "IPS LCD capacitive touchscreen, 16M colors"
                       }
-                  },
+                  }
 
 
 
@@ -114,33 +120,147 @@ namespace ITech.Data
                   Name = "XIAOMI Redmi 9T - 6.53-inch 128GB/6GB Dual SIM Mobile Phone - Twilight Blue",
                   ShortDescription = "Brighten up your life with Redmi 9T's luminous aesthetic. The back glistens in the light giving off a captivating radiance. Pick your favorite from four stunning colors; Twilight Blue, Sunrise Orange, Ocean Green and Carbon Gray.",
                   Price = 3450m,
-                  Image1Url = "~/img/mockImages/Mock1.1",
-                  Image2Url = "~/img/mockImages/MockEmpty",
-                  Image3Url = "~/img/mockImages/MockEmpty",
+                  Image1Url = "~/img/mockImages/Mock2.1",
+                  Image2Url = "~/img/mockImages/Mock2.2",
+                  Image3Url = "~/img/mockImages/Mock2.3",
+                  Image4Url = "~/img/mockImages/Mock2.4",
+                  Image5Url = "~/img/mockImages/Mock2.5",
+                  Image6Url = "~/img/mockImages/Mock2.6",
+                  Image7Url = "~/img/mockImages/Mock2.7",
+                  Image8Url = "~/img/mockImages/Mock2.8",
                   Category = _categoryRepository.GetCategoryByName("Phones"),
                   ProductDetails = new List<ProductDetail>()
                   {
                       new ProductDetail
                       {
-                          Title = "Display Size",
-                          Content = "5.45 inches, 76.7 cm2 (~72.7% screen-to-body ratio)"
+                          Title = "Speed",
+                          Content = "HSPA 42.2/5.76 Mbps, LTE-A"
                       },
                        new ProductDetail
                       {
-                          Title = "Display Resolution",
-                          Content = "480 x 960 pixels, 18:9 ratio (~197 ppi density)"
+                          Title = "Display",
+                          Content = "1080 x 2340 pixels, 19.5:9 ratio (~395 ppi density)"
                       },
                         new ProductDetail
                       {
-                          Title = "Display Type",
-                          Content = "IPS LCD capacitive touchscreen, 16M colors"
+                          Title = "Main Camera",
+                          Content = "Quad: 48 MP, f/1.8, 26mm (wide), 1/2.0, 0.8µm, PDAF"
                       }
-                  },
+                  }
 
 
 
 
-                }
+                },
+                 new Product
+                {
+                  Name = "Samsung Galaxy A12 - 6.5-inch 64GB/4GB Dual SIM Mobile Phone - Blue",
+                  ShortDescription = "This is a very nice phone",
+                  Price = 2777m,
+                  Image1Url = "~/img/mockImages/Mock3.1",
+                  Image2Url = "~/img/mockImages/Mock3.2",
+                  Image3Url = "~/img/mockImages/Mock3.3",
+                  Image4Url = "~/img/mockImages/Mock3.4",
+                  Image5Url = "~/img/mockImages/Mock3.5",
+                  Image6Url = "~/img/mockImages/MockEmpty",
+                  Image7Url = "~/img/mockImages/MockEmpty",
+                  Image8Url = "~/img/mockImages/MockEmpty",
+                  Category = _categoryRepository.GetCategoryByName("Phones"),
+                  ProductDetails = new List<ProductDetail>()
+                  {
+                      new ProductDetail
+                      {
+                          Title = "Speed",
+                          Content = "HSPA 42.2/5.76 Mbps, LTE-A"
+                      },
+                       new ProductDetail
+                      {
+                          Title = "Display",
+                          Content = "1080 x 2340 pixels, 19.5:9 ratio (~395 ppi density)"
+                      },
+                        new ProductDetail
+                      {
+                          Title = "Main Camera",
+                          Content = "Quad: 48 MP, f/1.8, 26mm (wide), 1/2.0, 0.8µm, PDAF"
+                      }
+                  }
+
+
+
+
+                },
+                 new Product
+                {
+                  Name = "HP ProBook 450 G7 Laptop - Intel Core I7 - 8GB RAM - 1TB HDD - 15.6-inch HD - 2GB GPU - Windows 10 Pro - Natural Silver + Laptop Bag",
+                  ShortDescription = "Full-featured, thin, and light, the reliable HP ProBook 450 offers essential commercial features at an affordable price to every business. Automatic security solutions, powerful performance, and long battery life help keep your business productive.",
+                  Price = 15555m,
+                  Image1Url = "~/img/mockImages/Mock4.1",
+                  Image2Url = "~/img/mockImages/Mock4.2",
+                  Image3Url = "~/img/mockImages/Mock4.3",
+                  Image4Url = "~/img/mockImages/Mock4.4",
+                  Image5Url = "~/img/mockImages/Mock4.5",
+                  Image6Url = "~/img/mockImages/MockEmpty",
+                  Image7Url = "~/img/mockImages/MockEmpty",
+                  Image8Url = "~/img/mockImages/MockEmpty",
+                  Category = _categoryRepository.GetCategoryByName("Laptops"),
+                  ProductDetails = new List<ProductDetail>()
+                  {
+                      new ProductDetail
+                      {
+                          Title = "Processor",
+                          Content = "Intel® Core™ i7-10510U processor with Intel® UHD Graphics 620 (1.8 GHz base frequency, up to 4.9 GHz with Intel® Turbo Boost Technology, 8 MB L3 cache, 4 cores)"
+                      },
+                       new ProductDetail
+                      {
+                          Title = "Memory",
+                          Content = "8 GB DDR4-2400 SDRAM (1 x 8 GB)"
+                      },
+                        new ProductDetail
+                      {
+                          Title = "Graphics",
+                          Content = "Discrete: NVIDIA® GeForce® MX130 (2 GB DDR5 dedicated)"
+                      }
+                  }
+
+
+
+
+                },
+                  new Product
+                {
+                  Name = "Lenovo IdeaPad L3 Laptop - Intel Core I7 - 8GB RAM - 1TB HDD + 256GB SSD - 15.6-inch FHD - 2GB GPU - DOS - Abyss Blue",
+                  ShortDescription = "The new Lenovo™ IdeaPad™ L3 brings everything you need in an everyday-use laptop, but offers powerful memory and Intel® processing options, making it perfect for anyone who wants to do more than just surf the internet. Enjoy its FHD display and stereo speakers with your favorite streaming movies and shows and take it anywhere with a battery that lasts all day. Work, school, or home, the IdeaPad L3 has something for everyone.",
+                  Price = 13760m,
+                  Image1Url = "~/img/mockImages/Mock5.1",
+                  Image2Url = "~/img/mockImages/Mock5.2",
+                  Image3Url = "~/img/mockImages/Mock5.3",
+                  Image4Url = "~/img/mockImages/Mock5.4",
+                  Image5Url = "~/img/mockImages/MockEmpty",
+                  Image6Url = "~/img/mockImages/MockEmpty",
+                  Image7Url = "~/img/mockImages/MockEmpty",
+                  Image8Url = "~/img/mockImages/MockEmpty",
+                  Category = _categoryRepository.GetCategoryByName("Laptops"),
+                  ProductDetails = new List<ProductDetail>()
+                  {
+                      new ProductDetail
+                      {
+                          Title = "Processor",
+                          Content = "Intel® Core™ i7-10510U Processor, 1.80 GHz (8M Cache, up to 4.9 GHz, # of Cores: 4)"
+                      },
+                       new ProductDetail
+                      {
+                          Title = "Memory",
+                          Content = "Installed Memory: 8 GB RAM"
+                      },
+                        new ProductDetail
+                      {
+                          Title = "Graphics",
+                          Content = "Graphics Processor: NVIDIA® GeForce® MX330"
+                      }
+                  }
+
+              }
+
             };
             foreach (var category in categories)
             {
