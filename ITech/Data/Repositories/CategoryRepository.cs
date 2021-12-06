@@ -21,6 +21,11 @@ namespace ITech.Data.Repositories
            
         }
 
+        public Category GetCategoryByName(string name)
+        {
+            return _context.Categories.FirstOrDefault(c => c.Name == name);
+        }
+
         public int SaveChanges()
         {
             return _context.SaveChanges();
