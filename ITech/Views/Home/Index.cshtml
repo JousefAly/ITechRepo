@@ -1,4 +1,32 @@
-﻿@{
+﻿@model List<Product>
+@{
     ViewData["Title"] = "Home Page";
 }
 <!--Display products here-->
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Category</th>
+            <th scope="col">Main image</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <th scope="row">@product.Id</th>
+                <td>@product.Name</td>
+                <td>@product.Price.ToString("c")</td>
+                <td>@product.Category.Name</td>
+                <!--Should have implemented image urls properties to have the name only then handle full url here-->
+                <td><img src="@String.Concat(product.Image1Url,".jpg")" width="250" height="250" /></td>
+
+            </tr>
+
+        }
+    </tbody>
+</table>
+

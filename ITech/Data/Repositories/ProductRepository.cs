@@ -1,4 +1,5 @@
 ﻿using ITech.Data.Entites;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,11 @@ namespace ITech.Data.Repositories
         {
             _context.Products.Add(product);
 
+        }
+
+        public List<Product> GetAllProducts()
+        {
+            return _context.Products.Include(p => p.Category).ToList();           
         }
 
         public int SaveChanges()
