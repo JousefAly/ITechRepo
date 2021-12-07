@@ -22,7 +22,7 @@
                 <td>@product.Price.ToString("c")</td>
                 <td>@product.Category.Name</td>
                 <!--Should have implemented image urls properties to have the name only then handle full url here-->
-                <td><img src="@String.Concat(product.Image1Url,".jpg")" width="250" height="250" /></td>
+                <td><img src="@product.Image1Url" width="250" height="250" /></td>
 
             </tr>
 
