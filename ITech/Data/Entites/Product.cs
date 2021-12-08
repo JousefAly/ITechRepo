@@ -23,14 +23,14 @@ namespace ITech.Data.Entites
         public decimal PriceAfterDiscount { get; set; }
         public decimal DiscountPercentage { get; set; }
         public DateTime LaunchTime { get; set; }
-        public string Image1Url { get; set; }
-        public string Image2Url { get; set; }
-        public string Image3Url { get; set; }
-        public string Image4Url { get; set; }
-        public string Image5Url { get; set; }
-        public string Image6Url { get; set; }
-        public string Image7Url { get; set; }
-        public string Image8Url { get; set; }
+        public string Image1Name { get; set; }
+        public string Image2Name { get; set; }
+        public string Image3Name { get; set; }
+        public string Image4Name { get; set; }
+        public string Image5Name { get; set; }
+        public string Image6Name { get; set; }
+        public string Image7Name { get; set; }
+        public string Image8Name { get; set; }
         public bool InStock { get; set; }
         public int SoldCount { get; set; }
 
