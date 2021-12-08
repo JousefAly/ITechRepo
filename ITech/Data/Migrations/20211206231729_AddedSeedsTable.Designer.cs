@@ -4,14 +4,16 @@ using ITech.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ITech.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211206231729_AddedSeedsTable")]
+    partial class AddedSeedsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,52 +46,40 @@ namespace ITech.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Brand")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("DiscountPercentage")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Image1Name")
+                    b.Property<string>("Image1Url")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image2Name")
+                    b.Property<string>("Image2Url")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image3Name")
+                    b.Property<string>("Image3Url")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image4Name")
+                    b.Property<string>("Image4Url")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image5Name")
+                    b.Property<string>("Image5Url")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image6Name")
+                    b.Property<string>("Image6Url")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image7Name")
+                    b.Property<string>("Image7Url")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image8Name")
+                    b.Property<string>("Image8Url")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("InStock")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("LaunchTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("PriceAfterDiscount")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("SellerId")

@@ -4,14 +4,16 @@ using ITech.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ITech.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211208163512_Added Discount attributes and launchdate to product")]
+    partial class AddedDiscountattributesandlaunchdatetoproduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,28 +55,28 @@ namespace ITech.Data.Migrations
                     b.Property<decimal>("DiscountPercentage")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Image1Name")
+                    b.Property<string>("Image1Url")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image2Name")
+                    b.Property<string>("Image2Url")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image3Name")
+                    b.Property<string>("Image3Url")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image4Name")
+                    b.Property<string>("Image4Url")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image5Name")
+                    b.Property<string>("Image5Url")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image6Name")
+                    b.Property<string>("Image6Url")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image7Name")
+                    b.Property<string>("Image7Url")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image8Name")
+                    b.Property<string>("Image8Url")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("InStock")
