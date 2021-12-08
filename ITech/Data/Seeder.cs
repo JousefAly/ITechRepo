@@ -101,7 +101,7 @@ namespace ITech.Data
             {
                 new Product
                 {
-                  Name = "Nokia C1 - 5.45-inch 16GB/1GB Dual SIM 3G Mobile Phone - Charcoal",
+                  Title = "Nokia C1 - 5.45-inch 16GB/1GB Dual SIM 3G Mobile Phone - Charcoal",
                   ShortDescription = "Level up to the new Nokia C1. Enjoy your entertainment – anytime, anywhere – with the large screen and all-day battery life. Raise your selfie game with the front-facing flash and 5 MP camera. Do more with Android 9 Pie (Go edition) – watch your favorite videos, view your photos and even find your way home all while offline.",
                   Price = 1059m,
                   Image1Name = "Mock1.1.jpg",
@@ -138,7 +138,7 @@ namespace ITech.Data
                 },
                 new Product
                 {
-                  Name = "XIAOMI Redmi 9T - 6.53-inch 128GB/6GB Dual SIM Mobile Phone - Twilight Blue",
+                  Title = "XIAOMI Redmi 9T - 6.53-inch 128GB/6GB Dual SIM Mobile Phone - Twilight Blue",
                   ShortDescription = "Brighten up your life with Redmi 9T's luminous aesthetic. The back glistens in the light giving off a captivating radiance. Pick your favorite from four stunning colors; Twilight Blue, Sunrise Orange, Ocean Green and Carbon Gray.",
                   Price = 3450m,
                   Image1Name = "Mock2.1.jpg",
@@ -175,7 +175,7 @@ namespace ITech.Data
                 },
                  new Product
                 {
-                  Name = "Samsung Galaxy A12 - 6.5-inch 64GB/4GB Dual SIM Mobile Phone - Blue",
+                  Title = "Samsung Galaxy A12 - 6.5-inch 64GB/4GB Dual SIM Mobile Phone - Blue",
                   ShortDescription = "This is a very nice phone",
                   Price = 2777m,
                   Image1Name = "Mock3.1.jpg",
@@ -212,7 +212,7 @@ namespace ITech.Data
                 },
                  new Product
                 {
-                  Name = "HP ProBook 450 G7 Laptop - Intel Core I7 - 8GB RAM - 1TB HDD - 15.6-inch HD - 2GB GPU - Windows 10 Pro - Natural Silver + Laptop Bag",
+                  Title = "HP ProBook 450 G7 Laptop - Intel Core I7 - 8GB RAM - 1TB HDD - 15.6-inch HD - 2GB GPU - Windows 10 Pro - Natural Silver + Laptop Bag",
                   ShortDescription = "Full-featured, thin, and light, the reliable HP ProBook 450 offers essential commercial features at an affordable price to every business. Automatic security solutions, powerful performance, and long battery life help keep your business productive.",
                   Price = 15555m,
                   Image1Name = "Mock4.1.jpg",
@@ -249,7 +249,7 @@ namespace ITech.Data
                 },
                   new Product
                 {
-                  Name = "Lenovo IdeaPad L3 Laptop - Intel Core I7 - 8GB RAM - 1TB HDD + 256GB SSD - 15.6-inch FHD - 2GB GPU - DOS - Abyss Blue",
+                  Title = "Lenovo IdeaPad L3 Laptop - Intel Core I7 - 8GB RAM - 1TB HDD + 256GB SSD - 15.6-inch FHD - 2GB GPU - DOS - Abyss Blue",
                   ShortDescription = "The new Lenovo™ IdeaPad™ L3 brings everything you need in an everyday-use laptop, but offers powerful memory and Intel® processing options, making it perfect for anyone who wants to do more than just surf the internet. Enjoy its FHD display and stereo speakers with your favorite streaming movies and shows and take it anywhere with a battery that lasts all day. Work, school, or home, the IdeaPad L3 has something for everyone.",
                   Price = 13760m,
                   Image1Name = "Mock5.1.jpg",

@@ -1,0 +1,23 @@
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+
+namespace ITech.Data.Migrations
+{
+    public partial class ChangedNameToTitle : Migration
+    {
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.RenameColumn(
+                name: "Name",
+                table: "Products",
+                newName: "Title");
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.RenameColumn(
+                name: "Title",
+                table: "Products",
+                newName: "Name");
+        }
+    }
+}
