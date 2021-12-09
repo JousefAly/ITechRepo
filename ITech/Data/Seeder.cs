@@ -27,22 +27,26 @@ namespace ITech.Data
         //return affected rows in Database
         public int SeedProducts(int desiredSeed)
         {
-            //if no seeds already in db create the desired one for products
-            var seed = _context.Seeds.FirstOrDefault(s => s.NameOfSeedType == "Products" && s.DesiredSeed == desiredSeed);
-            if (seed == null)
+            if (desiredSeed <= 0)
             {
-                seed = new Seed();
-                seed.DesiredSeed = desiredSeed;
-                seed.NameOfSeedType = "Products";
-                seed.SeedAttempts = 1;
-                seed.Seeded = true;
-                _context.Seeds.Add(seed);
-                _context.SaveChanges();
-                return SeedProductsInDbManually();
+                //if no seeds already in db create the desired one for products
+                var seed = _context.Seeds.FirstOrDefault(s => s.NameOfSeedType == "Products" && s.DesiredSeed == desiredSeed);
+                if (seed == null)
+                {
+                    seed = new Seed();
+                    seed.DesiredSeed = desiredSeed;
+                    seed.NameOfSeedType = "Products";
+                    seed.SeedAttempts = 1;
+                    seed.Seeded = true;
+                    _context.Seeds.Add(seed);
+                    _context.SaveChanges();
+                    return SeedProductsInDbManually();
 
+                }
+                seed.SeedAttempts += 1;
+                _context.SaveChanges();
+                return 0;
             }
-            seed.SeedAttempts += 1;
-            _context.SaveChanges();
             return 0;
 
         }
