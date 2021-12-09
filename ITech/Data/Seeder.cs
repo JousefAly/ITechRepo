@@ -117,6 +117,8 @@ namespace ITech.Data
                   Image7Name = "MockEmpty.jpg",
                   Image8Name = "MockEmpty.jpg",
 
+                  ITSIN = "IT-Mock-1",
+
                   Category = _categoryRepository.GetCategoryByName("Phones"),
                   ProductDetails = new List<ProductDetail>()
                   {
@@ -153,6 +155,7 @@ namespace ITech.Data
                   Image6Name = "Mock2.6.jpg",
                   Image7Name = "Mock2.7.jpg",
                   Image8Name = "Mock2.8.jpg",
+                  ITSIN = "IT-Mock-2",
                   Category = _categoryRepository.GetCategoryByName("Phones"),
                   ProductDetails = new List<ProductDetail>()
                   {
@@ -190,6 +193,7 @@ namespace ITech.Data
                   Image6Name = "MockEmpty.jpg",
                   Image7Name = "MockEmpty.jpg",
                   Image8Name = "MockEmpty.jpg",
+                  ITSIN = "IT-Mock-3",
                   Category = _categoryRepository.GetCategoryByName("Phones"),
                   ProductDetails = new List<ProductDetail>()
                   {
@@ -227,6 +231,7 @@ namespace ITech.Data
                   Image6Name = "MockEmpty.jpg",
                   Image7Name = "MockEmpty.jpg",
                   Image8Name = "MockEmpty.jpg",
+                  ITSIN = "IT-Mock-4",
                   Category = _categoryRepository.GetCategoryByName("Laptops"),
                   ProductDetails = new List<ProductDetail>()
                   {
@@ -264,6 +269,7 @@ namespace ITech.Data
                   Image6Name = "MockEmpty.jpg",
                   Image7Name = "MockEmpty.jpg",
                   Image8Name = "MockEmpty.jpg",
+                  ITSIN = "IT-Mock-5",
                   Category = _categoryRepository.GetCategoryByName("Laptops"),
                   ProductDetails = new List<ProductDetail>()
                   {
