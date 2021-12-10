@@ -9,6 +9,7 @@ namespace ITech.Data.Entites
     public class ProductDetail
     {
         public int Id { get; set; }
+        public string ITSIN { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
         public Product Product { get; set; }

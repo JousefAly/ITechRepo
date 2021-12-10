@@ -1,7 +1,10 @@
-﻿using ITech.Data.Entites;
+﻿using CsvHelper;
+using ITech.Data.Entites;
 using ITech.Data.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,20 +30,36 @@ namespace ITech.Data
         //return affected rows in Database
         public int SeedProducts(int desiredSeed)
         {
-            if (desiredSeed <= 0)
+            if (desiredSeed > 0)
             {
                 //if no seeds already in db create the desired one for products
                 var seed = _context.Seeds.FirstOrDefault(s => s.NameOfSeedType == "Products" && s.DesiredSeed == desiredSeed);
                 if (seed == null)
                 {
-                    seed = new Seed();
-                    seed.DesiredSeed = desiredSeed;
-                    seed.NameOfSeedType = "Products";
-                    seed.SeedAttempts = 1;
-                    seed.Seeded = true;
+                    seed = new Seed
+                    {
+                        DesiredSeed = desiredSeed,
+                        NameOfSeedType = "Products",
+                        SeedAttempts = 1,
+
+                    };
                     _context.Seeds.Add(seed);
-                    _context.SaveChanges();
-                    return SeedProductsInDbManually();
+                    if (_context.SaveChanges() > 0)
+                    {
+                        seed.Seeded = true;
+                        _context.SaveChanges();
+                    }
+
+                    switch (desiredSeed)
+                    {
+                        case 1:
+                            return SeedProductsInDbManually();
+                            
+                        case 2:
+                            return SeedProductsFromCsv();
+                        default:
+                            return 0;
+                    }
 
                 }
                 seed.SeedAttempts += 1;
@@ -57,23 +76,27 @@ namespace ITech.Data
         public int SeedCategories(int desiredSeed)
         {
             //if no seeds already in db create the desired one for categories
-            var seed = _context.Seeds.FirstOrDefault(s => s.NameOfSeedType == "Categories" && s.DesiredSeed == desiredSeed);
-            if (seed == null)
+            if (desiredSeed > 0)
             {
-                seed = new Seed();
-                seed.DesiredSeed = desiredSeed;
-                seed.NameOfSeedType = "Categories";
-                seed.SeedAttempts = 1;
-                seed.Seeded = true;
-                _context.Seeds.Add(seed);
+                var seed = _context.Seeds.FirstOrDefault(s => s.NameOfSeedType == "Categories" && s.DesiredSeed == desiredSeed);
+                if (seed == null)
+                {
+                    seed = new Seed();
+                    seed.DesiredSeed = desiredSeed;
+                    seed.NameOfSeedType = "Categories";
+                    seed.SeedAttempts = 1;
+                    seed.Seeded = true;
+                    _context.Seeds.Add(seed);
+                    _context.SaveChanges();
+                    return SeedCategoriesInDbManually();
+
+                }
+
+
+                seed.SeedAttempts += 1;
                 _context.SaveChanges();
-                return SeedCategoriesInDbManually();
-
+                return 0;
             }
-
-
-            seed.SeedAttempts += 1;
-            _context.SaveChanges();
             return 0;
         }
         //seed then return affected rows
@@ -293,11 +316,56 @@ namespace ITech.Data
               }
 
             };
-            foreach (var product in products)
+            _productRepository.Add(products);
+            return _productRepository.SaveChanges();
+        }
+
+        //this function will automatically seed details after seed products
+        private int SeedProductsFromCsv()
+        {
+            var products = ReadProductsFromCsv();
+            foreach (var p in products)
             {
-                _productRepository.AddProduct(product);
+                //add category to product category recived with only id from csv
+                p.Category = _categoryRepository.GetCategoryById(p.Category.Id);
+                _productRepository.Add(p);
+
             }
-            return _categoryRepository.SaveChanges();
+            var affectedRows = _productRepository.SaveChanges();
+            return affectedRows + SeedProductDetailsFromCsv();
+        }
+        //this method read Products.csv  and return list of products without its product details
+        private List<Product> ReadProductsFromCsv()
+        {
+
+            using (var reader = new StreamReader("Products.csv"))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                csv.Context.RegisterClassMap<ProductMap>();
+                var products = csv.GetRecords<Product>().ToList();
+
+                return products;
+            }
+
+        }
+        // Post condition: Products already in database and have ITSIN
+        private int SeedProductDetailsFromCsv()
+        {
+            using (var reader = new StreamReader("ProductsDetails.csv"))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                int rowsAffected = 0;
+                var details = csv.GetRecords<ProductDetail>().ToList();
+                foreach (var detail in details)
+                {
+                    var product = _productRepository.GetProductByITSIN(detail.ITSIN);
+                    _productRepository.AddProductDetail(product, detail);
+                    _productRepository.SaveChanges();
+                    rowsAffected += 1;
+                }
+                return rowsAffected;
+
+            }
         }
 
 

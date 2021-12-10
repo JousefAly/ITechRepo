@@ -16,15 +16,32 @@ namespace ITech.Data.Repositories
         {
             _context = context;
         }
-        public void AddProduct(Product product)
+        public void Add(Product product)
         {
             _context.Products.Add(product);
 
+        }
+        public void Add(IEnumerable<Product> products)
+        {
+            _context.Products.AddRange(products);
+
+        }
+
+
+        public void AddProductDetail(Product product, ProductDetail detail)
+        {
+            product.ProductDetails.Add(detail);
+            
         }
 
         public List<Product> GetAllProducts()
         {
             return _context.Products.Include(p => p.Category).ToList();           
+        }
+
+        public Product GetProductByITSIN(string iTSIN)
+        {
+            return _context.Products.FirstOrDefault(p => p.ITSIN == iTSIN);
         }
 
         public int SaveChanges()
