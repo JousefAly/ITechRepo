@@ -87,19 +87,34 @@ namespace ITech.Data
             if (desiredSeed > 0)
             {
                 var seed = _context.Seeds.FirstOrDefault(s => s.NameOfSeedType == "Categories" && s.DesiredSeed == desiredSeed);
-                if (seed == null)
+                if (seed == null || seed.Seeded == false)
                 {
-                    seed = new Seed();
-                    seed.DesiredSeed = desiredSeed;
-                    seed.NameOfSeedType = "Categories";
-                    seed.SeedAttempts = 1;
-                    seed.Seeded = true;
+                    seed = new Seed
+                    {
+                        DesiredSeed = desiredSeed,
+                        NameOfSeedType = "Categories",
+                        SeedAttempts = 1,
+
+                    };
                     _context.Seeds.Add(seed);
-                    _context.SaveChanges();
-                    return SeedCategoriesInDbManually();
+
+                    int rowsAffected = 0;
+                    switch (desiredSeed)
+                    {
+                        case 1:
+                            rowsAffected = SeedCategoriesInDbManually();
+                            if (rowsAffected > 0)
+                            {
+                                seed.Seeded = true;
+                                _context.SaveChanges();
+                            }
+                            return rowsAffected;
+                        default:
+                            return 0;
+
+                    }
 
                 }
-
 
                 seed.SeedAttempts += 1;
                 _context.SaveChanges();
@@ -277,7 +292,7 @@ namespace ITech.Data
                   {
                       new ProductDetail
                       {
-                          
+
                           Title = "Processor",
                           ITSIN = "IT-Mock-4",
                           Content = "Intel® Core™ i7-10510U processor with Intel® UHD Graphics 620 (1.8 GHz base frequency, up to 4.9 GHz with Intel® Turbo Boost Technology, 8 MB L3 cache, 4 cores)"
