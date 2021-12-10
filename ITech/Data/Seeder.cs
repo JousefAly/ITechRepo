@@ -34,7 +34,7 @@ namespace ITech.Data
             {
                 //if no seeds already in db create the desired one for products
                 var seed = _context.Seeds.FirstOrDefault(s => s.NameOfSeedType == "Products" && s.DesiredSeed == desiredSeed);
-                if (seed == null)
+                if (seed == null || seed.Seeded == false)
                 {
                     seed = new Seed
                     {
@@ -44,19 +44,21 @@ namespace ITech.Data
 
                     };
                     _context.Seeds.Add(seed);
-                    if (_context.SaveChanges() > 0)
-                    {
-                        seed.Seeded = true;
-                        _context.SaveChanges();
-                    }
 
+                    int rowsAffected = 0;
                     switch (desiredSeed)
                     {
                         case 1:
-                            return SeedProductsInDbManually();
-                            
+                            rowsAffected = SeedProductsInDbManually();
+                            if (rowsAffected > 0)
+                                seed.Seeded = true;
+                            return rowsAffected;
+
                         case 2:
-                            return SeedProductsFromCsv();
+                            if (rowsAffected > 0)
+                                seed.Seeded = true;
+                            rowsAffected = SeedProductsFromCsv();
+                            return rowsAffected;
                         default:
                             return 0;
                     }
@@ -148,16 +150,19 @@ namespace ITech.Data
                       new ProductDetail
                       {
                           Title = "Display Size",
+                          ITSIN = "IT-Mock-1",
                           Content = "5.45 inches, 76.7 cm2 (~72.7% screen-to-body ratio)"
                       },
                        new ProductDetail
                       {
                           Title = "Display Resolution",
+                          ITSIN = "IT-Mock-1",
                           Content = "480 x 960 pixels, 18:9 ratio (~197 ppi density)"
                       },
                         new ProductDetail
                       {
                           Title = "Display Type",
+                          ITSIN = "IT-Mock-1",
                           Content = "IPS LCD capacitive touchscreen, 16M colors"
                       }
                   }
@@ -185,16 +190,19 @@ namespace ITech.Data
                       new ProductDetail
                       {
                           Title = "Speed",
+                           ITSIN = "IT-Mock-2",
                           Content = "HSPA 42.2/5.76 Mbps, LTE-A"
                       },
                        new ProductDetail
                       {
                           Title = "Display",
+                           ITSIN = "IT-Mock-2",
                           Content = "1080 x 2340 pixels, 19.5:9 ratio (~395 ppi density)"
                       },
                         new ProductDetail
                       {
                           Title = "Main Camera",
+                           ITSIN = "IT-Mock-2",
                           Content = "Quad: 48 MP, f/1.8, 26mm (wide), 1/2.0, 0.8µm, PDAF"
                       }
                   }
@@ -223,16 +231,19 @@ namespace ITech.Data
                       new ProductDetail
                       {
                           Title = "Speed",
+                          ITSIN = "IT-Mock-3",
                           Content = "HSPA 42.2/5.76 Mbps, LTE-A"
                       },
                        new ProductDetail
                       {
                           Title = "Display",
+                          ITSIN = "IT-Mock-3",
                           Content = "1080 x 2340 pixels, 19.5:9 ratio (~395 ppi density)"
                       },
                         new ProductDetail
                       {
                           Title = "Main Camera",
+                          ITSIN = "IT-Mock-3",
                           Content = "Quad: 48 MP, f/1.8, 26mm (wide), 1/2.0, 0.8µm, PDAF"
                       }
                   }
@@ -260,17 +271,21 @@ namespace ITech.Data
                   {
                       new ProductDetail
                       {
+                          
                           Title = "Processor",
+                          ITSIN = "IT-Mock-4",
                           Content = "Intel® Core™ i7-10510U processor with Intel® UHD Graphics 620 (1.8 GHz base frequency, up to 4.9 GHz with Intel® Turbo Boost Technology, 8 MB L3 cache, 4 cores)"
                       },
                        new ProductDetail
                       {
                           Title = "Memory",
+                          ITSIN = "IT-Mock-4",
                           Content = "8 GB DDR4-2400 SDRAM (1 x 8 GB)"
                       },
                         new ProductDetail
                       {
                           Title = "Graphics",
+                          ITSIN = "IT-Mock-4",
                           Content = "Discrete: NVIDIA® GeForce® MX130 (2 GB DDR5 dedicated)"
                       }
                   }
@@ -299,16 +314,19 @@ namespace ITech.Data
                       new ProductDetail
                       {
                           Title = "Processor",
+                          ITSIN = "IT-Mock-5",
                           Content = "Intel® Core™ i7-10510U Processor, 1.80 GHz (8M Cache, up to 4.9 GHz, # of Cores: 4)"
                       },
                        new ProductDetail
                       {
                           Title = "Memory",
+                          ITSIN = "IT-Mock-5",
                           Content = "Installed Memory: 8 GB RAM"
                       },
                         new ProductDetail
                       {
                           Title = "Graphics",
+                          ITSIN = "IT-Mock-5",
                           Content = "Graphics Processor: NVIDIA® GeForce® MX330"
                       }
                   }
