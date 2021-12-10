@@ -12,7 +12,7 @@ namespace ITech.Data
     {
         public ProductMap()
         {
-            Map(p => p.Name).Name("Title");
+            Map(p => p.Title).Name("Title");
             Map(p => p.Image1Name).Name("Image1Name");
             Map(p => p.Image2Name).Name("Image2Name");
             Map(p => p.Image3Name).Name("Image3Name");
