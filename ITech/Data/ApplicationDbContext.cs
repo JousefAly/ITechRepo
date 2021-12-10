@@ -16,6 +16,7 @@ namespace ITech.Data
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ProductDetail> ProductDetails { get; set; }
         public DbSet<Seller> Sellers { get; set; }
 
         public DbSet<Seed> Seeds { get; set; }

@@ -7,5 +7,6 @@ namespace ITech.Data.Repositories
         void AddCategory(Category category);
         Category GetCategoryByName(string name);
         int SaveChanges();
+        Category GetCategoryById(int id);
     }
 }

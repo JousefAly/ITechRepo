@@ -21,6 +21,11 @@ namespace ITech.Data.Repositories
            
         }
 
+        public Category GetCategoryById(int id)
+        {
+            return _context.Categories.Find(id);
+        }
+
         public Category GetCategoryByName(string name)
         {
             return _context.Categories.FirstOrDefault(c => c.Name == name);
