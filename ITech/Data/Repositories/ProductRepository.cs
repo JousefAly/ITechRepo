@@ -31,7 +31,7 @@ namespace ITech.Data.Repositories
         public void AddProductDetail(Product product, ProductDetail detail)
         {
             detail.ITSIN = product.ITSIN;
-            product.ProductDetails.Add(detail);
+            detail.Product = product;
             
         }
 

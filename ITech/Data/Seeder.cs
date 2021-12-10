@@ -51,13 +51,19 @@ namespace ITech.Data
                         case 1:
                             rowsAffected = SeedProductsInDbManually();
                             if (rowsAffected > 0)
+                            {
                                 seed.Seeded = true;
+                                _context.SaveChanges();
+                            }
                             return rowsAffected;
 
                         case 2:
-                            if (rowsAffected > 0)
-                                seed.Seeded = true;
                             rowsAffected = SeedProductsFromCsv();
+                            if (rowsAffected > 0)
+                            {
+                                seed.Seeded = true;
+                                _context.SaveChanges();
+                            }
                             return rowsAffected;
                         default:
                             return 0;
@@ -373,7 +379,10 @@ namespace ITech.Data
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
                 int rowsAffected = 0;
+                csv.Context.RegisterClassMap<ProductDetailMap>();
                 var details = csv.GetRecords<ProductDetail>().ToList();
+                _context.AddRange(details);
+                _context.SaveChanges();
                 foreach (var detail in details)
                 {
                     var product = _productRepository.GetProductByITSIN(detail.ITSIN);
