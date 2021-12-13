@@ -11,5 +11,6 @@ namespace ITech.Data.Repositories
         int SaveChanges();
         void AddProductDetail(Product prodcut, ProductDetail detail);
         Product GetProductByITSIN(string iTSIN);
+        Product GetById(int id);
     }
 }

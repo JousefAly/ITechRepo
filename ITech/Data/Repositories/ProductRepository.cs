@@ -39,6 +39,11 @@ namespace ITech.Data.Repositories
         {
             return _context.Products.Include(p => p.Category).ToList();           
         }
+        //return product with its details
+        public Product GetById(int id)
+        {
+            return _context.Products.Include(p => p.ProductDetails).FirstOrDefault(p => p.Id == id);
+        }
 
         public Product GetProductByITSIN(string iTSIN)
         {
