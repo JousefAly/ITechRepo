@@ -12,15 +12,29 @@ namespace ITech.Data.Entites
         public Product()
         {
             DiscountPercentage = 0m;
-            PriceAfterDiscount = Price - (Price * (DiscountPercentage / 100));
             LaunchTime = DateTime.Now;
         }
+        private decimal _Price;
+        private decimal _PriceAfterDiscount;
         public int Id { get; set; }
+
         public string Title { get; set; }
+
+        public string ITSIN { get; set; }
+       
+
         public string Brand { get; set; }
         public string ShortDescription { get; set; }
-        public decimal Price { get; set; }
-        public decimal PriceAfterDiscount { get; set; }
+        public decimal Price
+        {
+            get { return _Price; }
+            set
+            {
+                _Price = value;
+                _PriceAfterDiscount = _Price - (_Price * (DiscountPercentage / 100));
+            }
+        }
+        public decimal PriceAfterDiscount { get { return _PriceAfterDiscount; } set { _PriceAfterDiscount = value; } }
         public decimal DiscountPercentage { get; set; }
         public DateTime LaunchTime { get; set; }
         public string Image1Name { get; set; }

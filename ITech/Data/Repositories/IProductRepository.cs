@@ -5,8 +5,12 @@ namespace ITech.Data.Repositories
 {
     public interface IProductRepository
     {
-        void AddProduct(Product prodcut);
+        void Add(Product prodcut);
+        void Add(IEnumerable<Product> products);
         List<Product> GetAllProducts();
         int SaveChanges();
+        void AddProductDetail(Product prodcut, ProductDetail detail);
+        Product GetProductByITSIN(string iTSIN);
+        Product GetById(int id);
     }
 }
