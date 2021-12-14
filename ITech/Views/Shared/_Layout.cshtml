@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
+    <!--render other styles per view-->
+    @RenderSection("Styles", required: false)
 </head>
 <body>
     <header>
@@ -21,6 +23,7 @@
                     <ul class="navbar-nav flex-grow-1">
                         @*<li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+
                         </li>*@
                        
                     </ul>
@@ -64,8 +67,14 @@
 
         </div>
     </section>
+<<<<<<< HEAD
     
         @*<footer class="footer bg-dark text-white ">
+=======
+    @*Footer code begin here*@
+
+    @*<footer class="footer bg-dark text-white ">
+>>>>>>> master
             <div class="container p-4">
                 <div class="row">
                     <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
@@ -92,7 +101,7 @@
                             <li>
                                 <a class="fotter-link" href="#">About us</a>
                             </li>
-                            
+
                         </ul>
                     </div>
                     <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
@@ -115,7 +124,13 @@
                 </div>
             </div>
         </footer>*@
+<<<<<<< HEAD
    
+=======
+
+    @*Footer code end here*@
+
+>>>>>>> master
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
