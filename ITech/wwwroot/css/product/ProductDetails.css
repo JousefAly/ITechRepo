@@ -1,0 +1,45 @@
+﻿body {
+    
+}
+
+
+.cart {
+    overflow: hidden;
+    box-sizing: border-box;
+    background-color: #F5F5F5;
+    width: 850px;
+    margin: 50px auto 0;
+    padding: 15px;
+    padding-right: 20px;
+    border-radius: 5px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    box-shadow: 0px 0px 5px 5px gray;
+}
+
+    .cart .description {
+    }
+
+.thems img {
+    display: inline-block;
+    height: 80px;
+    width: 80px;
+    border: 1px solid #ccc;
+    margin: 7px;
+    border-radius: 8px;
+}
+
+.xzoom-container .xzoom {
+    width: 300px;
+    height: 300px;
+}
+
+.thems img:hover {
+    transform: translate(0px,-150px) scale3d(2,2,0) ;
+    transition: all 2s;
+}
+.thems 
+
+    .thems a {
+        text-decoration: none;
+    }

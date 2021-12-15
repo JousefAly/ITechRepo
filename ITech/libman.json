@@ -70,6 +70,10 @@
     {
       "library": "font-awesome@5.15.4",
       "destination": "wwwroot/lib/font-awesome/"
+    },
+    {
+      "library": "zoom.js@0.0.1",
+      "destination": "wwwroot/lib/zoom.js/"
     }
   ]
 }
