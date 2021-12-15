@@ -88,8 +88,13 @@ aside {
     color: #808080
 }
 
-.fotter-link:hover {
-    color: #0366d6;
-} 
-            
+    .fotter-link:hover {
+        color: #0366d6;
+    }
+
 /*custom styles*/
+.profile-picture {
+    height: 250px;
+    width:250px;
+    object-fit: cover;
+}

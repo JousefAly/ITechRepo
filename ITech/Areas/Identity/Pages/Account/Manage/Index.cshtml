@@ -36,17 +36,24 @@
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <label class="w-100" asp-for="Input.ProfilePicture">
-                    @if (Model.Input.ProfilePicture != null)
-                    {
-                        <img  id="profilePicture" alt="profile" src="data:image/*;base64,@(Convert.ToBase64String(Model.Input.ProfilePicture))" />
-                    }
-                    else
-                    {
-                        <img id="profilePicture" alt="profile" src="~/img/male-avatar.png"/>
-                    }
-
-                </label>
+                <label class="w-100" asp-for="Input.ProfilePicture"></label>
+                @if (Model.Input.ProfilePicture != null)
+                {
+                    <img class="profile-picture" id="profilePicture" alt="profile" src="data:image/*;base64,@(Convert.ToBase64String(Model.Input.ProfilePicture))" />
+                }
+                else
+                {
+                    <img class="profile-picture" id="profilePicture" alt="profile" src="~/img/male-avatar.png" />
+                }
+                <div class="custom-file mt-2">
+                    <input type="file"
+                           accept="image/*"
+                           asp-for="Input.ProfilePicture"
+                           class="custom-file-input"
+                           onchange="document.getElementById('profilePicture').src = window.URL.createObjectURL(this.files[0])" />
+                    <label asp-for="Input.ProfilePicture" class="custom-file-label">Choose picture...</label>
+                    <span asp-validation-for="Input.ProfilePicture" class="text-danger"></span>
+                </div>
             </div>
         </div>
     </div>
