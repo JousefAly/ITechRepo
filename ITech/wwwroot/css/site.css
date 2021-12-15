@@ -98,3 +98,7 @@ aside {
     width:250px;
     object-fit: cover;
 }
+.avatar {
+    height: 40px;
+    width: 40px;
+}
