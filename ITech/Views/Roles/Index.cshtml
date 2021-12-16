@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<IdentityRole>
 @{
     ViewData["Title"] = "Roles";
+    Layout = "_AdminLayout";
 }
 <partial name="_RoleForm" model="new RoleFormViewModel()" />
 <h1>Available Roles</h1>

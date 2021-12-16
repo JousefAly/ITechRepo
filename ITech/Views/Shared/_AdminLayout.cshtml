@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ITech</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
+    <!--render other styles per view-->
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ITech</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Roles" asp-action="Index">Manage Roles</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Users" asp-action="Index">Manage Users</a>
+                        </li>
+
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section>
+
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-4">
+                    <aside>
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link " href="#">Laptops</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">smart phones</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">TV</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link " href="#">Accessories</a>
+                            </li>
+                        </ul>
+                    </aside>
+                </div>
+
+                <div class="col-8">
+                    <main role="main" class="pb-3">
+                        @RenderBody()
+                    </main>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!--Footer code begin here
+
+    @*<footer class="footer bg-dark text-white ">
+
+            <div class="container p-4">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+                        <h6>Lets help you</h6>
+                        <ul class="list-unstyled">
+                            <li>
+                                <a class="fotter-link" href="#">Contact Us</a>
+                            </li>
+                            <li>
+                                <a class="fotter-link" href="#">How to buy?</a>
+                            </li>
+                            <li>
+                                <a class="fotter-link" href="#">Return privacy</a>
+                            </li>
+                        </ul>
+                        &copy; @DateTime.Now.Year - ITech - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+                        <h6>About ITech</h6>
+                        <ul class="list-unstyled">
+                            <li>
+                                <a class="fotter-link" href="#">Privacy policy</a>
+                            </li>
+                            <li>
+                                <a class="fotter-link" href="#">About us</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+                        <h6>Join us</h6>
+                        <ul class="list-unstyled">
+                            <li>
+                                <a class="fotter-link" href="#"><i class="fab fa-facebook text-white" aria-hidden="true"></i></a>
+                            </li>
+                            <li>
+                                <a class="fotter-link" href="#"><i class="fab fa-twitter text-white" aria-hidden="true"></i></a>
+                            </li>
+                            <li>
+                                <a class="fotter-link" href="#"><i class="fab fa-instagram text-white" aria-hidden="true"></i></a>
+                            </li>
+
+                        </ul>
+                    </div>
+
+
+                </div>
+            </div>
+        </footer>*@
+
+
+    Footer code end here-->
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
