@@ -92,6 +92,8 @@ namespace ITech.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+                    if (User.IsInRole("Admin"))
+                        returnUrl = "~/Admin/Index";
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
