@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Roles";
 }
-
+<partial name="_RoleForm" model="new RoleFormViewModel()" />
 <h1>Available Roles</h1>
 <table class="table table-striped mt-4">
     <thead>
@@ -22,3 +22,7 @@
     </tbody>
 
 </table>
+@section Scripts{ 
+
+<partial name="_ValidationScriptsPartial" />
+}
