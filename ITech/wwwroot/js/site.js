@@ -3,15 +3,8 @@
 
 // Write your JavaScript code.
 
-//function Display() {
-//    var x = document.getElementById("side_content");
-//    if (x.style.visibility === "hidden") {
-//        x.style.visibility = "visible";
-//    } else {
-//        x.style.visibility = "hidden";
-//    }
-       
-//}
+
+/* start of side-bar Javascript code */
 
 function openNav() {
     document.getElementById("mySidebar").style.width = "250px";
@@ -25,3 +18,5 @@ function closeNav() {
     document.getElementById("main2").style.marginLeft = "0";
     document.getElementById("main3").style.marginLeft= "0";
 }
+
+/* end of side-bar Javascript code  */
