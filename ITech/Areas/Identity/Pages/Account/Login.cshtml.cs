@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using ITech.Data;
+using System.Security.Claims;
 
 namespace ITech.Areas.Identity.Pages.Account
 {
@@ -83,19 +84,22 @@ namespace ITech.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+
+                
                 string username = Input.Email;
-                var user = await _userManager.FindByEmailAsync(Input.Email);
-                if ( user != null)
+
+                if (_userManager.FindByEmailAsync(Input.Email).Result != null)
                 {
-                     username = new EmailAddressAttribute().IsValid(Input.Email) ? _userManager.FindByEmailAsync(Input.Email).Result.UserName : Input.Email;
+                    username = new EmailAddressAttribute().IsValid(Input.Email) ? _userManager.FindByEmailAsync(Input.Email).Result.UserName : Input.Email;
                 }
                 var result = await _signInManager.PasswordSignInAsync(username, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    
-                    if (await _userManager.IsInRoleAsync(user,"Admin"))
-                        returnUrl = "~/Admin/Index";
+                    //temporary fix add cleaner code later
+                    var user = await _userManager.FindByNameAsync(username);
+                    if (await _userManager.IsInRoleAsync(user, "Admin"))
+                        returnUrl = "~/Admin";
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
