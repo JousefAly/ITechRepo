@@ -5,7 +5,7 @@
 }
 
 <h1>Users</h1>
-<table class="table table-striped col-md-6">
+<table class="table table-striped ">
     <thead>
         <tr class="bg-primary text-white">
             <th>First Name</th>
@@ -25,7 +25,9 @@
             <td>@user.UserName</td>
             <td>@user.Email</td>
             <td>@string.Join(" , ", user.Roles.ToList())</td>
-            <td></td>
+            <td>
+                <a class="btn btn-primary" asp-controller="Users" asp-action="ManageRoles" asp-route-userId="@user.Id"> Manage Roles</a>
+            </td>
 
         </tr>
         }

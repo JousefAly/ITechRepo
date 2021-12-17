@@ -35,41 +35,11 @@
         </nav>
     </header>
 
-    <section>
-
-
-        <div class="container">
-
-            <div class="row">
-                <div class="col-4">
-                    <aside>
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link " href="#">Laptops</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">smart phones</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">TV</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link " href="#">Accessories</a>
-                            </li>
-                        </ul>
-                    </aside>
-                </div>
-
-                <div class="col-8">
-                    <main role="main" class="pb-3">
-                        @RenderBody()
-                    </main>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
     <!--Footer code begin here
 
     @*<footer class="footer bg-dark text-white ">
@@ -126,7 +96,11 @@
 
 
     Footer code end here-->
-
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2021 - Example2 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
