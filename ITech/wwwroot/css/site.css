@@ -70,25 +70,16 @@ body {
     bottom: 0;
     width: 100%;
     white-space: nowrap;
-    /*line-height: 60px; /* Vertically center the text there */
+    line-height: 60px; /* Vertically center the text there */
 }
 
-aside {
-    height: 350px;
-    width: 220px;
-    margin: 50px;
-    background-color: burlywood
+/*custom styles*/
+.profile-picture {
+    height: 250px;
+    width:250px;
+    object-fit: cover;
 }
-
-    aside li a:hover {
-        color: orangered
-    }
-
-.fotter-link {
-    color: #808080
+.avatar {
+    height: 40px;
+    width: 40px;
 }
-
-.fotter-link:hover {
-    color: #0366d6;
-} 
-            
