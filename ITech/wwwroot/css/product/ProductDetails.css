@@ -1,11 +1,10 @@
-﻿body {
-}
+﻿
 body {
     background-color: #ffffff;
 }
 
 
-.cart {
+.cart{
     overflow: hidden;
     box-sizing: border-box;
     background-color: #F5F5F5;
@@ -15,11 +14,12 @@ body {
     padding-right: 20px;
     border-radius: 5px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 2fr;
     box-shadow: 0px 0px 5px 5px gray;
 }
 
     .cart .description {
+        padding-left:30px;
     }
 
 .thems img {
@@ -35,16 +35,20 @@ body {
 }
 
 
-.xzoom-container .xzoom {
+
+.mainImg-container .mainImg {
     width: 300px;
     height: 300px;
 }
 
 .thems img:hover {
-    transform: translate(0px,-150px) scale3d(2,2,0) ;
+    transform: translate(0px,-150px) scale(3,3) ;
     transition: all 2s;
 }
-.thems 
+.description{
+    left:50px;
+
+}
 
 .thems a {
     text-decoration: none;
