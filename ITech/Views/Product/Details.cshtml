@@ -24,20 +24,20 @@
         <h1 style="font-weight:200"> @Model.Title </h1>
         <p>Brand: @Model.Brand</p>
         <hr>
-        <span class="price"> @Model.Price </span><br /> <spam>@Model.DiscountPercentage</spam>
+        <span class="price"> @Model.Price </span><span style="text-decoration:line-through;"> @Model.PriceAfterDiscount</span><br /> <spam>@Model.DiscountPercentage</spam>
         <span class="font-weight-bold" style="font-weight:bold; font-size:30px;"></span>
         <span></span> <br>
-        <button class="btn btn-primary" style="font-size: 25px; padding: 50px 50px; width: 550px; margin-top:15px;">ADD TO CART <i class="fas fa-cart-plus"></i></button>
+        <button class="btn btn-primary" style="font-size: 25px; width:100%; ">ADD TO CART <i class="fas fa-cart-plus"></i></button>
 
     </div>
 </div>
 
 
 <div class="ProductDetails">
-    <h1>Product Details</h1>
+    <h1><i class="fas fa-info-circle"></i>Product Details </h1>
     <hr />
-    <ul>
-        <li>
+    <ul class="list-unstyled">
+        <li >
             <h2>short description </h2>
             <p>@Model.ShortDescription</p>
         </li>
@@ -47,5 +47,24 @@
         </li>
     </ul>
 
+</div>
+
+<div class="moreDetails">
+    <table>
+        <thead>
+            <tr>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var detail in Model.ProductDetails)
+            {
+            <tr>
+                <td>@detail.Title</td>
+                <td>@detail.Content</td>
+            </tr>
+            }
+        </tbody>
+    </table>
 </div>
 
