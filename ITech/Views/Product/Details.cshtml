@@ -1,7 +1,8 @@
 ﻿@model Product
 <!--Product Details page code here hello ismail-->
-
-<link rel="stylesheet" href="~/css/product/ProductDetails.css" />
+@section Styles{
+    <link rel="stylesheet" href="~/css/product/ProductDetails.css" />
+}
 
 <div class="cart">
     <div class="mainImg-container">
@@ -37,7 +38,7 @@
     <h1><i class="fas fa-info-circle"></i>Product Details </h1>
     <hr />
     <ul class="list-unstyled">
-        <li >
+        <li>
             <h2>short description </h2>
             <p>@Model.ShortDescription</p>
         </li>
@@ -53,16 +54,15 @@
     <table>
         <thead>
             <tr>
-                
             </tr>
         </thead>
         <tbody>
-            @foreach(var detail in Model.ProductDetails)
+            @foreach (var detail in Model.ProductDetails)
             {
-            <tr>
-                <td>@detail.Title</td>
-                <td>@detail.Content</td>
-            </tr>
+                <tr>
+                    <td>@detail.Title</td>
+                    <td>@detail.Content</td>
+                </tr>
             }
         </tbody>
     </table>
