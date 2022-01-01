@@ -196,6 +196,7 @@ namespace ITech.Data
                   Title = "XIAOMI Redmi 9T - 6.53-inch 128GB/6GB Dual SIM Mobile Phone - Twilight Blue",
                   ShortDescription = "Brighten up your life with Redmi 9T's luminous aesthetic. The back glistens in the light giving off a captivating radiance. Pick your favorite from four stunning colors; Twilight Blue, Sunrise Orange, Ocean Green and Carbon Gray.",
                   Price = 3450m,
+                  ITSIN = "IT-Mock-1",
                   Brand= "XIAOMI",
                   ProductImages = new List<ProductImage>
                   {
