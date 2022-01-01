@@ -51,6 +51,7 @@ namespace ITech.Data.Entites
         public Category Category { get; set; }
         public Seller Seller { get; set; }
         public List<ProductDetail> ProductDetails { get; set; }
+        public List<ProductImage> ProductImages { get; set; }
 
 
     }
