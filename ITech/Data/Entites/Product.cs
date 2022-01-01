@@ -37,14 +37,7 @@ namespace ITech.Data.Entites
         public decimal PriceAfterDiscount { get { return _PriceAfterDiscount; } set { _PriceAfterDiscount = value; } }
         public decimal DiscountPercentage { get; set; }
         public DateTime LaunchTime { get; set; }
-        public string Image1Name { get; set; }
-        public string Image2Name { get; set; }
-        public string Image3Name { get; set; }
-        public string Image4Name { get; set; }
-        public string Image5Name { get; set; }
-        public string Image6Name { get; set; }
-        public string Image7Name { get; set; }
-        public string Image8Name { get; set; }
+
         public bool InStock { get; set; }
         public int SoldCount { get; set; }
 
