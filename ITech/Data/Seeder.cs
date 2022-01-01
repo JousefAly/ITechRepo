@@ -125,24 +125,26 @@ namespace ITech.Data
         //seed then return affected rows
         private int SeedCategoriesInDbManually()
         {
-            var categories = new List<Category>()
-            {
-                new Category
-                {
-                  Name = "Phones",
-                  Description = "This category includes all phones in website",
-                },
-                new Category
-                {
-                    Name = "Laptops",
-                    Description = "This category includes all laptops in webiste"
-                }
-            };
-            foreach (var category in categories)
-            {
-                _categoryRepository.AddCategory(category);
-            }
-            return _categoryRepository.SaveChanges();
+            // seeding from migraions automatic
+            return 0;
+
+            //var categories = new List<Category>()
+            //{
+            //    new Category
+            //    {
+            //      Name = "Phones",
+            //      Description = "This category includes all phones in website",
+            //    },
+            //    new Category
+            //    {
+            //        Name = "Laptops",
+            //        Description = "This category includes all laptops in webiste"
+            //    }
+            //};
+            //foreach (var category in categories)
+            //{
+            //    _categoryRepository.AddCategory(category);
+            //}
         }
         //seed then return affected rows
         private int SeedProductsInDbManually()
