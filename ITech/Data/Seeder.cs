@@ -408,23 +408,23 @@ namespace ITech.Data
                       new ProductImage
                       {
                           ImageNumber = 1,
-                          ImageUrl = "img/mockImages/Mock4.1.jpg"
+                          ImageUrl = "img/mockImages/Mock5.1.jpg"
                       },
 
                       new ProductImage
                       {
                           ImageNumber = 2,
-                          ImageUrl = "img/mockImages/Mock4.2.jpg"
+                          ImageUrl = "img/mockImages/Mock5.2.jpg"
                       },
                       new ProductImage
                       {
                           ImageNumber = 3,
-                          ImageUrl = "img/mockImages/Mock4.3.jpg"
+                          ImageUrl = "img/mockImages/Mock5.3.jpg"
                       },
                       new ProductImage
                       {
                           ImageNumber = 4,
-                          ImageUrl = "img/mockImages/Mock4.4.jpg"
+                          ImageUrl = "img/mockImages/Mock5.4.jpg"
                       }
                   },
                   ITSIN = "IT-Mock-5",

@@ -3,11 +3,19 @@
 @section Styles{
     <link rel="stylesheet" href="~/css/product/ProductDetails.css" />
 }
+@{ 
+    var firstImage = Model.ProductImages.FirstOrDefault(i => i.ImageNumber == 1);
+}
 
 <div class="cart">
     <div class="mainImg-container">
-        @*<img src="~/img/mockImages/@Model.Image1Name" class="mainImg" xriginal="~/img/mockImages/@Model.Image1Name" />
-        <div class="thems">
+        <img src="~/@firstImage.ImageUrl" class="mainImg" xriginal="~/@firstImage.ImageUrl" />
+        @foreach (var image in Model.ProductImages)
+        {
+           //display rest of the images here 
+        }
+
+        @*<div class="thems">
 
             <a href="~/img/mockImages/@Model.Image2Name">
                 <img class="gallary" id="one" src="~/img/mockImages/@Model.Image2Name" xpreview="~/img/csvImages/@Model.Image2Name " />
@@ -17,9 +25,9 @@
             </a>
             <a href="~/img/mockImages/@Model.Image4Name">
                 <img class="gallary" id="three" src="~/img/mockImages/@Model.Image4Name" />
-            </a>*@
+            </a>
 
-        </div>
+        </div>*@
     </div>
     <div class="description" style="">
         <h1 style="font-weight:200"> @Model.Title </h1>
