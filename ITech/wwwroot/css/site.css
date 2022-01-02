@@ -97,6 +97,7 @@ body {
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
+    
 }
 
     .sidebar a {
@@ -127,7 +128,8 @@ body {
     color: white;
     padding: 10px 15px;
     border: none;
-    position:fixed
+    position:fixed;
+   z-index:1
 }
 
     .openbtn:hover {
@@ -138,3 +140,41 @@ body {
     transition: margin-left .5s;
     padding: 16px;
 }
+
+@media screen and (max-height: 450px) {
+    .sidebar {
+        padding-top: 15px;
+    }
+
+        .sidebar a {
+            font-size: 18px;
+        }
+
+    #smallScreen{
+        margin-left:20px
+    }
+
+    #openptn {
+       
+        display: none
+    }
+}
+/*
+@media screen and (max-width: 450px) {
+    .sidebar {
+        padding-top: 15px;
+    }
+
+        .sidebar a {
+            font-size: 18px;
+        }
+
+    #smallScreen {
+        margin-left: 20px
+    }
+
+    #openptn {
+        display: none
+    }
+}
+    */

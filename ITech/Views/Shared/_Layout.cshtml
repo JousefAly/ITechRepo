@@ -9,23 +9,26 @@
     <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
 </head>
 <body>
-    <header>
+    <header id="main1">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ITech</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+
+                <!--
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+        <ul class="navbar-nav flex-grow-1">
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+            </li>
 
-                    </ul>
-                    @*<partial name="_LoginPartial" />*@
-                </div>
+        </ul>
+        @*<partial name="_LoginPartial" />*@
+    </div>-->
+
             </div>
         </nav>
     </header>
@@ -42,13 +45,13 @@
 
     <!--Main layout page-->
     <div>
-        <button class="openbtn" onclick="openNav()"> Open Sidebar</button>
+        <button id="openptn" class="openbtn" onclick="openNav()"> <i class="fa fa-list"></i></button>
     </div>
     <div class="container" >
 
         <div class="row" id="main2">
 
-            <div class="col-12">
+            <div id="smallScreen" class="col-lg-12 col-sm-4">
                 <main role="main" class="pb-3">
                     @RenderBody()
                 </main>
