@@ -25,7 +25,7 @@ namespace ITech.Controllers
         public IActionResult Index()
         {
 
-            return View(_productRepository.GetAllProducts());
+            return View();
         }
 
         public IActionResult Privacy()

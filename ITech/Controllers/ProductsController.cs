@@ -7,13 +7,20 @@ using System.Threading.Tasks;
 
 namespace ITech.Controllers
 {
-    public class ProductController : Controller
+    public class ProductsController : Controller
     {
         private readonly IProductRepository _productRepository;
 
-        public ProductController(IProductRepository productRepository)
+        public ProductsController(IProductRepository productRepository)
         {
             _productRepository = productRepository;
+        }
+
+        //return all products   
+        public IActionResult Index()
+        {
+
+            return View(_productRepository.GetAllProducts());
         }
         public IActionResult Details(int id)
         {
