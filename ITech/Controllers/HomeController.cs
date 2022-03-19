@@ -27,11 +27,13 @@ namespace ITech.Controllers
 
         public IActionResult Index()
         {
-            var model = new HomeIndexViewModel();
-            model.AllCategories = _categoryRepository.GetAllCategories();
-            model.TrendyProducts = _productRepository.GetTopSellingProducts(10);
+            var model = new HomeIndexViewModel
+            {
+                AllCategories = _categoryRepository.GetAllCategories(),
+                TrendyProducts = _productRepository.GetTopSellingProducts(8)
+            };
 
-            return View();
+            return View(model);
         }
 
         public IActionResult Privacy()

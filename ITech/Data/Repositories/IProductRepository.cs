@@ -13,7 +13,7 @@ namespace ITech.Data.Repositories
         Product GetProductByITSIN(string iTSIN);
         Product GetById(int id);
         //return top products
-        //numberOfProducts is how many top products we want to return.
+        //numberOfProducts is how many top products we want to return
         List<Product> GetTopSellingProducts(int numberOfTProducts);
     }
 }

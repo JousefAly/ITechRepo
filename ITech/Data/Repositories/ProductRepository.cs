@@ -60,7 +60,9 @@ namespace ITech.Data.Repositories
 
         public List<Product> GetTopSellingProducts(int numberOfTProducts)
         {
-            var products = _context.Products.OrderBy(p => p.Title).Take(numberOfTProducts).ToList();
+            var products = _context.Products.Include(p => p.ProductImages)
+                                            .OrderBy(p => p.Title)
+                                            .Take(numberOfTProducts).ToList();
             return products;
 
         }
