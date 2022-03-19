@@ -14,17 +14,20 @@ namespace ITech.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IProductRepository _productRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
         public HomeController(ILogger<HomeController> logger,
-                                IProductRepository productRepository)
+                                IProductRepository productRepository,
+                                ICategoryRepository categoryRepository)
         {
             _logger = logger;
             _productRepository = productRepository;
+            _categoryRepository = categoryRepository;
         }
 
         public IActionResult Index()
         {
-
+           
             return View();
         }
 
