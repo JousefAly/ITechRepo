@@ -2,31 +2,42 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-<!--Display products here-->
-<!--This table is just a test replace it with viewPartial soon!-->
-<table class="table">
-    <thead class="thead-dark">
-        <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Name</th>
-            <th scope="col">Price</th>
-            <th scope="col">Category</th>
-            <th scope="col">Main image</th>
-        </tr>
-    </thead>
-    <tbody>
+
+<div class="container-fluid pt-5">
+    <div class="row px-xl-5 pb-3">
         @foreach (var product in Model)
         {
-            <tr>
-                <th scope="row">@product.Id</th>
-                <td><a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id">@product.Title</a></td>
-                <td>@product.Price.ToString("c")</td>
-                <td>@product.Category.Name</td>
-
-                <td><img src="~/@product.ProductImages.FirstOrDefault(p => p.ImageNumber == 1).ImageUrl" width="250" height="250" /></td>
-
-            </tr>
-
+            <partial name="_ProductCard" model="product" />
         }
-    </tbody>
-</table>
+    </div>
+</div>
+<!--Display products here-->
+<!--This table is just a test replace it with viewPartial soon!-->
+@*<div class="container">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Main image</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in Model)
+                {
+                    <tr>
+                        <th scope="row">@product.Id</th>
+                        <td><a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id">@product.Title</a></td>
+                        <td>@product.Price.ToString("c")</td>
+                        <td>@product.Category.Name</td>
+
+                        <td><img src="~/@product.ProductImages.FirstOrDefault(p => p.ImageNumber == 1).ImageUrl" width="250" height="250" /></td>
+
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>*@

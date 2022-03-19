@@ -12,5 +12,8 @@ namespace ITech.Data.Repositories
         void AddProductDetail(Product prodcut, ProductDetail detail);
         Product GetProductByITSIN(string iTSIN);
         Product GetById(int id);
+        //return top products
+        //numberOfProducts is how many top products we want to return.
+        List<Product> GetTopSellingProducts(int numberOfTProducts);
     }
 }

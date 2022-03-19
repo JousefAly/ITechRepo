@@ -27,7 +27,10 @@ namespace ITech.Controllers
 
         public IActionResult Index()
         {
-           
+            var model = new HomeIndexViewModel();
+            model.AllCategories = _categoryRepository.GetAllCategories();
+            model.TrendyProducts = _productRepository.GetTopSellingProducts(10);
+
             return View();
         }
 

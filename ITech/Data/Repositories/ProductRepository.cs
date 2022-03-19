@@ -58,6 +58,13 @@ namespace ITech.Data.Repositories
             return _context.Products.FirstOrDefault(p => p.ITSIN == iTSIN);
         }
 
+        public List<Product> GetTopSellingProducts(int numberOfTProducts)
+        {
+            var products = _context.Products.OrderBy(p => p.Title).Take(numberOfTProducts).ToList();
+            return products;
+
+        }
+
         public int SaveChanges()
         {
             return _context.SaveChanges();
