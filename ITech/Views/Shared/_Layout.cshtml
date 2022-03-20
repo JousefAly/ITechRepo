@@ -97,7 +97,7 @@
                     <i class="fa fa-angle-down text-dark"></i>
                 </a>
                 <nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0" id="navbar-vertical">
-                    <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
+                    <div class="navbar-nav w-100 overflow-hidden" >
 
                         <a href="#" class="nav-item nav-link">Laptops</a>
                         <a href="#" class="nav-item nav-link">Phones</a>
@@ -139,8 +139,9 @@
                             <a href="contact.html" class="nav-item nav-link">Contact</a>
                         </div>
                         <div class="navbar-nav ml-auto py-0">
-                            <a href="" class="nav-item nav-link">Login</a>
-                            <a href="" class="nav-item nav-link">Register</a>
+                            @*<a href="" class="nav-item nav-link">Login</a>
+                            <a href="" class="nav-item nav-link">Register</a>*@
+                            <partial name="_LoginPartial" />
                         </div>
                     </div>
                     <!--nav header links end-->
@@ -152,11 +153,11 @@
     </div>
     <!-- Navbar End -->
    
-    
-        <main role="main" >
+    <div class="container-fluid ml-5">
+        <main role="main">
             @RenderBody()
         </main>
-    
+    </div>
        
     <footer class="border-top footer text-muted">
         <!-- Footer Start -->
