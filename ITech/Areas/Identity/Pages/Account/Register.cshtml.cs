@@ -72,6 +72,9 @@ namespace ITech.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Display(Name = "Role")]
+            public string Role { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -87,6 +90,12 @@ namespace ITech.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
+                //check the role first
+                if(Input.Role == "Seller")
+                {
+                    return Redirect("CompleteSellerRegisteration");
+                }
+                // now the user is customer
                 var user = new AppUser
                 {
                     UserName = new MailAddress(Input.Email).User,
@@ -94,7 +103,10 @@ namespace ITech.Areas.Identity.Pages.Account
                     FirstName = Input.FirstName,
                     LastName = Input.LastName
                 };
+                
+                var roleResult = await _userManager.AddToRoleAsync(user, "Customer");
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                _customerRepository.CreateCustomer(user);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
