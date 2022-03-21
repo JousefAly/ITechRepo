@@ -142,7 +142,14 @@ namespace ITech.Areas.Identity.Pages.Account
                     else
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                        if(Input.Role == "Customer")
+                        {
+                            return LocalRedirect(returnUrl);
+                        }
+                        if(Input.Role == "Seller")
+                        {
+                            return RedirectToAction("CompleteRegister", "Seller");
+                        }
                     }
                 }
                 foreach (var error in result.Errors)
