@@ -95,7 +95,7 @@ namespace ITech.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 //check the role first
-                if(Input.Role == "Seller")
+                if (Input.Role == "Seller")
                 {
                     return Redirect("CompleteSellerRegisteration");
                 }
@@ -107,14 +107,15 @@ namespace ITech.Areas.Identity.Pages.Account
                     FirstName = Input.FirstName,
                     LastName = Input.LastName
                 };
-                
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
-                var roleResult = await _userManager.AddToRoleAsync(user, "Customer");
-               var createdCustomer = _customerRepository.Create(user);
-                _customerRepository.SaveChanges();
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+                    //now make a customer instance and connect it with the user in users table
+                    var roleResult = await _userManager.AddToRoleAsync(user, "Customer");
+                    var createdCustomer = _customerRepository.Create(user);
+                    _customerRepository.SaveChanges();
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

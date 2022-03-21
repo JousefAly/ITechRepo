@@ -19,6 +19,7 @@ namespace ITech.Data.Repositories
         {
             var customer = new Customer
             {
+                Id = Guid.NewGuid().ToString(),
                 User = user
             };
             _context.Customers.Add(customer);
