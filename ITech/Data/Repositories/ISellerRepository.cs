@@ -11,5 +11,7 @@ namespace ITech.Data.Repositories
     {
         Seller Create(AppUser user);
         int SaveChanges();
+        //return seller oject for a given user or null if not found
+        Seller GetUserSeller(AppUser user);
     }
 }

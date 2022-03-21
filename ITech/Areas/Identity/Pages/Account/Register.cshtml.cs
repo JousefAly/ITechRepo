@@ -120,8 +120,9 @@ namespace ITech.Areas.Identity.Pages.Account
                     if (Input.Role == "Seller")
                     {
                         var roleResult = await _userManager.AddToRoleAsync(user, "Seller");
-                        var createdCustomer = _sellerRepository.Create(user);
+                        var createdSeller = _sellerRepository.Create(user);
                         _sellerRepository.SaveChanges();
+                       
                     }
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -148,6 +149,7 @@ namespace ITech.Areas.Identity.Pages.Account
                         }
                         if(Input.Role == "Seller")
                         {
+                           
                             return RedirectToAction("CompleteRegister", "Seller");
                         }
                     }
