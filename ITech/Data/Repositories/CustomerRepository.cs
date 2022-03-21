@@ -21,7 +21,8 @@ namespace ITech.Data.Repositories
             {
                 User = user
             };
-            _
+            _context.Customers.Add(customer);
+            return customer;
         }
 
         public int SaveChanges()

@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using ITech.Data;
+using ITech.Data.Repositories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -25,17 +26,20 @@ namespace ITech.Areas.Identity.Pages.Account
         private readonly UserManager<AppUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ICustomerRepository _customerRepository;
 
         public RegisterModel(
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ICustomerRepository customerRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _customerRepository = customerRepository;
         }
 
         [BindProperty]
@@ -95,7 +99,7 @@ namespace ITech.Areas.Identity.Pages.Account
                 {
                     return Redirect("CompleteSellerRegisteration");
                 }
-                // now the user is customer
+                // if we reached here  user is customer
                 var user = new AppUser
                 {
                     UserName = new MailAddress(Input.Email).User,
@@ -104,9 +108,10 @@ namespace ITech.Areas.Identity.Pages.Account
                     LastName = Input.LastName
                 };
                 
-                var roleResult = await _userManager.AddToRoleAsync(user, "Customer");
                 var result = await _userManager.CreateAsync(user, Input.Password);
-                _customerRepository.CreateCustomer(user);
+                var roleResult = await _userManager.AddToRoleAsync(user, "Customer");
+               var createdCustomer = _customerRepository.Create(user);
+                _customerRepository.SaveChanges();
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
