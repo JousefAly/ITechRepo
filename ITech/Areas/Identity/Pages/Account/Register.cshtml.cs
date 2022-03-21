@@ -27,19 +27,22 @@ namespace ITech.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly ICustomerRepository _customerRepository;
+        private readonly ISellerRepository _sellerRepository;
 
         public RegisterModel(
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            ICustomerRepository customerRepository)
+            ICustomerRepository customerRepository,
+            ISellerRepository sellerRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
             _customerRepository = customerRepository;
+            _sellerRepository = sellerRepository;
         }
 
         [BindProperty]
@@ -94,12 +97,7 @@ namespace ITech.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                //check the role first
-                if (Input.Role == "Seller")
-                {
-                    return Redirect("CompleteSellerRegisteration");
-                }
-                // if we reached here  user is customer
+               
                 var user = new AppUser
                 {
                     UserName = new MailAddress(Input.Email).User,
@@ -112,10 +110,19 @@ namespace ITech.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-                    //now make a customer instance and connect it with the user in users table
-                    var roleResult = await _userManager.AddToRoleAsync(user, "Customer");
-                    var createdCustomer = _customerRepository.Create(user);
-                    _customerRepository.SaveChanges();
+                    //now add the role
+                    if (Input.Role == "Customer")
+                    {
+                        var roleResult = await _userManager.AddToRoleAsync(user, "Customer");
+                        var createdCustomer = _customerRepository.Create(user);
+                        _customerRepository.SaveChanges();
+                    }
+                    if (Input.Role == "Seller")
+                    {
+                        var roleResult = await _userManager.AddToRoleAsync(user, "Seller");
+                        var createdCustomer = _sellerRepository.Create(user);
+                        _sellerRepository.SaveChanges();
+                    }
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
