@@ -24,49 +24,80 @@
     <!--Styles End-->
 </head>
 <body>
-    <div class="container">
-        <!--Topbar Start-->
-        <div class="row bg-secondary py-2 px-xl-5">
-            <div class="col-lg-6 d-none d-lg-block">
-                <div class="d-inline-flex align-items-center">
-                    <a class="text-dark" href="">FAQs</a>
-                    <span class="text-muted px-2">|</span>
-                    <a class="text-dark" href="">Help</a>
-                    <span class="text-muted px-2">|</span>
-                    <a class="text-dark" href="">Support</a>
-                </div>
-            </div>
-            <div class="col-lg-6 text-center text-lg-right">
-                <div class="d-inline-flex align-items-center">
-                    <a class="text-dark px-2" href="">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a class="text-dark px-2" href="">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a class="text-dark px-2" href="">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                    <a class="text-dark px-2" href="">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a class="text-dark pl-2" href="">
-                        <i class="fab fa-youtube"></i>
-                    </a>
-                </div>
+
+    <!--Topbar Start-->
+    <div class="row bg-secondary py-2 px-xl-5">
+        <div class="col-lg-6 d-none d-lg-block">
+            <div class="d-inline-flex align-items-center">
+                <a class="text-dark" href="">FAQs</a>
+                <span class="text-muted px-2">|</span>
+                <a class="text-dark" href="">Help</a>
+                <span class="text-muted px-2">|</span>
+                <a class="text-dark" href="">Support</a>
             </div>
         </div>
-        <!--Topbar End-->
-
-
-
-        <div>
-            <main role="main">
-                @RenderBody()
-            </main>
+        <div class="col-lg-6 text-center text-lg-right">
+            <div class="d-inline-flex align-items-center">
+                <a class="text-dark px-2" href="">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a class="text-dark px-2" href="">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a class="text-dark px-2" href="">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a class="text-dark px-2" href="">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a class="text-dark pl-2" href="">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </div>
         </div>
-
     </div>
+    <!--Topbar End-->
+    <!--TopNavbarStart-->
+
+    <nav class="navbar navbar-expand-lg bg-light navbar-light border" >
+        @*<a class="navbar-brand" asp-controller="Home" asp-action="Index">ITech</a>*@
+        <a class="text-decoration-none navbar-brand"
+           asp-controller="Home" asp-action="Index">
+            <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">I</span>Tech</h1>
+        </a>
+        <!-- hamburger button that toggles the navbar-->
+        <button class="navbar-toggler" type="button"
+                data-toggle="collapse"
+                data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon">
+            </span>
+        </button>
+        <!-- navbar links -->
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav mr-auto py-0">
+                <a class="nav-item nav-link" asp-controller="Seller" asp-action="Index">Home</a>
+                <a class="nav-item nav-link" href="#">Products Manager</a>
+                <a class="nav-item nav-link" href="#">Revenues</a>
+            </div>
+        </div>
+    </nav>
+
+    <!--TopNavbarEnd-->
+
+
+
+
+
+    <div>
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+
+
 
 </body>
 </html>
