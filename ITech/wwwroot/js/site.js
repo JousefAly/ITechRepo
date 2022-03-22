@@ -4,23 +4,18 @@
 // Write your JavaScript code.
 
 
-/* start of side-bar Javascript code */
 
-function openNav() {
-    document.getElementById("mySidebar").style.width = "250px";
-    document.getElementById("main1").style.marginLeft = "100px";
-    document.getElementById("main2").style.marginLeft = "40px";
-    document.getElementById("main3").style.marginLeft = "100px";
-    document.getElementById("openptn").style.zIndex = "0";
 
-}
+/* Start of slider*/
+$(document).ready(function () {
+    $('.autoWidth').lightSlider({
+        autoWidth: true,
+        loop: true,
+        onSliderLoad: function () {
+            $('.autoWidth').removeClass('cS-hidden');
+        }
+    });
+});
 
-function closeNav() {
-    document.getElementById("mySidebar").style.width = "0";
-    document.getElementById("main1").style.marginLeft = "0";
-    document.getElementById("main2").style.marginLeft = "0";
-    document.getElementById("main3").style.marginLeft = "0";
-    document.getElementById("openptn").style.zIndex = "1";
-}
+/* End of slider */
 
-/* end of side-bar Javascript code  */

@@ -1,8 +1,11 @@
-﻿namespace ITech.Data.Entites
+﻿using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
+
+namespace ITech.Data.Entites
 {
-    public class Seller
+    public class Seller :AppUser
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+       
+        public List<Product> Products { get; set; }
     }
 }

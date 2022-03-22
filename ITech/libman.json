@@ -70,6 +70,24 @@
     {
       "library": "font-awesome@5.15.4",
       "destination": "wwwroot/lib/font-awesome/"
+    },
+    {
+      "library": "zoom.js@0.0.1",
+      "destination": "wwwroot/lib/zoom.js/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "lightslider@1.1.6",
+      "destination": "wwwroot/lightslider/",
+      "files": [
+        "dist/css/lightslider.css",
+        "dist/css/lightslider.min.css",
+        "dist/js/lightslider.js",
+        "dist/js/lightslider.min.js",
+        "src/css/lightslider.css",
+        "src/js/.jshintrc",
+        "src/js/lightslider.js"
+      ]
     }
   ]
 }

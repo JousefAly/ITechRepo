@@ -92,8 +92,8 @@ namespace ITech.Data.Migrations
                     b.Property<decimal>("PriceAfterDiscount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("SellerId")
-                        .HasColumnType("int");
+                    b.Property<string>("SellerId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ShortDescription")
                         .HasColumnType("nvarchar(max)");
@@ -139,19 +139,27 @@ namespace ITech.Data.Migrations
                     b.ToTable("ProductDetails");
                 });
 
-            modelBuilder.Entity("ITech.Data.Entites.Seller", b =>
+            modelBuilder.Entity("ITech.Data.Entites.ProductImage", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name")
+                    b.Property<int>("ImageNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Sellers");
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductImage");
                 });
 
             modelBuilder.Entity("ITech.Data.Seed", b =>
@@ -241,6 +249,10 @@ namespace ITech.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -292,6 +304,8 @@ namespace ITech.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -321,12 +335,10 @@ namespace ITech.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -363,12 +375,10 @@ namespace ITech.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -378,6 +388,29 @@ namespace ITech.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("ITech.Data.AppUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("ProfilePicture")
+                        .HasColumnType("varbinary(max)");
+
+                    b.HasDiscriminator().HasValue("AppUser");
+                });
+
+            modelBuilder.Entity("ITech.Data.Entites.Seller", b =>
+                {
+                    b.HasBaseType("ITech.Data.AppUser");
+
+                    b.HasDiscriminator().HasValue("Seller");
+                });
+
             modelBuilder.Entity("ITech.Data.Entites.Product", b =>
                 {
                     b.HasOne("ITech.Data.Entites.Category", "Category")
@@ -385,7 +418,7 @@ namespace ITech.Data.Migrations
                         .HasForeignKey("CategoryId");
 
                     b.HasOne("ITech.Data.Entites.Seller", "Seller")
-                        .WithMany()
+                        .WithMany("Products")
                         .HasForeignKey("SellerId");
 
                     b.Navigation("Category");
@@ -400,6 +433,13 @@ namespace ITech.Data.Migrations
                         .HasForeignKey("ProductId");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("ITech.Data.Entites.ProductImage", b =>
+                {
+                    b.HasOne("ITech.Data.Entites.Product", null)
+                        .WithMany("ProductImages")
+                        .HasForeignKey("ProductId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -461,6 +501,13 @@ namespace ITech.Data.Migrations
             modelBuilder.Entity("ITech.Data.Entites.Product", b =>
                 {
                     b.Navigation("ProductDetails");
+
+                    b.Navigation("ProductImages");
+                });
+
+            modelBuilder.Entity("ITech.Data.Entites.Seller", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

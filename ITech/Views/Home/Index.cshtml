@@ -2,32 +2,358 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-<!--Display products here-->
-<!--This table is just a test replace it with viewPartial soon!-->
-<table class="table">
-    <thead class="thead-dark">
-        <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Name</th>
-            <th scope="col">Price</th>
-            <th scope="col">Category</th>
-            <th scope="col">Main image</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var product in Model)
+
+<section class="header_two">
+    <div class="content">
+        <div class="text-center text-capitalize">
+            <h4>What is in your mind?</h4>
+        </div>
+        <form action="/" method="post" class="search">
+            <input type="text" name="name" value="" placeholder="Search ..." class="search_input form-control" style=" border-bottom-left-radius: 25px;" />
+            <button class="search_button"><i class="fa fa-search"></i></button>
+        </form>
+    </div>
+
+</section>
+
+<div style="position:relative">
+
+    <h1 class="title-text text-center">Recently Arrival</h1>
+
+</div>
+
+
+
+
+
+<section class="slider">
+
+    <ul class="autoWidth cs-hidden">
+
+        @foreach (var Product in Model)
         {
-            <tr>
-                <th scope="row">@product.Id</th>
-                <td>@product.Title</td>
-                <td>@product.Price.ToString("c")</td>
-                <td>@product.Category.Name</td>
-                
-                <td><img src="/img/mockImages/@product.Image1Name" width="250" height="250" /></td>
 
-            </tr>
 
+            <li class="item-a">
+
+                <div class="box">
+                    <div class="slide-image">
+
+                        <img src="~/img/mockImages/@Product.Image1Name" />
+                        <div class="overlay">
+                            <a href="#" class="buy-btn">Buy Now</a>
+                        </div>
+                    </div>
+
+
+
+                    <div class="detail-box">
+                        <div class="type">
+                            <a asp-controller="Product" asp-action="Details" asp-route-id="@Product.Id">@Product.Title</a>
+
+                        </div>
+
+                        <a href="#" class="price">@Product.Price EGP</a>
+
+
+                    </div>
+
+                </div>
+
+            </li>
         }
-    </tbody>
-</table>
+      
+    </ul>
+            
+</section>
+
+<div style="position:relative">
+
+    <h1 class="title-text text-center">Mobiles </h1>
+
+</div>
+
+<section class="slider">
+
+    <ul class="autoWidth cs-hidden">
+        <li class="item-a">
+
+            <div class="box">
+                <div class="slide-image">
+
+                    <img src="~/img/Slide_Images/tech-image2.jpg" />
+                    <div class="overlay">
+                        <a href="#" class="buy-btn">Buy Now</a>
+                    </div>
+                </div>
+
+
+
+                <div class="detail-box">
+                    <div class="type">
+                        <a href="#">Rabbed cardigan</a>
+                        <span>Noe Arri</span>
+                    </div>
+
+                    <a href="#" class="price">$23</a>
+                </div>
+
+            </div>
+
+        </li>
+        <li class="item-b">
+
+            <div class="box">
+                <div class="slide-image">
+
+                    <img src="~/img/Slide_Images/tech-image1.jpg" alt="1" />
+                    <div class="overlay">
+                        <a href="#" class="buy-btn">Buy Now</a>
+                    </div>
+                </div>
+
+
+
+                <div class="detail-box">
+                    <div class="type">
+                        <a href="#">Rabbed cardigan</a>
+                        <span>Noe Arri</span>
+                    </div>
+
+                    <a href="#" class="price">$23</a>
+                </div>
+
+            </div>
+
+
+        </li>
+        <li class="item-c">
+
+            <div class="box">
+                <div class="slide-image">
+
+                    <img src="~/img/Slide_Images/tech-image3.jpg" />
+                    <div class="overlay">
+                        <a href="#" class="buy-btn">Buy Now</a>
+                    </div>
+                </div>
+
+
+
+                <div class="detail-box">
+                    <div class="type">
+                        <a href="#">Rabbed cardigan</a>
+                        <span>Noe Arri</span>
+                    </div>
+
+                    <a href="#" class="price">$23</a>
+                </div>
+
+            </div>
+
+
+        </li>
+        <li class="item-d">
+
+            <div class="box">
+                <div class="slide-image">
+
+                    <img src="~/img/Slide_Images/tech-image2.jpg" />
+                    <div class="overlay">
+                        <a href="#" class="buy-btn">Buy Now</a>
+                    </div>
+                </div>
+
+
+
+                <div class="detail-box">
+                    <div class="type">
+                        <a href="#">Rabbed cardigan</a>
+                        <span>Noe Arri</span>
+                    </div>
+
+                    <a href="#" class="price">$23</a>
+                </div>
+
+            </div>
+
+
+        </li>
+
+        <li class="item-e">
+
+            <div class="box">
+                <div class="slide-image">
+
+                    <img src="~/img/Slide_Images/tech-image1.jpg" />
+                    <div class="overlay">
+                        <a href="#" class="buy-btn">Buy Now</a>
+                    </div>
+                </div>
+
+
+
+                <div class="detail-box">
+                    <div class="type">
+                        <a href="#">Rabbed cardigan</a>
+                        <span>Noe Arri</span>
+                    </div>
+
+                    <a href="#" class="price">$23</a>
+                </div>
+
+            </div>
+
+
+        </li>
+
+    </ul>
+</section>
+
+
+<div style="position:relative">
+
+    <h1 class="title-text text-center">Laptops </h1>
+
+</div>
+
+<section class="slider">
+
+    <ul class="autoWidth cs-hidden">
+        <li class="item-a">
+
+            <div class="box">
+                <div class="slide-image">
+
+                    <img src="~/img/Slide_Images/tech-image2.jpg" />
+                    <div class="overlay">
+                        <a href="#" class="buy-btn">Buy Now</a>
+                    </div>
+                </div>
+
+
+
+                <div class="detail-box">
+                    <div class="type">
+                        <a href="#">Rabbed cardigan</a>
+                        <span>Noe Arri</span>
+                    </div>
+
+                    <a href="#" class="price">$23</a>
+                </div>
+
+            </div>
+
+        </li>
+        <li class="item-b">
+
+            <div class="box">
+                <div class="slide-image">
+
+                    <img src="~/img/Slide_Images/tech-image1.jpg" alt="1" />
+                    <div class="overlay">
+                        <a href="#" class="buy-btn">Buy Now</a>
+                    </div>
+                </div>
+
+
+
+                <div class="detail-box">
+                    <div class="type">
+                        <a href="#">Rabbed cardigan</a>
+                        <span>Noe Arri</span>
+                    </div>
+
+                    <a href="#" class="price">$23</a>
+                </div>
+
+            </div>
+
+
+        </li>
+        <li class="item-c">
+
+            <div class="box">
+                <div class="slide-image">
+
+                    <img src="~/img/Slide_Images/tech-image3.jpg" />
+                    <div class="overlay">
+                        <a href="#" class="buy-btn">Buy Now</a>
+                    </div>
+                </div>
+
+
+
+                <div class="detail-box">
+                    <div class="type">
+                        <a href="#">Rabbed cardigan</a>
+                        <span>Noe Arri</span>
+                    </div>
+
+                    <a href="#" class="price">$23</a>
+                </div>
+
+            </div>
+
+
+        </li>
+        <li class="item-d">
+
+            <div class="box">
+                <div class="slide-image">
+
+                    <img src="~/img/Slide_Images/tech-image2.jpg" />
+                    <div class="overlay">
+                        <a href="#" class="buy-btn">Buy Now</a>
+                    </div>
+                </div>
+
+
+
+                <div class="detail-box">
+                    <div class="type">
+                        <a href="#">Rabbed cardigan</a>
+                        <span>Noe Arri</span>
+                    </div>
+
+                    <a href="#" class="price">$23</a>
+                </div>
+
+            </div>
+
+
+        </li>
+
+        <li class="item-e">
+
+            <div class="box">
+                <div class="slide-image">
+
+                    <img src="~/img/Slide_Images/tech-image1.jpg" />
+                    <div class="overlay">
+                        <a href="#" class="buy-btn">Buy Now</a>
+                    </div>
+                </div>
+
+
+
+                <div class="detail-box">
+                    <div class="type">
+                        <a href="#">Rabbed cardigan</a>
+                        <span>Noe Arri</span>
+                    </div>
+
+                    <a href="#" class="price">$23</a>
+                </div>
+
+            </div>
+
+
+        </li>
+        
+
+    </ul>
+</section>
+
+
 
