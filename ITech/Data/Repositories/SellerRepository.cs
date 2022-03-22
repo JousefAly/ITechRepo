@@ -33,7 +33,14 @@ namespace ITech.Data.Repositories
         //return the seller object for a given appuser or null if not seller
         public Seller GetUserSeller(AppUser user)
         {
-            return _context.Sellers.FirstOrDefault(s => s.User == user);
+            var seller = _context.Sellers.FirstOrDefault(s => s.User == user);
+            return seller;
+        }
+        public bool Update(Seller seller)
+        {
+            _context.Update(seller);
+
+            return _context.SaveChanges() > 0 ;
         }
     }
 }
