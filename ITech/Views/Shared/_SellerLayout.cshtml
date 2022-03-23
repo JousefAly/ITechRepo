@@ -81,7 +81,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" href="#">Revenues</a>
                         </li>
-                  </ul>
+                    </ul>
                     <partial name="_LoginPartial" />
                 </div>
             </div>
@@ -98,7 +98,13 @@
             &copy; 2022 - ITech - <a asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/easing/easing.min.js"></script>
+    <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
 
+    <script src="~/js/template.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 
 
 </body>
