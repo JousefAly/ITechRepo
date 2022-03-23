@@ -7,12 +7,13 @@
     {
         @if (UserManager.GetUserAsync(User).Result.ProfilePicture != null)
         {
-            <li>
+
+            @*<li class="nav-item align-content-center">
                 <a asp-area="Identity" asp-page="/Account/Manage/Index">
 
-                <img class="rounded-circle avatar" src="data:image/*;base64,@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))" />
+                <img class="rounded-circle avatar profile-picture " src="data:image/*;base64,@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))" />
                 </a>
-            </li>
+            </li>*@
         }
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>

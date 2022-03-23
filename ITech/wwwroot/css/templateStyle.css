@@ -10395,3 +10395,15 @@ a.text-dark:hover, a.text-dark:focus {
         transform: translateY(-15px);
     }
 }
+
+/*my own styles*/
+
+.profile-picture {
+    height: 250px;
+    width: 250px;
+    object-fit: cover;
+}
+.avatar {
+    height: 40px;
+    width: 40px;
+}
