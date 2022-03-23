@@ -1,0 +1,37 @@
+﻿@model Product
+@{
+    if (User.IsInRole("Seller"))
+        Layout = "_SellerLayout";
+}
+
+<form asp-controller="Products" asp-action="CreateProduct" method="post">
+    <h4>Enter Product Data</h4>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Title" class="col-md-2 control-label"></label>
+        <div class="col-md-5">
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="ShortDescription" class="col-md-2 control-label"></label>
+        <div class="col-md-5">
+            <input asp-for="ShortDescription" class="form-control" />
+            <span asp-validation-for="ShortDescription" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="Price" class="col-md-2 control-label"></label>
+        <div class="col-md-5">
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-5">
+            <input type="submit" class="btn btn-primary" value="Next" />
+        </div>
+    </div>
+
+</form>

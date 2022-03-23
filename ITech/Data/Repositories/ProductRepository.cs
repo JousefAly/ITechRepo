@@ -32,7 +32,15 @@ namespace ITech.Data.Repositories
         {
             detail.ITSIN = product.ITSIN;
             detail.Product = product;
-            
+
+        }
+
+        public Product AddSellerProduct(Seller seller, Product product)
+        {
+            product.Seller = seller;
+            _context.Products.Add(product);
+            _context.SaveChanges();
+            return product;
         }
 
         public List<Product> GetAllProducts()
@@ -41,7 +49,7 @@ namespace ITech.Data.Repositories
                 .Include(p => p.Category)
                 .Include(p => p.ProductDetails)
                 .Include(p => p.ProductImages)
-                .ToList();           
+                .ToList();
         }
         //return product with its details
         public Product GetById(int id)

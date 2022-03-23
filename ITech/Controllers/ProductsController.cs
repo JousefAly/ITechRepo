@@ -28,5 +28,9 @@ namespace ITech.Controllers
 
             return View(product);
         }
+        public IActionResult CreateProduct()
+        {
+            return View();
+        }
     }
 }

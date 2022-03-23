@@ -15,5 +15,7 @@ namespace ITech.Data.Repositories
         //return top products
         //numberOfProducts is how many top products we want to return
         List<Product> GetTopSellingProducts(int numberOfTProducts);
+        //return Added product
+        Product AddSellerProduct(Seller seller, Product product);
     }
 }

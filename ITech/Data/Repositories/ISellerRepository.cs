@@ -15,5 +15,8 @@ namespace ITech.Data.Repositories
         Seller GetUserSeller(AppUser user);
         // return true if updated
         bool Update(Seller seller);
+
+        
+        
     }
 }
