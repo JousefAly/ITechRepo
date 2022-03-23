@@ -21,83 +21,83 @@
 
     @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
     <link rel="stylesheet" href="~/css/templateStyle.css" />
+    <link href="~/css/site.css" rel="stylesheet" />
     <!--render other styles per view-->
     @RenderSection("Styles", required: false)
     <!--Styles End-->
 </head>
 <body>
-
-    <!--Topbar Start-->
-    <div class="row bg-secondary py-2 px-xl-5">
-        <div class="col-lg-6 d-none d-lg-block">
-            <div class="d-inline-flex align-items-center">
-                <a class="text-dark" href="">FAQs</a>
-                <span class="text-muted px-2">|</span>
-                <a class="text-dark" href="">Help</a>
-                <span class="text-muted px-2">|</span>
-                <a class="text-dark" href="">Support</a>
+    <header>
+        <!--Topbar Start-->
+        <div class="row bg-secondary py-2 px-xl-5">
+            <div class="col-lg-6 d-none d-lg-block">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-dark" href="">FAQs</a>
+                    <span class="text-muted px-2">|</span>
+                    <a class="text-dark" href="">Help</a>
+                    <span class="text-muted px-2">|</span>
+                    <a class="text-dark" href="">Support</a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center text-lg-right">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a class="text-dark pl-2" href="">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
             </div>
         </div>
-        <div class="col-lg-6 text-center text-lg-right">
-            <div class="d-inline-flex align-items-center">
-                <a class="text-dark px-2" href="">
-                    <i class="fab fa-facebook-f"></i>
+        <!--Topbar End-->
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="text-decoration-none navbar-brand"
+                   asp-controller="Home" asp-action="Index">
+                    <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">I</span>Tech</h1>
                 </a>
-                <a class="text-dark px-2" href="">
-                    <i class="fab fa-twitter"></i>
-                </a>
-                <a class="text-dark px-2" href="">
-                    <i class="fab fa-linkedin-in"></i>
-                </a>
-                <a class="text-dark px-2" href="">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a class="text-dark pl-2" href="">
-                    <i class="fab fa-youtube"></i>
-                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Seller" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="#">Products Manager</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="#">Revenues</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </div>
-    <!--Topbar End-->
-
-    <!--NavbarStart-->
-    <nav class="navbar navbar-expand-lg bg-light navbar-light border">
-
-        <a class="text-decoration-none navbar-brand"
-           asp-controller="Home" asp-action="Index">
-            <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">I</span>Tech</h1>
-        </a>
-        <!-- hamburger button that toggles the navbar-->
-        <button class="navbar-toggler" type="button"
-                data-toggle="collapse"
-                data-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup"
-                aria-expanded="false"
-                aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon">
-            </span>
-        </button>
-        <!-- navbar links -->
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav mr-auto py-0">
-                <a class="nav-item nav-link" asp-controller="Seller" asp-action="Index">Home</a>
-                <a class="nav-item nav-link" href="#">Products Manager</a>
-                <a class="nav-item nav-link" href="#">Revenues</a>
-            </div>
-        </div>
-    </nav>
-    <!--NavbarEnd-->
-
-    <!--main start-->
-    <div class="container-fluid bg-danger ">
-        <main role="main">
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
-    <!--main end--> 
 
-    <!-- Footer Start -->
-    
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - ITech - <a asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+
 
 
 </body>

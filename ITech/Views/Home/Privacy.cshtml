@@ -1,5 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Privacy Policy";
+
+    if (User.IsInRole("Seller"))
+        Layout = "_SellerLayout";
 }
 <h1>@ViewData["Title"]</h1>
 
