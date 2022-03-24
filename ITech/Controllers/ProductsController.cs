@@ -1,10 +1,13 @@
 ﻿using ITech.Data;
 using ITech.Data.Entites;
 using ITech.Data.Repositories;
+using ITech.ViewModels;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,16 +19,19 @@ namespace ITech.Controllers
         private readonly ISellerRepository _sellerRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly UserManager<AppUser> _userManager;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
         public ProductsController(IProductRepository productRepository,
                                   ISellerRepository sellerRepository,
                                   ICategoryRepository categoryRepository,
-                                  UserManager<AppUser> userManager)
+                                  UserManager<AppUser> userManager,
+                                  IWebHostEnvironment hostEnvironment)
         {
             _productRepository = productRepository;
             _sellerRepository = sellerRepository;
             _categoryRepository = categoryRepository;
             _userManager = userManager;
+            _hostEnvironment = hostEnvironment;
         }
 
         //return all products   
@@ -63,7 +69,40 @@ namespace ITech.Controllers
         }
         public IActionResult UploadProductImage(int productId)
         {
-            return View(nameof(UploadProductImage), productId);
+            var model = new UploadProductImageViewModel
+            {
+                Product = _productRepository.GetById(productId)
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> UploadProductImage(UploadProductImageViewModel model)
+        {
+            //upload image to wwwroot/img/products then connect image with its product
+            //change the image name to unique name with productId attached to it
+            var imageFile = model.ImageFile;
+            string wwwrootPath = _hostEnvironment.WebRootPath;
+            string fileName = Path.GetFileNameWithoutExtension(imageFile.FileName);
+            string extension = Path.GetExtension(imageFile.FileName);
+            string imageUniqueName = fileName + DateTime.Now.ToString("yymmssfff") + "-" 
+                                     + model.Product.Id.ToString() + extension;
+            var path = Path.Combine(wwwrootPath + "/img/products/", imageUniqueName);
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            {
+                await imageFile.CopyToAsync(fileStream);
+            }
+            //now image uploaded connect it with product in db
+            var productImage = new ProductImage
+            {
+                ImageNumber = model.ImageNumber,
+                ImageUrl = "img/products/" + imageUniqueName,
+                Product = model.Product
+            };
+            var addedImage = _productRepository.AddProductImage(model.Product, productImage);
+            if (addedImage == null)
+                return BadRequest("Image was not added to Database.");
+
+            return Ok();
         }
     }
 }

@@ -9,6 +9,7 @@
     <div class="col-md-4">
         <form asp-action="UploadProductImage" enctype="multipart/form-data">
             <div asp-validation-summary="All" class="text-danger"></div>
+            <input asp-for="Product" value="@Model.Product" type="hidden" />
             <div class="form-group">
                 <label asp-for="ImageNumber" class="control-label"></label>
                 <input asp-for="ImageNumber" class="form-control" />

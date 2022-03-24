@@ -35,6 +35,14 @@ namespace ITech.Data.Repositories
 
         }
 
+        public ProductImage AddProductImage(Product product, ProductImage image)
+        {
+            product.ProductImages.Add(image);
+            if (_context.SaveChanges() == 0)
+                return null;
+            return image;
+        }
+
         public Product AddSellerProduct(Seller seller, Product product)
         {
             product.Seller = seller;
