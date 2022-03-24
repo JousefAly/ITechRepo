@@ -70,9 +70,12 @@ namespace ITech.Controllers
         }
         public IActionResult UploadProductImage(int productId)
         {
+
+
             var model = new UploadProductImageViewModel
             {
-                ProductId = productId
+                ProductId = productId,
+                HasMainImage = _productRepository.HasMainImage(productId)
             };
             return View(model);
         }

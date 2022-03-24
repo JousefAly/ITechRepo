@@ -14,8 +14,10 @@ namespace ITech.ViewModels
     public class UploadProductImageViewModel
     {
         [Required]
+        [DisplayName("Image order")]
         public int ImageNumber { get; set; }
-        
+        public bool HasMainImage { get; set; } 
+
         [Required]
         [DisplayName("Upload File")]
         public IFormFile ImageFile { get; set; }

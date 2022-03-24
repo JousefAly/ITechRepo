@@ -18,5 +18,7 @@ namespace ITech.Data.Repositories
         //return Added product
         Product AddSellerProduct(Seller seller, Product product);
         ProductImage AddProductImage(Product product, ProductImage image);
+        bool HasMainImage(int productId);
+        
     }
 }

@@ -1,6 +1,7 @@
 ﻿@model UploadProductImageViewModel
 
 @{
+
 }
 <h1>Upload Image to product:@Model.ProductId</h1>
 
@@ -10,11 +11,24 @@
         <form asp-action="UploadProductImage" enctype="multipart/form-data">
             <div asp-validation-summary="All" class="text-danger"></div>
             <input asp-for="ProductId" value="@Model.ProductId" type="hidden" />
-            <div class="form-group">
-                <label asp-for="ImageNumber" class="control-label"></label>
-                <input asp-for="ImageNumber" class="form-control" />
-                <span asp-validation-for="ImageNumber" class="text-danger"></span>
-            </div>
+
+            @if (Model.HasMainImage)
+            {
+                <div class="form-group">
+                    <label asp-for="ImageNumber" class="control-label">Main Image</label>
+                    <input asp-for="ImageNumber" class="form-control" type="number" min="2" max="8" />
+                    <span asp-validation-for="ImageNumber" class="text-danger"></span>
+                </div>
+            }
+            else
+            {
+                <div class="form-group">
+                    <label asp-for="ImageNumber" class="control-label"></label>
+                    <input asp-for="ImageNumber" class="form-control" type="number" value="1" readonly />
+                    <span asp-validation-for="ImageNumber" class="text-danger"></span>
+                </div>
+            }
+
             <div class="form-group">
                 <label asp-for="ImageFile" class="control-label"></label>
                 <input asp-for="ImageFile" accept="image/*" />

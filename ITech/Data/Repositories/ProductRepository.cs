@@ -83,6 +83,15 @@ namespace ITech.Data.Repositories
 
         }
 
+        public bool HasMainImage(int productId)
+        {
+           
+            return _context.Products.Include(p => p.ProductImages)
+                                    .FirstOrDefault(p => p.Id == productId).ProductImages
+                                    .FirstOrDefault(pi => pi.ImageNumber == 1) != null;
+        }
+
+       
         public int SaveChanges()
         {
             return _context.SaveChanges();
