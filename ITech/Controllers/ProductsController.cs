@@ -61,5 +61,9 @@ namespace ITech.Controllers
             var product = _productRepository.GetById(productId);
             return View(product);
         }
+        public IActionResult UploadProductImage(int productId)
+        {
+            return View(nameof(UploadProductImage), productId);
+        }
     }
 }
