@@ -107,7 +107,7 @@ namespace ITech.Controllers
             if (addedImage == null)
                 return BadRequest("Image was not added to Database.");
 
-            return Ok();
+            return RedirectToAction(nameof(UploadProductImage));
         }
 
         public IActionResult CancelUploadImage(int productId)
