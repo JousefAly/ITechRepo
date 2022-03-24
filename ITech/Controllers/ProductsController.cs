@@ -52,10 +52,11 @@ namespace ITech.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> CreateProduct(Product product)
+        public async Task<IActionResult> CreateProduct(Product product, int categoryId)
         {
             var appUser = await _userManager.GetUserAsync(HttpContext.User);
             var seller = _sellerRepository.GetUserSeller(appUser);
+            product.Category = _categoryRepository.GetCategoryById(categoryId);
             var createdProduct = _productRepository.AddSellerProduct(seller, product);
             if (createdProduct == null)
                 return BadRequest("Product was not created.");

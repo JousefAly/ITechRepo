@@ -10,12 +10,12 @@
     <h4>Enter Product Data</h4>
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
-        <label asp-for="Category" class="col-md-2 control-label"></label>
+        <label class="col-md-2 control-label" for="categoryId">Category</label>
         <div class="col-md-5">
-            <select class="form-control">
+            <select class="form-control" name="categoryId" id="categoryId">
                 @foreach (var category in categories)
                 {
-                    <option value="@category">@category.Name</option>
+                    <option value="@category.Id">@category.Name</option>
                 }
             </select>
             <span asp-validation-for="Title" class="text-danger"></span>
@@ -24,7 +24,7 @@
     <div class="form-group">
         <label asp-for="Brand" class="col-md-2 control-label"></label>
         <div class="col-md-5">
-            <input asp-for="Brand" class="form-control" placeholder="Example: Samsung"/>
+            <input asp-for="Brand" class="form-control" placeholder="Example: Samsung" />
             <span asp-validation-for="Brand" class="text-danger"></span>
         </div>
     </div>
@@ -52,10 +52,10 @@
     <div class="form-group">
         <div class="col-md-offset-2 col-md-5">
             <input type="submit" class="btn btn-primary" value="Next" />
-            <a class="btn btn-danger"  asp-action="Index">Cancel</a>
+            <a class="btn btn-danger" asp-action="Index">Cancel</a>
         </div>
-       
-        
+
+
     </div>
 
 </form>
