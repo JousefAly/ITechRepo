@@ -2,31 +2,50 @@
 @{
 
 }
-<h1>Add new product Detail to this list</h1>
-<table class="table-responsive table-striped">
-    <thead>
-        <tr>
-            <td>Title</td>
-            <td>Content</td>
-        </tr>
-    </thead>
-    @foreach (var detail in Model.ProductDetails)
-    {
+@if (Model.ProductDetails.Any())
+{
+    <h1>Add new product Detail to this list</h1>
+    <table class="table-responsive table-striped">
+        <thead>
+            <tr>
+                <td>Title</td>
+                <td>Content</td>
+            </tr>
+        </thead>
+        @foreach (var detail in Model.ProductDetails)
+        {
 
-        <tr>
-            <td>@detail.Title</td>
-            <td>@detail.Content</td>
-        </tr>
-    }
-</table>
+            <tr>
+                <td>@detail.Title</td>
+                <td>@detail.Content</td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <h3> Add the first Product Detail</h3>
+}
 
-<form class="form-inline">
-    <label class="sr-only" asp-for="@Model.Title"></label>
-    <input class="form-control mb-2 mr-sm-2" asp-for="@Model.Title" placeholder="Detail Subject">
-
-    <label class="sr-only" asp-for="@Model.Content"></label>
-    <textarea class="form-control" asp-for="@Model.Content" rows="3"></textarea>
-
-
-    <button type="submit" class="btn btn-primary">Submit</button>
+<form>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Title" class="col-md-2 control-label"></label>
+        <div class="col-md-5">
+            <input asp-for="Title" class="form-control" placeholder="Detail Subject" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="Content" class="col-md-2 control-label"></label>
+        <div class="col-md-5">
+            <textarea class="form-control" asp-for="Content" rows="3" placeholder="Detail Content..."></textarea>
+            <span asp-validation-for="Content" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-5">
+            <input type="submit" class="btn btn-primary" value="Add" />            
+        </div>
+    </div>
 </form>
