@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,7 @@ namespace ITech.Data.Entites
        
 
         public string Brand { get; set; }
+        [Display(Name = "Short Description")]
         public string ShortDescription { get; set; }
         public decimal Price
         {
