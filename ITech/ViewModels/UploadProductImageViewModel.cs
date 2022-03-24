@@ -19,7 +19,7 @@ namespace ITech.ViewModels
         [Required]
         [DisplayName("Upload File")]
         public IFormFile ImageFile { get; set; }
-        public Product Product { get; set; }
+        public int ProductId { get; set; }
 
         //[DisplayName("Image Name")]
         //public string ImageName { get; set; }

@@ -2,14 +2,14 @@
 
 @{
 }
-<h1>Upload Image to product:@Model.Product.Title</h1>
+<h1>Upload Image to product:@Model.ProductId</h1>
 
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="UploadProductImage" enctype="multipart/form-data">
             <div asp-validation-summary="All" class="text-danger"></div>
-            <input asp-for="Product" value="@Model.Product" type="hidden" />
+            <input asp-for="ProductId" value="@Model.ProductId" type="hidden" />
             <div class="form-group">
                 <label asp-for="ImageNumber" class="control-label"></label>
                 <input asp-for="ImageNumber" class="form-control" />

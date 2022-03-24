@@ -71,7 +71,7 @@ namespace ITech.Controllers
         {
             var model = new UploadProductImageViewModel
             {
-                Product = _productRepository.GetById(productId)
+                ProductId = productId
             };
             return View(model);
         }
@@ -85,20 +85,21 @@ namespace ITech.Controllers
             string fileName = Path.GetFileNameWithoutExtension(imageFile.FileName);
             string extension = Path.GetExtension(imageFile.FileName);
             string imageUniqueName = fileName + DateTime.Now.ToString("yymmssfff") + "-" 
-                                     + model.Product.Id.ToString() + extension;
+                                     + model.ProductId.ToString() + extension;
             var path = Path.Combine(wwwrootPath + "/img/products/", imageUniqueName);
             using (var fileStream = new FileStream(path, FileMode.Create))
             {
                 await imageFile.CopyToAsync(fileStream);
             }
             //now image uploaded connect it with product in db
+            var product = _productRepository.GetById(model.ProductId);
             var productImage = new ProductImage
             {
                 ImageNumber = model.ImageNumber,
                 ImageUrl = "img/products/" + imageUniqueName,
-                Product = model.Product
+                Product = product
             };
-            var addedImage = _productRepository.AddProductImage(model.Product, productImage);
+            var addedImage = _productRepository.AddProductImage(product , productImage);
             if (addedImage == null)
                 return BadRequest("Image was not added to Database.");
 
