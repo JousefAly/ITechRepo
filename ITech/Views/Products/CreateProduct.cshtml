@@ -2,10 +2,24 @@
 @{
     if (User.IsInRole("Seller"))
         Layout = "_SellerLayout";
+
+    List<Category> categories = ViewBag.Categories;
 }
 
 <form asp-controller="Products" asp-action="CreateProduct" method="post">
     <h4>Enter Product Data</h4>
+    <div class="form-group">
+        <label asp-for="Category" class="col-md-2 control-label"></label>
+        <div class="col-md-5">
+            <select class="form-control">
+                @foreach (var category in categories)
+                {
+                    <option value="@category">@category.Name</option>
+                }
+            </select>
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+    </div>
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
         <label asp-for="Title" class="col-md-2 control-label"></label>

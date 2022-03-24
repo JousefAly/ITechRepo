@@ -14,14 +14,17 @@ namespace ITech.Controllers
     {
         private readonly IProductRepository _productRepository;
         private readonly ISellerRepository _sellerRepository;
+        private readonly ICategoryRepository _categoryRepository;
         private readonly UserManager<AppUser> _userManager;
 
         public ProductsController(IProductRepository productRepository,
                                   ISellerRepository sellerRepository,
+                                  ICategoryRepository categoryRepository,
                                   UserManager<AppUser> userManager)
         {
             _productRepository = productRepository;
             _sellerRepository = sellerRepository;
+            _categoryRepository = categoryRepository;
             _userManager = userManager;
         }
 
@@ -39,6 +42,7 @@ namespace ITech.Controllers
         }
         public IActionResult CreateProduct()
         {
+            ViewBag.Categories = _categoryRepository.GetAllCategories();
             return View();
         }
         [HttpPost]
@@ -49,7 +53,7 @@ namespace ITech.Controllers
             var createdProduct = _productRepository.AddSellerProduct(seller, product);
             if (createdProduct == null)
                 return BadRequest("Product was not created.");
-            
+
             return RedirectToAction(nameof(CreateProductImages), new { productId =createdProduct.Id });
         }
         public IActionResult CreateProductImages(int productId)
