@@ -61,7 +61,7 @@ namespace ITech.Controllers
             if (createdProduct == null)
                 return BadRequest("Product was not created.");
 
-            return RedirectToAction(nameof(CreateProductImages), new { productId =createdProduct.Id });
+            return RedirectToAction(nameof(CreateProductImages), new { productId = createdProduct.Id });
         }
         public IActionResult CreateProductImages(int productId)
         {
@@ -88,7 +88,7 @@ namespace ITech.Controllers
             string wwwrootPath = _hostEnvironment.WebRootPath;
             string fileName = Path.GetFileNameWithoutExtension(imageFile.FileName);
             string extension = Path.GetExtension(imageFile.FileName);
-            string imageUniqueName = fileName + DateTime.Now.ToString("yymmssfff") + "-" 
+            string imageUniqueName = fileName + DateTime.Now.ToString("yymmssfff") + "-"
                                      + model.ProductId.ToString() + extension;
             var path = Path.Combine(wwwrootPath + "/img/products/", imageUniqueName);
             using (var fileStream = new FileStream(path, FileMode.Create))
@@ -103,18 +103,17 @@ namespace ITech.Controllers
                 ImageUrl = "img/products/" + imageUniqueName,
                 Product = product
             };
-            var addedImage = _productRepository.AddProductImage(product , productImage);
+            var addedImage = _productRepository.AddProductImage(product, productImage);
             if (addedImage == null)
                 return BadRequest("Image was not added to Database.");
 
-            return RedirectToAction(nameof(UploadProductImage), new { productId = model.ProductId});
+            return RedirectToAction(nameof(UploadProductImage), new { productId = model.ProductId });
         }
-
         public IActionResult CancelUploadImage(int productId)
         {
-            if(!_productRepository.HasMainImage(productId))
+            if (!_productRepository.HasMainImage(productId))
             {
-                if(_productRepository.Delete(productId))
+                if (_productRepository.Delete(productId))
                 {
                     TempData["successMessage"] = "Product Deleted Successfully";
                     return View();
@@ -122,9 +121,21 @@ namespace ITech.Controllers
                 TempData["errorMessage"] = "Product was not Deleted. Database Error.";
                 return View();
             }
-            
+
             return View();
-            
+
         }
+        public IActionResult AddProductDetail(int productId)
+        {
+            var model = new AddProductDetailViewModel
+            {
+                ProductId = productId,
+                Title = string.Empty,
+                Content = string.Empty,
+                ProductDetails = _productRepository.GetById(productId).ProductDetails
+            };
+            return View(model);
+        }
+
     }
 }

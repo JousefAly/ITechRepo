@@ -1,0 +1,32 @@
+﻿@model AddProductDetailViewModel
+@{
+
+}
+<h1>Add new product Detail to this list</h1>
+<table class="table-responsive table-striped">
+    <thead>
+        <tr>
+            <td>Title</td>
+            <td>Content</td>
+        </tr>
+    </thead>
+    @foreach (var detail in Model.ProductDetails)
+    {
+
+        <tr>
+            <td>@detail.Title</td>
+            <td>@detail.Content</td>
+        </tr>
+    }
+</table>
+
+<form class="form-inline">
+    <label class="sr-only" asp-for="@Model.Title"></label>
+    <input class="form-control mb-2 mr-sm-2" asp-for="@Model.Title" placeholder="Detail Subject">
+
+    <label class="sr-only" asp-for="@Model.Content"></label>
+    <textarea class="form-control" asp-for="@Model.Content" rows="3"></textarea>
+
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
