@@ -51,6 +51,13 @@ namespace ITech.Data.Repositories
             return product;
         }
 
+        public bool Delete(int productId)
+        {
+            _context.Products.Remove(_context.Products.Find(productId));
+
+            return _context.SaveChanges() > 0;                
+        }
+
         public List<Product> GetAllProducts()
         {
             return _context.Products

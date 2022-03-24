@@ -109,5 +109,22 @@ namespace ITech.Controllers
 
             return Ok();
         }
+
+        public IActionResult CancelUploadImage(int productId)
+        {
+            if(!_productRepository.HasMainImage(productId))
+            {
+                if(_productRepository.Delete(productId))
+                {
+                    TempData["successMessage"] = "Product Deleted Successfully";
+                    return View();
+                }
+                TempData["errorMessage"] = "Product was not Deleted. Database Error.";
+                return View();
+            }
+            
+            return View();
+            
+        }
     }
 }

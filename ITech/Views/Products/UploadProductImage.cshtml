@@ -35,8 +35,23 @@
                 <span asp-validation-for="ImageFile" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Submti" class="btn btn-primary" />
+                @if (!Model.HasMainImage)
+                {
+                    <input type="submit" value="Add" class="btn btn-primary" />
+                    <a class="btn btn-danger" asp-action="CancelUploadImage" asp-route-productId="@Model.ProductId"
+                       onclick="alert(" Product will be Deleted")">
+                        Cancel
+                    </a>
+                }
+                else
+                {
+                    <input type="submit" value="Add" class="btn btn-primary" />
+                    <a class="btn btn-danger" asp-action="CancelUploadImage" asp-route-productId="@Model.ProductId">Cancel</a>
+
+                }
             </div>
+
+
         </form>
     </div>
 </div>

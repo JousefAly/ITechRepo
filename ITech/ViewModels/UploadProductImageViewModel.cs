@@ -19,7 +19,7 @@ namespace ITech.ViewModels
         public bool HasMainImage { get; set; } 
 
         [Required]
-        [DisplayName("Upload File")]
+        [DisplayName("Upload Image")]
         public IFormFile ImageFile { get; set; }
         public int ProductId { get; set; }
 
