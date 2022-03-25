@@ -5,19 +5,19 @@
     }
     else
     {
-        Layout = "/_Layout";
+        Layout = "/Views/Shared/_Layout";
     }
-    
+
 }
 
 <h2>Manage Product</h2>
 
 <div>
-    
+
     <hr />
     <div class="row">
         <div class="col-md-3">
-            <partial name="_ManageProductNav"/>
+            <partial name="_ManageProductNav" />
         </div>
         <div class="col-md-9">
             @RenderBody()
