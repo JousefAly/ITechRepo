@@ -1,4 +1,5 @@
 ﻿using ITech.Data.Entites;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +43,17 @@ namespace ITech.Data.Repositories
 
             return _context.SaveChanges() > 0 ;
         }
-        
+        public List<Product> GetSellerProducts(Seller seller)
+        {
+            return _context.Products
+                .Include(p => p.ProductDetails)
+                .Include(p => p.ProductImages)
+                .Where(p => p.Seller == seller).ToList();
+        }
+
+        public Seller GetBySellerId(string sellerId)
+        {
+            return _context.Sellers.Find(sellerId);
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using ITech.Data;
 using ITech.Data.Entites;
 using ITech.Data.Repositories;
+using ITech.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -52,6 +53,20 @@ namespace ITech.Controllers
             }
             TempData["errorMessage"] = "Invalid Data";
             return RedirectToAction("CompleteRegister");
+        }
+        public IActionResult ManageProducts(string sellerId)
+        {
+            var model = new ManageSellerProductsViewModel 
+            {
+                SellerId = sellerId,
+                Products = _sellerRepository.GetSellerProducts(_sellerRepository.GetBySellerId(sellerId))
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult ManageProducts()
+        {
+            return View();
         }
     }
 }

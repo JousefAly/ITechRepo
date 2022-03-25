@@ -17,6 +17,7 @@ namespace ITech.Data.Repositories
         List<Product> GetTopSellingProducts(int numberOfTProducts);
         //return Added product
         Product AddSellerProduct(Seller seller, Product product);
+        List<Product> GetSellerProducts(Seller seller);
         ProductImage AddProductImage(Product product, ProductImage image);
         bool HasMainImage(int productId);
         bool Delete(int productId);

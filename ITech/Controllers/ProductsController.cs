@@ -155,6 +155,20 @@ namespace ITech.Controllers
             TempData["isDetailAdded"] = true;
             return RedirectToAction(nameof(AddProductDetail), new { productId = model.ProductId });
         }
+        public IActionResult ManageProducts()
+        {
+            var model = new ManageProductsViewModel();
+            if(HttpContext.User.IsInRole("Admin"))
+            {
+
+            }
+            else if(HttpContext.User.IsInRole("Seller"))
+            {
+                var
+            }
+            
+            return View();
+        }
 
     }
 }

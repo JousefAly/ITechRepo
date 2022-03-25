@@ -105,5 +105,12 @@ namespace ITech.Data.Repositories
         {
             return _context.SaveChanges();
         }
+        public List<Product> GetSellerProducts(Seller seller)
+        {
+            return _context.Products
+                .Include(p => p.ProductDetails)
+                .Include(p => p.ProductImages)
+                .Where(p => p.Seller == seller).ToList();
+        }
     }
 }
