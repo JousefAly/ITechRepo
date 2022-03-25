@@ -15,13 +15,16 @@ namespace ITech.Controllers
     public class SellerController : Controller
     {
         private readonly ISellerRepository _sellerRepository;
+        private readonly IProductRepository _productRepository;
         private readonly UserManager<AppUser> _userManager;
 
         public SellerController(ISellerRepository sellerRepository,
+                                IProductRepository productRepository,
                                 UserManager<AppUser> userManager)
 
         {
             _sellerRepository = sellerRepository;
+            _productRepository = productRepository;
             _userManager = userManager;
         }
         public IActionResult Index()
@@ -64,6 +67,7 @@ namespace ITech.Controllers
             };
             return View(model);
         }
+        
         
         
     }

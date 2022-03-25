@@ -156,7 +156,11 @@ namespace ITech.Controllers
             TempData["isDetailAdded"] = true;
             return RedirectToAction(nameof(AddProductDetail), new { productId = model.ProductId });
         }
-        
+        public IActionResult Edit(int productId)
+        {
+            return View(_productRepository.GetById(productId));
+        }
+
 
     }
 }
