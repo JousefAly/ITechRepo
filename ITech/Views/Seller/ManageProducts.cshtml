@@ -3,8 +3,12 @@
     ViewData["Title"] = "Manage Products";
 }
 <h1>Manage Products</h1>
+<div class="container">
+    <div class="row">
+        @foreach (var p in Model.Products)
+        {
+        <partial name="_ProductEditCard" model="p" />
+        }
+    </div>
 
-@foreach (var p in Model.Products)
-            {
-                <partial name="_ProductCard" model="p"/>
-            }
+</div>
