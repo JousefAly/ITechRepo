@@ -1,12 +1,10 @@
 ﻿@{
-    if (ViewData.TryGetValue("ParentLayout", out var parentLayout))
-    {
-        Layout = (string)parentLayout;
-    }
+    if (User.IsInRole("Admin"))
+        Layout = "/Views/Shared/_AdminLayout.cshtml";
+    else if (User.IsInRole("Seller"))
+        Layout = "/Views/Shared/_SellerLayout.cshtml";
     else
-    {
-        Layout = "/Views/Shared/_Layout";
-    }
+        Layout = "/Views/Shared/_Layout.cshtml";
 
 }
 

@@ -17,11 +17,7 @@ namespace ITech.Controllers
         }
         public IActionResult Index(int productId)
         {
-            if (HttpContext.User.IsInRole("Admin"))
-                ViewData["ParentLayout"] = "_AdminLayout";
-            else if (HttpContext.User.IsInRole("Seller"))
-                ViewData["ParentLayout"] = "_SellerLayout";
-            ViewData["ProductId"] = productId;
+            ViewData["productId"] = productId;
             return View(_productRepository.GetById(productId));
         }
         public IActionResult EditMainInformation(int productId)
