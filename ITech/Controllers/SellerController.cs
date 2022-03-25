@@ -64,11 +64,7 @@ namespace ITech.Controllers
             };
             return View(model);
         }
-        [HttpPost]
-        public IActionResult ManageProducts()
-        {
-            return View();
-        }
+        
         
     }
 }
