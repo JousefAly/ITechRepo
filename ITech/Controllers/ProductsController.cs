@@ -156,15 +156,7 @@ namespace ITech.Controllers
             TempData["isDetailAdded"] = true;
             return RedirectToAction(nameof(AddProductDetail), new { productId = model.ProductId });
         }
-        public IActionResult Edit(int productId)
-        {
-            if (HttpContext.User.IsInRole("Admin"))
-                ViewData["ParentLayout"] = "_AdminLayout";
-            else if (HttpContext.User.IsInRole("Seller"))
-                ViewData["ParentLayout"] = "_SellerLayout";
-            ViewData["ProductId"] = productId;
-            return View(_productRepository.GetById(productId));
-        }
+       
 
 
 
