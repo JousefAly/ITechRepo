@@ -55,6 +55,7 @@ namespace ITech.Controllers
         public async Task<IActionResult> CreateProduct(Product product, int categoryId)
         {
             var appUser = await _userManager.GetUserAsync(HttpContext.User);
+
             var seller = _sellerRepository.GetUserSeller(appUser);
             product.Category = _categoryRepository.GetCategoryById(categoryId);
             var createdProduct = _productRepository.AddSellerProduct(seller, product);
@@ -155,20 +156,7 @@ namespace ITech.Controllers
             TempData["isDetailAdded"] = true;
             return RedirectToAction(nameof(AddProductDetail), new { productId = model.ProductId });
         }
-        public IActionResult ManageProducts()
-        {
-            var model = new ManageProductsViewModel();
-            if(HttpContext.User.IsInRole("Admin"))
-            {
-
-            }
-            else if(HttpContext.User.IsInRole("Seller"))
-            {
-                var
-            }
-            
-            return View();
-        }
+        
 
     }
 }
