@@ -1,9 +1,33 @@
 ﻿@model AddProductDetailViewModel
 @{
+    var wasAddingDetail = false;
+    var isDetailAdded = false;
+    if (TempData["isDetailAdded"] != null)
+    {
+        wasAddingDetail = true;
+        isDetailAdded = (bool)TempData["isDetailAdded"];
 
+    }
 }
 @if (Model.ProductDetails.Any())
 {
+
+
+    @if (wasAddingDetail)
+    {
+        @if (isDetailAdded)
+        {
+            <div class="alert-success">
+                <p>Detail was added successfully!</p>
+            </div>
+        }
+        else
+        {
+            <div class="alert-danger">
+                <p>Detail was not added!</p>
+            </div>
+        }
+    }
     <h1>Add new product Detail to this list</h1>
     <table class="table-responsive table-striped">
         <thead>
@@ -30,7 +54,7 @@ else
 <form asp-action="AddProductDetail" method="post">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div hidden>
-        <input asp-for="ProductId" value="@Model.ProductId"/>
+        <input asp-for="ProductId" value="@Model.ProductId" />
     </div>
     <div class="form-group">
         <label asp-for="Title" class="col-md-2 control-label"></label>
@@ -48,7 +72,7 @@ else
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-5">
-            <input type="submit" class="btn btn-primary" value="Add" />            
+            <input type="submit" class="btn btn-primary" value="Add" />
         </div>
     </div>
 </form>

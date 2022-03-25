@@ -145,8 +145,14 @@ namespace ITech.Controllers
                 Title = model.Title,
                 Content = model.Content,
             };
-            _productRepository.AddProductDetail(product, detail);
-            return View();
+           var addedDetail = _productRepository.AddProductDetail(product, detail);
+            if (addedDetail == null)
+            {
+                TempData["isDetailAdded"] = false;
+                return RedirectToAction(nameof(AddProductDetail));
+            }
+            TempData["isDetailAdded"] = true;
+            return RedirectToAction(nameof(AddProductDetail));
         }
 
     }
