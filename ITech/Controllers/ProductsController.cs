@@ -140,6 +140,7 @@ namespace ITech.Controllers
         public IActionResult AddProductDetail(AddProductDetailViewModel model)
         {
             var product = _productRepository.GetById(model.ProductId);
+            model.Content = model.Content.Replace("\n", " ").Replace("\r", " ");
             var detail = new ProductDetail
             {
                 Title = model.Title,
@@ -149,10 +150,10 @@ namespace ITech.Controllers
             if (addedDetail == null)
             {
                 TempData["isDetailAdded"] = false;
-                return RedirectToAction(nameof(AddProductDetail));
+                return RedirectToAction(nameof(AddProductDetail), new { productId = model.ProductId});
             }
             TempData["isDetailAdded"] = true;
-            return RedirectToAction(nameof(AddProductDetail));
+            return RedirectToAction(nameof(AddProductDetail), new { productId = model.ProductId });
         }
 
     }
