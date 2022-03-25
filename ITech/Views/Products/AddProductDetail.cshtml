@@ -32,18 +32,20 @@
     <table class="table-responsive table-striped mt-1">
         <thead class="thead-dark">
             <tr>
-                <td>Title</td>
-                <td>Content</td>
+                <th class="col-3 mr-2" scope="col">Title</th>
+                <th class="col-9"scope="col">Content</th>
             </tr>
         </thead>
-        @foreach (var detail in Model.ProductDetails)
-        {
+        <tbody>
+            @foreach (var detail in Model.ProductDetails)
+            {
 
-            <tr>
-                <td>@detail.Title</td>
-                <td>@detail.Content</td>
-            </tr>
-        }
+                <tr>
+                    <th class="col-3 mr-2" scope="row">@detail.Title</th>
+                    <td class="col-9">@detail.Content</td>
+                </tr>
+            }
+        </tbody>
     </table>
 }
 else
