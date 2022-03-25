@@ -54,12 +54,13 @@ namespace ITech.Controllers
             TempData["errorMessage"] = "Invalid Data";
             return RedirectToAction("CompleteRegister");
         }
-        public IActionResult ManageProducts(string sellerId)
+        public async Task<IActionResult> ManageProducts()
         {
+            var seller = _sellerRepository.GetUserSeller(await _userManager.GetUserAsync(HttpContext.User));
             var model = new ManageSellerProductsViewModel 
             {
-                SellerId = sellerId,
-                Products = _sellerRepository.GetSellerProducts(_sellerRepository.GetBySellerId(sellerId))
+                SellerId = seller.Id,
+                Products = _sellerRepository.GetSellerProducts(seller)
             };
             return View(model);
         }
