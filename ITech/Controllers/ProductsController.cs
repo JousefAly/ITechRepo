@@ -162,6 +162,7 @@ namespace ITech.Controllers
                 ViewData["ParentLayout"] = "_AdminLayout";
             else if (HttpContext.User.IsInRole("Seller"))
                 ViewData["ParentLayout"] = "_SellerLayout";
+            ViewData["ProductId"] = productId;
             return View(_productRepository.GetById(productId));
         }
 

@@ -1,6 +1,26 @@
-﻿<ul class="nav nav-pills flex-column">
-    <li class="nav-item"><a class="nav-link" id="" asp-page="">Profile</a></li>
-    <li class="nav-item"><a class="nav-link" id="email" asp-page="">Email</a></li>
-    <li class="nav-item"><a class="nav-link" id="change-password" asp-page="">Password</a></li>
-    
+﻿@{
+    int pId = 0;
+    if (ViewData.TryGetValue("ProductId", out var productId))
+    {
+        pId = (int)productId;
+    }
+}
+
+<ul class="nav nav-pills flex-column">
+    <li class="nav-item">
+        <a class="nav-link"
+           asp-controller="EditProduct" asp-action="EditMainInformation"
+           asp-route-productId="@pId">Edit Main Information</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link"
+           asp-controller="EditProduct" asp-action="EditDetails"
+           asp-route-productId="@pId">Edit Details</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link"
+           asp-controller="EditProduct" asp-action="EditImages"
+           asp-route-productId="@pId">Edit Images</a>
+    </li>
+
 </ul>
