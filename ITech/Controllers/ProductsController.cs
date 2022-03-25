@@ -136,6 +136,12 @@ namespace ITech.Controllers
             };
             return View(model);
         }
+        [HttpPost]
+        public IActionResult AddProductDetail(AddProductDetailViewModel model)
+        {
+
+            return View();
+        }
 
     }
 }

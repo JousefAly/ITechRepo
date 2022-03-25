@@ -27,8 +27,11 @@ else
     <h3> Add the first Product Detail</h3>
 }
 
-<form>
+<form asp-action="AddProductDetail" method="post">
     <div asp-validation-summary="All" class="text-danger"></div>
+    <div hidden>
+        <input asp-for="ProductId" value="@Model.ProductId"/>
+    </div>
     <div class="form-group">
         <label asp-for="Title" class="col-md-2 control-label"></label>
         <div class="col-md-5">
