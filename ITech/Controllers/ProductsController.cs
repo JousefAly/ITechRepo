@@ -147,20 +147,24 @@ namespace ITech.Controllers
                 Title = model.Title,
                 Content = model.Content,
             };
-           var addedDetail = _productRepository.AddProductDetail(product, detail);
+            var addedDetail = _productRepository.AddProductDetail(product, detail);
             if (addedDetail == null)
             {
                 TempData["isDetailAdded"] = false;
-                return RedirectToAction(nameof(AddProductDetail), new { productId = model.ProductId});
+                return RedirectToAction(nameof(AddProductDetail), new { productId = model.ProductId });
             }
             TempData["isDetailAdded"] = true;
             return RedirectToAction(nameof(AddProductDetail), new { productId = model.ProductId });
         }
         public IActionResult Edit(int productId)
         {
+            if (HttpContext.User.IsInRole("Admin"))
+                ViewData["ParentLayout"] = "_AdminLayout";
+            else if (HttpContext.User.IsInRole("Seller"))
+                ViewData["ParentLayout"] = "_SellerLayout";
             return View(_productRepository.GetById(productId));
         }
-        
+
 
 
     }
