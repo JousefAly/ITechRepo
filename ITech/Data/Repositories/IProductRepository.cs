@@ -9,7 +9,7 @@ namespace ITech.Data.Repositories
         void Add(IEnumerable<Product> products);
         List<Product> GetAllProducts();
         int SaveChanges();
-        void AddProductDetail(Product prodcut, ProductDetail detail);
+        ProductDetail AddProductDetail(Product prodcut, ProductDetail detail);
         Product GetProductByITSIN(string iTSIN);
         Product GetById(int id);
         //return top products

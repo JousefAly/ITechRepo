@@ -139,7 +139,13 @@ namespace ITech.Controllers
         [HttpPost]
         public IActionResult AddProductDetail(AddProductDetailViewModel model)
         {
-
+            var product = _productRepository.GetById(model.ProductId);
+            var detail = new ProductDetail
+            {
+                Title = model.Title,
+                Content = model.Content,
+            };
+            _productRepository.AddProductDetail(product, detail);
             return View();
         }
 

@@ -28,10 +28,12 @@ namespace ITech.Data.Repositories
         }
 
 
-        public void AddProductDetail(Product product, ProductDetail detail)
+        public ProductDetail AddProductDetail(Product product, ProductDetail detail)
         {
-            detail.ITSIN = product.ITSIN;
-            detail.Product = product;
+
+            product.ProductDetails.Add(detail);
+
+            return _context.SaveChanges() > 0 ? detail : null;
 
         }
 
