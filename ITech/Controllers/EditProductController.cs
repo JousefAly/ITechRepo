@@ -56,17 +56,26 @@ namespace ITech.Controllers
             var model = new EditProductDetailsViewModel
             {
                 ProductDetails = details,
-                ProductId = productId,                                
+                ProductId = productId,
+                
             };
             if (detailId != 0)
                 model.DetailToEdit = details.FirstOrDefault(d => d.Id == detailId);
+            if (TempData["StatusMessage"] != null)
+                model.StatusMessage = TempData["StatusMessage"] as string;
             return View(model);
         }
         [HttpPost]
-        public IActionResult EditDetail(ProductDetail detail)
+        public IActionResult EditDetail(EditProductDetailsViewModel model)
         {
-
-            return RedirectToAction(nameof(EditDetails), new { productId = detail.Product.Id });
+            var editedDetail = model.DetailToEdit;
+            editedDetail.Content = editedDetail.Content.Replace("\r", " ").Replace("\n", " ");
+            editedDetail.Product = _productRepository.GetById(model.ProductId);
+            _context.Entry(editedDetail).State = EntityState.Detached;
+            if (_productRepository.UpdateProductDetail(editedDetail) == null)
+                TempData["StatusMessage"] = "Error : Detail was not updated";
+            TempData["StatusMessage"] = "Detail updated successfully!";
+            return RedirectToAction(nameof(EditDetails), new { productId = model.ProductId });
         }
 
 

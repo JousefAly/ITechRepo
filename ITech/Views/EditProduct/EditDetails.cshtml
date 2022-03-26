@@ -37,29 +37,30 @@
     @if (Model.DetailToEdit != null)
     {
         <div>
-            <form asp-action="EditDetail" method="post">
+            <form asp-action="EditDetail"  method="post">
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div hidden>
                     <input asp-for="ProductId" value="@Model.ProductId" />
+                    <input asp-for="DetailToEdit.Id" value="@Model.DetailToEdit.Id" />
                 </div>
                 <div class="form-group">
                     <label asp-for="DetailToEdit.Title" class="col-md-2 control-label"></label>
                     <div class="col-md-5">
-                        <input asp-for="DetailToEdit.Title" class="form-control" placeholder="Detail Subject" />
+                        <input asp-for="DetailToEdit.Title" class="form-control"  />
                         <span asp-validation-for="DetailToEdit.Title" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label asp-for="DetailToEdit.Content" class="col-md-2 control-label"></label>
                     <div class="col-md-5">
-                        <textarea class="form-control" asp-for="DetailToEdit.Content" rows="3" placeholder="Detail Content..."></textarea>
+                        <textarea class="form-control" asp-for="DetailToEdit.Content" rows="3" ></textarea>
                         <span asp-validation-for="DetailToEdit.Content" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-5">
                         <input type="submit" class="btn btn-primary" value="Edit" />
-                        <a class="btn btn-danger" asp-action="EditDetails">Cancel</a>
+                        <a class="btn btn-danger" asp-action="EditDetails" asp-route-productId="@Model.ProductId">Cancel</a>
                     </div>
                 </div>
             </form>

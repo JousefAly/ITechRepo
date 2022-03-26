@@ -119,5 +119,10 @@ namespace ITech.Data.Repositories
             _context.SaveChanges();
             return product;
         }
+        public ProductDetail UpdateProductDetail(ProductDetail productDetail)
+        {
+            _context.Update(productDetail);
+            return _context.SaveChanges() > 0 ? productDetail : null;
+        }
     }
 }
