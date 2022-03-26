@@ -78,7 +78,13 @@ namespace ITech.Controllers
             return RedirectToAction(nameof(EditDetails), new { productId = model.ProductId });
         }
 
-
+        public IActionResult DeleteDetail(int detailId, int productId)
+        {
+            if (!_productRepository.DeleteProductDetail(detailId))
+                TempData["StatusMessage"] = "Error : Product detail was not Deleted!";
+            TempData["StatusMessage"] = "Detail was deleted Successfully!";
+            return RedirectToAction(nameof(EditDetails), new { productId });
+        }
 
 
 

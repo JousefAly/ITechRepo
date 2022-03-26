@@ -124,5 +124,12 @@ namespace ITech.Data.Repositories
             _context.Update(productDetail);
             return _context.SaveChanges() > 0 ? productDetail : null;
         }
+
+        public bool DeleteProductDetail(int detailId)
+        {
+            
+            _context.Remove(_context.ProductDetails.Find(detailId));
+            return _context.SaveChanges() > 0;
+        }
     }
 }

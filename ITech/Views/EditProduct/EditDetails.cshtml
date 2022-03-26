@@ -26,7 +26,7 @@
                     <td class="col-8">@detail.Content</td>
                     <td class="col-1">
                         <a asp-action="EditDetails" asp-route-productId="@Model.ProductId" asp-route-detailId="@detail.Id"><i class="fas fa-edit" title="Edit"></i></a>
-                        <a asp-action="DeleteDetail"><i class="fas fa-trash" title="Delete"></i></a>
+                        <a asp-action="DeleteDetail" asp-route-productId="@Model.ProductId" asp-route-detailId="@detail.Id"><i class="fas fa-trash" title="Delete"></i></a>
                     </td>
                 </tr>
             }

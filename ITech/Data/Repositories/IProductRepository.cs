@@ -23,6 +23,7 @@ namespace ITech.Data.Repositories
         bool Delete(int productId);
         Product Update(Product product);
         ProductDetail UpdateProductDetail(ProductDetail productDetail);
+        bool DeleteProductDetail(int detailId);
 
 
     }
