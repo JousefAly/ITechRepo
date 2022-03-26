@@ -112,5 +112,12 @@ namespace ITech.Data.Repositories
                 .Include(p => p.ProductImages)
                 .Where(p => p.Seller == seller).ToList();
         }
+
+        public Product Update(Product product)
+        {
+            _context.Update(product);
+            _context.SaveChanges();
+            return product;
+        }
     }
 }

@@ -33,7 +33,9 @@ namespace ITech.Controllers
         [HttpPost]
         public IActionResult EditMainInformation(Product product, int categoryId)
         {
-
+            product.LaunchTime = _productRepository.GetById(product.Id).LaunchTime;
+            product.Category = _categoryRepository.GetCategoryById(categoryId);
+            _productRepository.Update(product);
             return View();
         }
         public IActionResult EditDetails(int productId)

@@ -21,6 +21,7 @@ namespace ITech.Data.Repositories
         ProductImage AddProductImage(Product product, ProductImage image);
         bool HasMainImage(int productId);
         bool Delete(int productId);
+        Product Update(Product product);
         
     }
 }
