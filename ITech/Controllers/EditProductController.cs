@@ -1,4 +1,5 @@
 ﻿using ITech.Data;
+using ITech.ViewModels;
 using ITech.Data.Entites;
 using ITech.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -47,11 +48,33 @@ namespace ITech.Controllers
             _productRepository.Update(product);
             return RedirectToAction(nameof(EditMainInformation), new { productId = product.Id});
         }
-        public IActionResult EditDetails(int productId)
+        public IActionResult EditDetails(int productId, int detailId = 0)
         {
             ViewData["productId"] = productId;
-            return View();
+            var details = _productRepository.GetById(productId).ProductDetails;
+
+            var model = new EditProductDetailsViewModel
+            {
+                ProductDetails = details,
+                ProductId = productId,                                
+            };
+            if (detailId != 0)
+                model.DetailToEdit = details.FirstOrDefault(d => d.Id == detailId);
+            return View(model);
         }
+        [HttpPost]
+        public IActionResult EditDetail(ProductDetail detail)
+        {
+
+            return RedirectToAction(nameof(EditDetails), new { productId = detail.Product.Id });
+        }
+
+
+
+
+
+
+
         public IActionResult EditImages(int productId)
         {
             ViewData["productId"] = productId;
