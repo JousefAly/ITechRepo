@@ -26,6 +26,7 @@ namespace ITech.Controllers
         }
         public IActionResult EditMainInformation(int productId)
         {
+            ViewData["productId"] = productId;
             ViewBag.Categories = _categoryRepository.GetAllCategories();
             return View(_productRepository.GetById(productId));
         }
@@ -37,10 +38,12 @@ namespace ITech.Controllers
         }
         public IActionResult EditDetails(int productId)
         {
+            ViewData["productId"] = productId;
             return View();
         }
         public IActionResult EditImages(int productId)
         {
+            ViewData["productId"] = productId;
             return View();
         }
     }
