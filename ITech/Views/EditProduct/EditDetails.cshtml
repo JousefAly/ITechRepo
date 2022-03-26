@@ -73,7 +73,7 @@
 else
 {
     <h3>This product Does not have Detilas yet!</h3>
-    <a class="btn btn-success">Add</a>
+    <a class="btn btn-success" asp-controller="Products" asp-action="AddProductDetail" asp-route-productId="@Model.ProductId">Add</a>
 }
 
 
