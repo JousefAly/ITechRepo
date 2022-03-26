@@ -22,15 +22,15 @@ namespace ITech.Controllers
         public IActionResult Index(int productId)
         {
             ViewData["productId"] = productId;
-            ViewBag.Categories = _categoryRepository.GetAllCategories();
             return View(_productRepository.GetById(productId));
         }
         public IActionResult EditMainInformation(int productId)
         {
+            ViewBag.Categories = _categoryRepository.GetAllCategories();
             return View();
         }
         [HttpPost]
-        public IActionResult EditMainInformation(Product product)
+        public IActionResult EditMainInformation(Product product, int categoryId)
         {
 
             return View();
