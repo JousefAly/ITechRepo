@@ -27,7 +27,7 @@ namespace ITech.Controllers
         public IActionResult EditMainInformation(int productId)
         {
             ViewBag.Categories = _categoryRepository.GetAllCategories();
-            return View();
+            return View(_productRepository.GetById(productId));
         }
         [HttpPost]
         public IActionResult EditMainInformation(Product product, int categoryId)
