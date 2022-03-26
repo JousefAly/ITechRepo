@@ -46,7 +46,7 @@ namespace ITech.Controllers
             product.LaunchTime = oldProduct.LaunchTime;
             product.Category = _categoryRepository.GetCategoryById(categoryId);
             _productRepository.Update(product);
-            return RedirectToAction(nameof(EditMainInformation), new { productId = product.Id});
+            return RedirectToAction(nameof(EditMainInformation), new { productId = product.Id });
         }
         public IActionResult EditDetails(int productId, int detailId = 0)
         {
@@ -57,7 +57,7 @@ namespace ITech.Controllers
             {
                 ProductDetails = details,
                 ProductId = productId,
-                
+
             };
             if (detailId != 0)
                 model.DetailToEdit = details.FirstOrDefault(d => d.Id == detailId);
@@ -68,11 +68,11 @@ namespace ITech.Controllers
         [HttpPost]
         public IActionResult EditDetail(EditProductDetailsViewModel model)
         {
-            var editedDetail = model.DetailToEdit;
-            editedDetail.Content = editedDetail.Content.Replace("\r", " ").Replace("\n", " ");
-            editedDetail.Product = _productRepository.GetById(model.ProductId);
-            _context.Entry(editedDetail).State = EntityState.Detached;
-            if (_productRepository.UpdateProductDetail(editedDetail) == null)
+            
+            model.DetailToEdit.Content = model.DetailToEdit.Content.Replace("\r", " ").Replace("\n", " ");
+            //add product relation without returning product to avoid tracking same entity twice by db.
+                     
+            if (_productRepository.UpdateProductDetail(model.DetailToEdit) == null)
                 TempData["StatusMessage"] = "Error : Detail was not updated";
             TempData["StatusMessage"] = "Detail updated successfully!";
             return RedirectToAction(nameof(EditDetails), new { productId = model.ProductId });
