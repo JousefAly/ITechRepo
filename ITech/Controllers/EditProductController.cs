@@ -1,6 +1,8 @@
-﻿using ITech.Data.Entites;
+﻿using ITech.Data;
+using ITech.Data.Entites;
 using ITech.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +14,15 @@ namespace ITech.Controllers
     {
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly ApplicationDbContext _context;
 
         public EditProductController(IProductRepository productRepository,
-                                     ICategoryRepository categoryRepository)
+                                     ICategoryRepository categoryRepository,
+                                     ApplicationDbContext context)
         {
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
+            _context = context;
         }
         public IActionResult Index(int productId)
         {
@@ -33,10 +38,14 @@ namespace ITech.Controllers
         [HttpPost]
         public IActionResult EditMainInformation(Product product, int categoryId)
         {
-            product.LaunchTime = _productRepository.GetById(product.Id).LaunchTime;
+            //make sure to not track the old product
+            var oldProduct = _productRepository.GetById(product.Id);
+            _context.Entry(oldProduct).State = EntityState.Detached;
+
+            product.LaunchTime = oldProduct.LaunchTime;
             product.Category = _categoryRepository.GetCategoryById(categoryId);
             _productRepository.Update(product);
-            return View();
+            return RedirectToAction(nameof(EditMainInformation), new { productId = product.Id});
         }
         public IActionResult EditDetails(int productId)
         {

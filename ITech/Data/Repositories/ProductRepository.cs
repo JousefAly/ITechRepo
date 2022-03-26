@@ -114,7 +114,7 @@ namespace ITech.Data.Repositories
         }
 
         public Product Update(Product product)
-        {
+        {            
             _context.Update(product);
             _context.SaveChanges();
             return product;
