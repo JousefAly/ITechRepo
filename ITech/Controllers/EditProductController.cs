@@ -1,4 +1,5 @@
-﻿using ITech.Data.Repositories;
+﻿using ITech.Data.Entites;
+using ITech.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,18 +11,28 @@ namespace ITech.Controllers
     public class EditProductController : Controller
     {
         private readonly IProductRepository _productRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public EditProductController(IProductRepository productRepository)
+        public EditProductController(IProductRepository productRepository,
+                                     ICategoryRepository categoryRepository)
         {
             _productRepository = productRepository;
+            _categoryRepository = categoryRepository;
         }
         public IActionResult Index(int productId)
         {
             ViewData["productId"] = productId;
+            ViewBag.Categories = _categoryRepository.GetAllCategories();
             return View(_productRepository.GetById(productId));
         }
         public IActionResult EditMainInformation(int productId)
         {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult EditMainInformation(Product product)
+        {
+
             return View();
         }
         public IActionResult EditDetails(int productId)
