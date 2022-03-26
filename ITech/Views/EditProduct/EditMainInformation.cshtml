@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "EditMainInformation";
     var categories = ViewBag.Categories;
-    var categoryId = Model.Category.Id;
+    var categoryId = Model.Category != null ? Model.Category.Id : 0;
 
 }
 
