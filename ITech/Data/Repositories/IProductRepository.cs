@@ -1,5 +1,7 @@
 ﻿using ITech.Data.Entites;
+using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ITech.Data.Repositories
 {
@@ -24,6 +26,9 @@ namespace ITech.Data.Repositories
         Product Update(Product product);
         ProductDetail UpdateProductDetail(ProductDetail productDetail);
         bool DeleteProductDetail(int detailId);
+        //upload image to server files then connect it with product in db
+        //return created image
+        public Task<ProductImage> AddProductImage(IFormFile imageFile, int imageNumber, int productId);
 
 
     }

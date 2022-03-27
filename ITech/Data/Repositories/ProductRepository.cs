@@ -1,7 +1,11 @@
 ﻿using ITech.Data.Entites;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,10 +15,13 @@ namespace ITech.Data.Repositories
     public class ProductRepository : IProductRepository
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public ProductRepository(ApplicationDbContext context)
+        public ProductRepository(ApplicationDbContext context,
+                                 IWebHostEnvironment hostEnvironment)
         {
             _context = context;
+            _hostEnvironment = hostEnvironment;
         }
         public void Add(Product product)
         {
@@ -57,7 +64,7 @@ namespace ITech.Data.Repositories
         {
             _context.Products.Remove(_context.Products.Find(productId));
 
-            return _context.SaveChanges() > 0;                
+            return _context.SaveChanges() > 0;
         }
 
         public List<Product> GetAllProducts()
@@ -94,13 +101,13 @@ namespace ITech.Data.Repositories
 
         public bool HasMainImage(int productId)
         {
-           
+
             return _context.Products.Include(p => p.ProductImages)
                                     .FirstOrDefault(p => p.Id == productId).ProductImages
                                     .FirstOrDefault(pi => pi.ImageNumber == 1) != null;
         }
 
-       
+
         public int SaveChanges()
         {
             return _context.SaveChanges();
@@ -114,7 +121,7 @@ namespace ITech.Data.Repositories
         }
 
         public Product Update(Product product)
-        {            
+        {
             _context.Update(product);
             _context.SaveChanges();
             return product;
@@ -127,9 +134,37 @@ namespace ITech.Data.Repositories
 
         public bool DeleteProductDetail(int detailId)
         {
-            
+
             _context.Remove(_context.ProductDetails.Find(detailId));
             return _context.SaveChanges() > 0;
+        }
+        //upload image to server files then connect it with product in db
+        //return created image
+        public async Task<ProductImage> AddProductImage(IFormFile imageFile, int imageNumber, int productId)
+        {
+
+            string wwwrootPath = _hostEnvironment.WebRootPath;
+            string fileName = Path.GetFileNameWithoutExtension(imageFile.FileName);
+            string extension = Path.GetExtension(imageFile.FileName);
+            string imageUniqueName = fileName + DateTime.Now.ToString("yymmssfff") + "-"
+                                     + productId.ToString() + extension;
+            var path = Path.Combine(wwwrootPath + "/img/products/", imageUniqueName);
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            {
+                await imageFile.CopyToAsync(fileStream);
+            }
+            //now image uploaded connect it with product in db
+           
+            var productImage = new ProductImage
+            {
+                ImageNumber = imageNumber,
+                ImageUrl = "img/products/" + imageUniqueName,
+                ProductId = productId
+            };
+
+
+            _context.Add(productImage);
+            return _context.SaveChanges() > 0 ? productImage : null;
         }
     }
 }
