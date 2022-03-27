@@ -1,0 +1,12 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "ManageProduct";
+    var statusMessage = "";
+    if (TempData["StatusMessage"] != null)
+        statusMessage = TempData["StatusMessage"] as string;
+}
+
+<h1>Manage Product: @Model.Id</h1>
+<partial name="_StatusMessage" model="@statusMessage"/>
+<a asp-controller="EditProduct" asp-action="Index" asp-route-productId="@Model.Id">Edit Product</a>
+

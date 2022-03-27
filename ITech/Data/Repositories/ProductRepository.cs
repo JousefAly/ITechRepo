@@ -168,5 +168,31 @@ namespace ITech.Data.Repositories
             _context.Add(productImage);
             return _context.SaveChanges() > 0 ? productImage : null;
         }
+        public ProductImage GetProductImage(int imageId)
+        {
+
+            return _context.ProductImages.Find(imageId);
+        }
+        public bool DeleteProductImage(int imageId)
+        {
+            //delete from files
+            var image = GetProductImage(imageId);
+            if(image == null)
+            {
+                return false;
+            }
+            string wwwrootPath = _hostEnvironment.WebRootPath;
+            string imageName = image.ImageUrl.Substring(13);
+            string path = Path.Combine( wwwrootPath + "/img/products/", imageName);
+            File.Delete(path);
+            if(File.Exists(path))
+            {
+                return false;
+            }
+            _context.ProductImages.Remove(image);
+            return _context.SaveChanges() > 0;
+        }
+
+        
     }
 }

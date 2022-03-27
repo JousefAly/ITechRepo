@@ -20,6 +20,7 @@ namespace ITech.Data
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Seller> Sellers { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
 
 
         public DbSet<Seed> Seeds { get; set; }

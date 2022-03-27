@@ -40,6 +40,10 @@ namespace ITech.Controllers
 
             return View(_productRepository.GetAllProducts());
         }
+        public IActionResult ManageProduct(int id)
+        {
+            return View(_productRepository.GetById(id));
+        }
         public IActionResult Details(int id)
         {
             var product = _productRepository.GetById(id);
@@ -137,7 +141,14 @@ namespace ITech.Controllers
             TempData["isDetailAdded"] = true;
             return RedirectToAction(nameof(AddProductDetail), new { productId = model.ProductId });
         }
-
+        public IActionResult DeleteProductImage(int imageId)
+        {
+            var productId = _productRepository.GetProductImage(imageId).ProductId;
+            if (!_productRepository.DeleteProductImage(imageId))
+                TempData["StatusMessage"] = " Error: Image was not deleted"; 
+            TempData["StatusMessage"] = "Image Deleted Successfully";
+            return RedirectToAction(nameof(ManageProduct), new { id = productId });
+        }
 
 
 

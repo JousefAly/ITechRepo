@@ -26,9 +26,14 @@ namespace ITech.Data.Repositories
         Product Update(Product product);
         ProductDetail UpdateProductDetail(ProductDetail productDetail);
         bool DeleteProductDetail(int detailId);
+        ProductImage GetProductImage(int imageId);
         //upload image to server files then connect it with product in db
         //return created image
         public Task<ProductImage> AddProductImage(IFormFile imageFile, int imageNumber, int productId);
+
+        //Delete from files and delete record from database
+        //return true if deleted from both database and files
+        public bool DeleteProductImage(int imageId);
 
 
     }
