@@ -139,6 +139,8 @@ namespace ITech.Data.Repositories
             return _context.SaveChanges() > 0;
         }
         //upload image to server files then connect it with product in db
+        //upload image to wwwroot/img/products then connect image with its product
+        //change the image name to unique name with productId attached to it
         //return created image
         public async Task<ProductImage> AddProductImage(IFormFile imageFile, int imageNumber, int productId)
         {

@@ -83,28 +83,9 @@ namespace ITech.Controllers
         [HttpPost]
         public async Task<IActionResult> UploadProductImage(UploadProductImageViewModel model)
         {
-            //upload image to wwwroot/img/products then connect image with its product
-            //change the image name to unique name with productId attached to it
-            var imageFile = model.ImageFile;
-            string wwwrootPath = _hostEnvironment.WebRootPath;
-            string fileName = Path.GetFileNameWithoutExtension(imageFile.FileName);
-            string extension = Path.GetExtension(imageFile.FileName);
-            string imageUniqueName = fileName + DateTime.Now.ToString("yymmssfff") + "-"
-                                     + model.ProductId.ToString() + extension;
-            var path = Path.Combine(wwwrootPath + "/img/products/", imageUniqueName);
-            using (var fileStream = new FileStream(path, FileMode.Create))
-            {
-                await imageFile.CopyToAsync(fileStream);
-            }
-            //now image uploaded connect it with product in db
-            var product = _productRepository.GetById(model.ProductId);
-            var productImage = new ProductImage
-            {
-                ImageNumber = model.ImageNumber,
-                ImageUrl = "img/products/" + imageUniqueName,
-                Product = product
-            };
-            var addedImage = _productRepository.AddProductImage(product, productImage);
+
+            var addedImage = await _productRepository
+                                      .AddProductImage(model.ImageFile, model.ImageNumber, model.ProductId);
             if (addedImage == null)
                 return BadRequest("Image was not added to Database.");
 
@@ -156,7 +137,7 @@ namespace ITech.Controllers
             TempData["isDetailAdded"] = true;
             return RedirectToAction(nameof(AddProductDetail), new { productId = model.ProductId });
         }
-       
+
 
 
 
