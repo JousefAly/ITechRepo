@@ -41,16 +41,18 @@ namespace ITech.Controllers
 
             return View(_productRepository.GetAllProducts());
         }
+        public IActionResult Detail(int id)
+        {
+            var model = new ProductDetailViewModel
+            {
+                Product = _productRepository.GetById(id)
+            };
+            return View(model);
+        }
         public IActionResult ManageProduct(int id)
         {
             return View(_productRepository.GetById(id));
-        }
-        public IActionResult Details(int id)
-        {
-            var product = _productRepository.GetById(id);
-
-            return View(product);
-        }
+        }      
         public IActionResult CreateProduct()
         {
             ViewBag.Categories = _categoryRepository.GetAllCategories();
