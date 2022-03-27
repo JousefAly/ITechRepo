@@ -62,8 +62,21 @@ namespace ITech.Data.Repositories
 
         public bool Delete(int productId)
         {
-            _context.Products.Remove(_context.Products.Find(productId));
+            //first delete all product images from server then delete product which will delete all it's dependent
+            //relations by cascading delete
+            var product = GetById(productId);
+            if (product.ProductImages != null && product.ProductImages.Any())
+            {
+                foreach (var p in product.ProductImages.ToList())
+                {
+                    
+                        DeleteProductImage(p.Id);
 
+                }
+            }
+
+            //now delete product
+            _context.Products.Remove(product);
             return _context.SaveChanges() > 0;
         }
 
@@ -156,7 +169,7 @@ namespace ITech.Data.Repositories
                 await imageFile.CopyToAsync(fileStream);
             }
             //now image uploaded connect it with product in db
-           
+
             var productImage = new ProductImage
             {
                 ImageNumber = imageNumber,
@@ -177,15 +190,15 @@ namespace ITech.Data.Repositories
         {
             //delete from files
             var image = GetProductImage(imageId);
-            if(image == null)
+            if (image == null)
             {
                 return false;
             }
             string wwwrootPath = _hostEnvironment.WebRootPath;
             string imageName = image.ImageUrl.Substring(13);
-            string path = Path.Combine( wwwrootPath + "/img/products/", imageName);
+            string path = Path.Combine(wwwrootPath + "/img/products/", imageName);
             File.Delete(path);
-            if(File.Exists(path))
+            if (File.Exists(path))
             {
                 return false;
             }
@@ -193,6 +206,6 @@ namespace ITech.Data.Repositories
             return _context.SaveChanges() > 0;
         }
 
-        
+
     }
 }

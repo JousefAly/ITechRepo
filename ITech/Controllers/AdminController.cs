@@ -22,5 +22,6 @@ namespace ITech.Controllers
         {
             return View(_productRepository.GetAllProducts());
         }
+       
     }
 }

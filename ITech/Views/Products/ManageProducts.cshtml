@@ -1,0 +1,23 @@
+﻿@model List<Product>
+@{
+
+}
+<partial name="_StatusMessage" model="@TempData["StatusMessage"]" />
+<h1>Manage All Products</h1>
+<div class="continer">
+    <div class="row">
+
+        @foreach (var p in Model)
+        {
+            <div class="col-md-4">
+                <partial name="_ProductEditCard" model="@p" />
+            </div>
+        }
+
+
+    </div>
+</div>
+
+
+
+

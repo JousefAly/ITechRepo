@@ -4,7 +4,7 @@
     <div class="card product-item border-0 mb-4">
         <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
             @if (Model.ProductImages.Any()
-               && Model.ProductImages.FirstOrDefault(p => p.ImageNumber == 1) != null)
+              && Model.ProductImages.FirstOrDefault(p => p.ImageNumber == 1) != null)
             {
                 <img class="img-fluid w-100" src="~/@Model.ProductImages.FirstOrDefault(p => p.ImageNumber == 1).ImageUrl" alt="">
             }
@@ -16,8 +16,11 @@
             </div>
         </div>
         <div class="card-footer d-flex justify-content-between bg-light border">
-            <a class="btn btn-sm text-dark p-0" asp-controller="EditProduct" asp-action="Index" asp-route-productId="@Model.Id" ><i class="fas fa-edit text-primary mr-1"></i>Edit</a>
-            <a class="btn btn-sm text-dark p-0" asp-controller="Products" asp-action="Delete" asp-route-productId="@Model.Id" ><i class="fas fa-trash text-primary mr-1"></i>Delete</a>
+            <a class="btn btn-sm text-dark p-0" asp-controller="EditProduct" asp-action="Index" asp-route-productId="@Model.Id"><i class="fas fa-edit text-primary mr-1"></i>Edit</a>
+            @if (User.IsInRole("Admin"))
+            {
+                <a class="btn btn-sm text-dark p-0" asp-controller="Products" asp-action="Delete" asp-route-id="@Model.Id"><i class="fas fa-trash text-primary mr-1"></i>Delete</a>
+            }
         </div>
     </div>
 </div>

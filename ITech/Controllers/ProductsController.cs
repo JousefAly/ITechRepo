@@ -2,6 +2,7 @@
 using ITech.Data.Entites;
 using ITech.Data.Repositories;
 using ITech.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -150,7 +151,24 @@ namespace ITech.Controllers
             return RedirectToAction(nameof(ManageProduct), new { id = productId });
         }
 
+        [Authorize(Roles = "Admin")]
+        public IActionResult Delete(int id)
+        {
+            if (!_productRepository.Delete(id))
+            {
+                TempData["StatusMessage"] = "Error: Product was not deleted.";
+            }
+            TempData["StatusMessage"] = "Product was deleted successfully.";
+            return RedirectToAction(nameof(ManageProducts));
+        }
+        [Authorize(Roles ="Admin")]
+        public IActionResult ManageProducts()
+        {
 
+            return View(_productRepository.GetAllProducts());
+        }
+
+        
 
     }
 }
