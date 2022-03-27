@@ -68,10 +68,10 @@ namespace ITech.Controllers
         [HttpPost]
         public IActionResult EditDetail(EditProductDetailsViewModel model)
         {
-            
+
             model.DetailToEdit.Content = model.DetailToEdit.Content.Replace("\r", " ").Replace("\n", " ");
             //add product relation without returning product to avoid tracking same entity twice by db.
-                     
+
             if (_productRepository.UpdateProductDetail(model.DetailToEdit) == null)
                 TempData["StatusMessage"] = "Error : Detail was not updated";
             TempData["StatusMessage"] = "Detail updated successfully!";
@@ -93,7 +93,50 @@ namespace ITech.Controllers
         public IActionResult EditImages(int productId)
         {
             ViewData["productId"] = productId;
-            return View();
+            var model = new EditProductImagesViewModel
+            {
+                ProductId = productId,
+                ProductImages = _productRepository.GetById(productId).ProductImages,
+            };
+            if (TempData["StatusMessage"] != null)
+                model.StatusMessage = TempData["StatusMessage"] as string;
+            return View(model);
+        }
+        public IActionResult DeleteImage(int imageid, int productId)
+        {
+            var image = _productRepository.GetProductImage(imageid);            
+            if(image.ImageNumber == 1)
+            {
+                TempData["StatusMessage"] = "Error: Cant delete main image if you want to delete image, assign another main image first.";
+                return RedirectToAction(nameof(EditImages), new { productId });
+            }
+            if (!_productRepository.DeleteProductImage(imageid))
+            {
+                TempData["StatusMessage"] = "Error: Image was not deleted.";
+                return RedirectToAction(nameof(EditImages), new { productId });
+            }
+            TempData["StatusMessage"] = "Image Deleted Successfully!";
+            return RedirectToAction(nameof(EditImages), new { productId });
+        }
+        public IActionResult SetMainImage(int productId, int imageId)
+        {
+            var oldMainImage = _context.ProductImages
+                                .FirstOrDefault(pi => pi.ProductId == productId && pi.ImageNumber == 1);
+            var imageToBeMain = _context.ProductImages.Find(imageId);
+            if(imageId == oldMainImage.Id)
+            {
+                TempData["StatusMessage"] = "Image is already the main image.";
+                return RedirectToAction(nameof(EditImages), new { productId });
+            }
+            oldMainImage.ImageNumber = imageToBeMain.ImageNumber;
+            imageToBeMain.ImageNumber = 1;
+            if(_context.SaveChanges() == 0)
+            {
+                TempData["StatusMessage"] = "Error happened while updating main image in Database!";
+                return RedirectToAction(nameof(EditImages), new { productId });
+            }
+            TempData["StatusMessage"] = "Changed Main Image Successfully!";
+            return RedirectToAction(nameof(EditImages), new { productId });
         }
     }
 }

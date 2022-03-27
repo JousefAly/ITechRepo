@@ -1,7 +1,33 @@
-﻿
+﻿@model EditProductImagesViewModel
 @{
     ViewData["Title"] = "EditImages";
 }
 
-<h1>EditImages</h1>
+<h1>Edit Images</h1>
+<partial name="_StatusMessage" model="@Model.StatusMessage" />
+<a class="btn btn-success" asp-controller="Products"
+   asp-action="UploadProductImage" asp-route-productId="@Model.ProductId">Add Image</a>
 
+<div class="container">
+    <!--Display Images-->
+    <div class="row">
+        @foreach (var image in Model.ProductImages)
+        {
+            <div class="card col-md-4 p-0 m-1" style="width: 18rem;">
+                @if (!string.IsNullOrEmpty(image.ImageUrl))
+                {
+                    <img class="card-img-top" src="~/@image.ImageUrl" alt="@image.ImageNumber">
+                }
+                <div class="card-body">
+                    <h5>Order:@image.ImageNumber</h5>
+                </div>
+                <div class="card-footer">
+                    <a class="card-link" asp-action="SetMainImage" asp-route-productId="@Model.ProductId" 
+                       asp-route-imageId="@image.Id"><i class="fas fa-home"></i>Set Main</a>
+                    <a class="card-link" asp-action="DeleteImage" asp-route-productId="@Model.ProductId" 
+                       asp-route-imageId="@image.Id" ><i class="fas fa-trash"></i>Delete</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
