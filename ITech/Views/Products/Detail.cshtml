@@ -6,7 +6,7 @@
     <link href="~/css/product/ProductDetailStyle.css" rel="stylesheet" />
 }
 <div class="container">
-    <div class="card-wrapper m-2">
+    <div class="card-wrapper m-2   p2">
         <div class="card">
             <!-- card left -->
             <div class="product-imgs">
@@ -48,6 +48,7 @@
                     <span>4.7(21)</span>
                 </div>
                 <!--Rating End (add later)-->
+                <!--Price Start-->
 
                 @if (Model.Product.DiscountPercentage > 0)
                 {
@@ -63,7 +64,7 @@
                 }
                 else
                 {
-                    <div class="product-price">                        
+                    <div class="product-price">
                         <p class="new-price">
                             Price:
                             <span>
@@ -72,17 +73,16 @@
                         </p>
                     </div>
                 }
-
+                <!--Price End-->
                 <div class="product-detail">
                     <h2>about this item: </h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo eveniet veniam tempora fuga tenetur placeat sapiente architecto illum soluta consequuntur, aspernatur quidem at sequi ipsa!</p>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, perferendis eius. Dignissimos, labore suscipit. Unde.</p>
+                    <p>@Model.Product.ShortDescription</p>
+                    <h2>Details</h2>
                     <ul>
-                        <li>Color: <span>Black</span></li>
-                        <li>Available: <span>in stock</span></li>
-                        <li>Category: <span>Shoes</span></li>
-                        <li>Shipping Area: <span>All over the world</span></li>
-                        <li>Shipping Fee: <span>Free</span></li>
+                        @foreach (var detail in Model.Product.ProductDetails)
+                        {
+                            <li>@detail.Title: <span>@detail.Content</span></li>
+                        }
                     </ul>
                 </div>
 
@@ -91,27 +91,10 @@
                     <button type="button" class="btn">
                         Add to Cart <i class="fas fa-shopping-cart"></i>
                     </button>
-                    <button type="button" class="btn">Compare</button>
+                    <button type="button" class="btn">Save <i class="fas fa-heart"></i></button>
                 </div>
 
-                <div class="social-links">
-                    <p>Share At: </p>
-                    <a href="#">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="#">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="#">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="#">
-                        <i class="fab fa-whatsapp"></i>
-                    </a>
-                    <a href="#">
-                        <i class="fab fa-pinterest"></i>
-                    </a>
-                </div>
+
             </div>
         </div>
     </div>
