@@ -21,6 +21,7 @@ namespace ITech.Data
         public DbSet<Seller> Sellers { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
+        public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
 
 
         public DbSet<Seed> Seeds { get; set; }
