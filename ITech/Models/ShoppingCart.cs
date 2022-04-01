@@ -20,7 +20,7 @@ namespace ITech.Models
             _context = context;
         }
 
-        public ShoppingCart GetCart(IServiceProvider services)
+        public static ShoppingCart GetCart(IServiceProvider services)
         {
             ISession session = services.GetRequiredService<IHttpContextAccessor>()?
                 .HttpContext.Session;

@@ -1,5 +1,6 @@
 using ITech.Data;
 using ITech.Data.Repositories;
+using ITech.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -47,7 +48,9 @@ namespace ITech
                 options.Password.RequiredLength = 3;
                 options.Password.RequiredUniqueChars = 0;
             });
+            services.AddSession();
             services.AddControllersWithViews();
+            services.AddScoped<ShoppingCart>(sp => ShoppingCart.GetCart(sp));
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
@@ -70,7 +73,7 @@ namespace ITech
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthentication();
