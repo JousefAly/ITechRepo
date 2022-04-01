@@ -1,0 +1,10 @@
+﻿@{ 
+    List<ShoppingCartItem> shoppingItems = ViewBag.ShoppingCartItems;
+}
+<h1>ShoppingCart Items</h1>
+
+@foreach (var item in shoppingItems)
+{
+    <h2>@item.Product.Brand , amount: @item.Amount</h2>
+    
+}
