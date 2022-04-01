@@ -32,7 +32,7 @@ namespace ITech.Models
             return new ShoppingCart(context) { ShoppingCartId = cartId };
         }
         // return the shopping cart item with it is new state
-        public ShoppingCartItem AddToCart(Product product, int amount)
+        public ShoppingCartItem AddToCart(Product product, int amount = 1)
         {
             var shoppingCartItem = _context.ShoppingCartItems
                 .FirstOrDefault(i => i.Product.Id == product.Id && i.ShoppingCartId == ShoppingCartId);
