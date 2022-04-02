@@ -1,5 +1,6 @@
 ﻿using ITech.Data.Repositories;
 using ITech.Models;
+using ITech.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -21,13 +22,22 @@ namespace ITech.Controllers
         }
         public IActionResult Index()
         {
-            ViewBag.ShoppingCartItems = _shoppingCart.GetShoppingCartItems();
-            return View();
+            var model = new ShoppingCartViewModel
+            {
+                ShoppingCartItems = _shoppingCart.GetShoppingCartItems(),
+                ShoppingCartTotal = _shoppingCart.GetShoppingCartTotal()
+            };
+            return View(model);
         }
-        public ActionResult AddToCart(int productId, int amount = 1)
+        public RedirectToActionResult AddToCart(int productId, int amount = 1)
         {
             _shoppingCart.AddToCart(_productRepository.GetById(productId), amount);
-            return RedirectToAction("Index","Home");
+            return RedirectToAction(nameof(Index));
+        }
+        public RedirectToActionResult RemoveFromCart(int productId, int amount = 1)
+        {
+            _shoppingCart.RemoveFromCart(_productRepository.GetById(productId), amount);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

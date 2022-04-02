@@ -49,6 +49,7 @@ namespace ITech
                 options.Password.RequiredUniqueChars = 0;
             });
             services.AddSession();
+            services.AddHttpContextAccessor();  
             services.AddControllersWithViews();
             services.AddScoped<ShoppingCart>(sp => ShoppingCart.GetCart(sp));
             services.AddScoped<ICategoryRepository, CategoryRepository>();
