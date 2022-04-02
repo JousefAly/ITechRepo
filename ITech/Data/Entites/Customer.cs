@@ -9,6 +9,6 @@ namespace ITech.Data.Entites
     public class Customer
     {
         public string Id { get; set; }
-        public AppUser User { get; set; }
+        public AppUser User { get; set; }       
     }
 }
