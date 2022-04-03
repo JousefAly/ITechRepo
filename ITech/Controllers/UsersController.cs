@@ -25,6 +25,7 @@ namespace ITech.Controllers
         {
             var users = await _userManager.Users.Select(usr => new UserViewModel
             {
+                Id = usr.Id,
                 FirstName = usr.FirstName,
                 LastName = usr.LastName,
                 UserName = usr.UserName,
