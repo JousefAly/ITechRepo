@@ -1,4 +1,5 @@
-﻿using ITech.Data.Entites;
+﻿using ITech.Data;
+using ITech.Data.Entites;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -39,8 +40,8 @@ namespace ITech.Models
         public DateTime OrderPlaced { get; set; }
 
         public List<OrderDetail> OrderDetails { get; set; }
-        public string CustomerId { get; set; }
-        public Customer Customer { get; set; }
+        public string UserId { get; set; }
+        public AppUser User { get; set; }
 
 
     }
