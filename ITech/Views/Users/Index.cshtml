@@ -3,7 +3,7 @@
     ViewData["Title"] = "Users";
     Layout = "_AdminLayout";
 }
-
+<partial name="_StatusMessage" model="@TempData["StatusMessage"]" />
 <h1>Users</h1>
 <table class="table table-striped ">
     <thead>
@@ -19,17 +19,19 @@
     <tbody>
         @foreach (var user in Model)
         {
-        <tr>
-            <td>@user.FirstName</td>
-            <td>@user.LastName</td>
-            <td>@user.UserName</td>
-            <td>@user.Email</td>
-            <td>@string.Join(" , ", user.Roles.ToList())</td>
-            <td>
-                <a class="btn btn-primary" asp-controller="Users" asp-action="ManageRoles" asp-route-userId="@user.Id"> Manage Roles</a>
-            </td>
+            <tr>
+                <td>@user.FirstName</td>
+                <td>@user.LastName</td>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>@string.Join(" , ", user.Roles.ToList())</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="Users" asp-action="ManageRoles" asp-route-userId="@user.Id"> Manage Roles</a>
+                    <a asp-area="Identity" asp-page="/Account/Manage/Index"><i class="fas fa-edit"></i></a>
+                    <a asp-controller="Users" asp-action="Delete" asp-route-id="@user.Id"><i class="fas fa-trash"></i></a>
+                </td>
 
-        </tr>
+            </tr>
         }
     </tbody>
 

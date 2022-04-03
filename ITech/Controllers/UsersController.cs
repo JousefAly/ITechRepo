@@ -4,10 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ITech.Controllers
@@ -36,6 +33,23 @@ namespace ITech.Controllers
             }).ToListAsync();
 
             return View(users);
+        }
+        public async Task<IActionResult> Delete(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            string userEmail = user.Email;
+            var result = await _userManager.DeleteAsync(user);
+            if (result.Succeeded)
+            {
+                TempData["StatusMessage"] = "User : " + userEmail + ". Deleted Successfully";
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                TempData["StatusMessage"] = "Error: User : " + userEmail + ". was not deleted!";
+                return RedirectToAction(nameof(Index));
+            }
+
         }
     }
 }
