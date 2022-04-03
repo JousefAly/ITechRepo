@@ -24,7 +24,7 @@ namespace ITech.Data.Repositories
 
             if (!shoppingCartItems.Any())
                 return 0;
-
+            order.OrderDetails = new List<OrderDetail>();
             foreach (var item in shoppingCartItems)
             {
                 var orderDetail = new OrderDetail
@@ -32,6 +32,7 @@ namespace ITech.Data.Repositories
                     ProductId = item.ProductId,
                     Amount = item.Amount,
                 };
+           
                 order.OrderDetails.Add(orderDetail);
             }
             order.OrderPlaced = DateTime.Now;

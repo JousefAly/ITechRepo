@@ -31,18 +31,23 @@ namespace ITech.Controllers
         {
             return View();
         }
+        [HttpPost]
         public async Task<IActionResult> Checkout(Order order)
         {
-
-            order.User = await _userManager.GetUserAsync(HttpContext.User);
-
-            if (_orderRepository.CreateOrder(order) == 0)
+            if (ModelState.IsValid)
             {
-                TempData["StatusMessage"] = "Error: sorry we could not create your order";
-                return RedirectToAction(nameof(Checkout));
+
+                order.User = await _userManager.GetUserAsync(HttpContext.User);
+
+                if (_orderRepository.CreateOrder(order) == 0)
+                {
+                    TempData["StatusMessage"] = "Error: sorry we could not create your order";
+                    return RedirectToAction(nameof(Checkout));
+                }
+                _shoppingCart.ClearCart();
+                return RedirectToAction(nameof(CheckoutComplete));
             }
-            _shoppingCart.ClearCart();
-            return RedirectToAction(nameof(CheckoutComplete));
+            return RedirectToAction(nameof(Checkout));
         }
         public IActionResult CheckoutComplete()
         {
