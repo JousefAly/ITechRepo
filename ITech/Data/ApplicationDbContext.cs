@@ -35,6 +35,10 @@ namespace ITech.Data
                 .HasOne(c => c.User)
                 .WithOne()
                 .OnDelete(DeleteBehavior.SetNull);
+            builder.Entity<Seller>()
+                .HasOne(s => s.User)
+                .WithOne()
+                .OnDelete(DeleteBehavior.SetNull);
 
             base.OnModelCreating(builder);
         }

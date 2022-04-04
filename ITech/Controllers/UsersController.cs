@@ -39,6 +39,7 @@ namespace ITech.Controllers
         {
             var user = await _userManager.FindByIdAsync(id);
             string userEmail = user.Email;
+            //on Delete User set it's assocciated FK to null in fluent API
             var result = await _userManager.DeleteAsync(user);
             if (result.Succeeded)
             {
