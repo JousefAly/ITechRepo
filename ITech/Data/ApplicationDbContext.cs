@@ -28,5 +28,15 @@ namespace ITech.Data
 
 
         public DbSet<Seed> Seeds { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<Customer>()
+                .HasOne(c => c.User)
+                .WithOne()
+                .OnDelete(DeleteBehavior.SetNull);
+
+            base.OnModelCreating(builder);
+        }
     }
 }
