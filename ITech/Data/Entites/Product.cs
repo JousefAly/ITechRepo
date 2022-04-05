@@ -20,6 +20,7 @@ namespace ITech.Data.Entites
         public int Id { get; set; }
 
         public string Title { get; set; }
+        public bool Activated { get; set; }
 
         public string ITSIN { get; set; }
        

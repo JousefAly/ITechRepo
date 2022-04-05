@@ -55,5 +55,23 @@ namespace ITech.Data.Repositories
         {
             return _context.Sellers.Find(sellerId);
         }
+
+        public bool Activate(string id)
+        {            
+            var seller = _context.Sellers.Find(id);
+            if (seller.Activated)
+                return true;
+            seller.Activated = true;
+            return _context.SaveChanges() > 0;
+        }
+
+        public bool DesActivate(string id)
+        {
+            var seller = _context.Sellers.Find(id);
+            if (!seller.Activated)
+                return true;
+            seller.Activated = false;
+            return _context.SaveChanges() > 0;
+        }
     }
 }

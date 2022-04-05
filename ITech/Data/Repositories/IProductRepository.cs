@@ -34,6 +34,8 @@ namespace ITech.Data.Repositories
         //Delete from files and delete record from database
         //return true if deleted from both database and files
         public bool DeleteProductImage(int imageId);
+        bool Activate(int id);
+        bool DesActivate(int id);
 
 
     }

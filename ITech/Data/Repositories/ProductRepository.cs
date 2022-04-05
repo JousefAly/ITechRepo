@@ -206,6 +206,22 @@ namespace ITech.Data.Repositories
             return _context.SaveChanges() > 0;
         }
 
+        public bool Activate(int id)
+        {
+            var product = _context.Products.Find(id);
+            if (product.Activated)
+                return true;
+            product.Activated = true;
+            return _context.SaveChanges() > 0;
+        }
 
+        public bool DesActivate(int id)
+        {
+            var product = _context.Products.Find(id);
+            if (!product.Activated)
+                return true;
+            product.Activated = false;
+            return _context.SaveChanges() > 0;
+        }
     }
 }

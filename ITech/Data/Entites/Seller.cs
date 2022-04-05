@@ -7,6 +7,7 @@ namespace ITech.Data.Entites
     {        
         public string Id { get; set; }
         public string UserId { get; set; }
+        public bool Activated { get; set; }
         public string Address { get; set; }
         public AppUser User { get; set; }                
         public List<Product> Products { get; set; }

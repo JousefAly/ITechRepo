@@ -17,8 +17,9 @@ namespace ITech.Data.Repositories
         // return true if updated
         bool Update(Seller seller);
         List<Product> GetSellerProducts(Seller seller);
+        bool Activate(string id);
+        bool DesActivate(string id);
 
-        
-        
+
     }
 }
