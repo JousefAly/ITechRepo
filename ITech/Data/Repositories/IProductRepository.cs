@@ -36,6 +36,8 @@ namespace ITech.Data.Repositories
         public bool DeleteProductImage(int imageId);
         bool Activate(int id);
         bool DesActivate(int id);
+        //return number of desactivated products
+        int DesActivateSellerPrdoucts(string sellerId);
 
 
     }

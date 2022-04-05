@@ -43,8 +43,9 @@ namespace ITech.Data.Entites
 
         public bool InStock { get; set; }
         public int SoldCount { get; set; }
-
+        public int? CategoryId { get; set; }
         public Category Category { get; set; }
+        public string SellerId { get; set; }
         public Seller Seller { get; set; }
         public List<ProductDetail> ProductDetails { get; set; }
         public List<ProductImage> ProductImages { get; set; }

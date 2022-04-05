@@ -223,5 +223,10 @@ namespace ITech.Data.Repositories
             product.Activated = false;
             return _context.SaveChanges() > 0;
         }
+
+        public int DesActivateSellerPrdoucts(string sellerId)
+        {
+            return 0;
+        }
     }
 }
