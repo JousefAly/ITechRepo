@@ -11,8 +11,9 @@ namespace ITech.ViewModels
     public class ManageUserRolesViewModel
     {
         public string UserId { get; set; }
+        public string Username { get; set; }
         public string[] RoleNames { get; set; }
-        public IList<string> UserRoleNmes { get; set; }
+        public IList<string> UserRoleNames { get; set; }
         
     }
 }

@@ -60,8 +60,9 @@ namespace ITech.Controllers
             var model = new ManageUserRolesViewModel
             {
                 UserId = id,
+                Username = user.UserName,
                 RoleNames = _roleManager.Roles.Select(r => r.Name).ToArray(),
-                UserRoleNmes = await _userManager.GetRolesAsync(user)
+                UserRoleNames = await _userManager.GetRolesAsync(user)
             };
             return View(model);
         }
@@ -74,11 +75,11 @@ namespace ITech.Controllers
             var result = await _userManager.AddToRoleAsync(user, roleName);
             if (!result.Succeeded)
             {
-                TempData["StatusMessage"] = "Error: Could not Assign " + roleName + " to userId: " + userId;
-                return RedirectToAction(nameof(ManageRoles));
+                TempData["StatusMessage"] = "Error: Could not Assign (" + roleName + ") to userId: " + userId;
+                return RedirectToAction(nameof(ManageRoles), new { id = userId});
             }
-            TempData["StatusMessage"] = "Successfully Assigned " + roleName + " to userId: " + userId;
-            return RedirectToAction(nameof(ManageRoles));
+            TempData["StatusMessage"] = "Successfully Assigned (" + roleName + ") to userId: " + userId;
+            return RedirectToAction(nameof(ManageRoles), new { id = userId });
         }
         public async Task<RedirectToActionResult> RemoveFromRole(string userId, string roleName)
         {
@@ -86,11 +87,11 @@ namespace ITech.Controllers
             var result = await _userManager.RemoveFromRoleAsync(user, roleName);
             if (!result.Succeeded)
             {
-                TempData["StatusMessage"] = "Error: Could not Remove " + roleName + " from userId: " + userId;
-                return RedirectToAction(nameof(ManageRoles));
+                TempData["StatusMessage"] = "Error: Could not Remove (" + roleName + ") from userId: " + userId;
+                return RedirectToAction(nameof(ManageRoles), new { id = userId });
             }
-            TempData["StatusMessage"] = "Successfully Removed " + roleName + " from userId: " + userId;
-            return RedirectToAction(nameof(ManageRoles));
+            TempData["StatusMessage"] = "Successfully Removed (" + roleName + ") from userId: " + userId;
+            return RedirectToAction(nameof(ManageRoles), new { id = userId });
         }
 
     }
