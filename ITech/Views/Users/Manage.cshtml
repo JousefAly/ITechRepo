@@ -1,0 +1,15 @@
+﻿@inject UserManager<AppUser> _userManager
+@model ManageUserViewModel
+
+<partial name="_StatusMessage" model="@TempData["StatusMessage"]" />
+
+@if (await _userManager.IsInRoleAsync(Model.User, "Seller"))
+{
+<div class="bg-secondary col-md-9">
+    <h6>Edit Selling Actions</h6>
+    <a class="btn btn-success" asp-action="ActivateSeller" asp-route-id="@Model.User.Id">Activate Seller</a>
+    <a class="btn btn-danger" asp-action="DesActivateSeller" asp-route-id="@Model.User.Id">DesActivate Seller</a>
+    <a class="btn btn-success" asp-action="ActivateSellerProducts" asp-route-id="@Model.User.Id">Activate Seller Products</a>
+    <a class="btn btn-danger" asp-action="DesActivateSellerProducts" asp-route-id="@Model.User.Id">DesActivate Seller Products</a>
+</div>
+}

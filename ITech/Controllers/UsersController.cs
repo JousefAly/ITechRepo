@@ -1,4 +1,6 @@
 ﻿using ITech.Data;
+using ITech.Data.Entites;
+using ITech.Data.Repositories;
 using ITech.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -14,11 +16,20 @@ namespace ITech.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly ISellerRepository _sellerRepository;
+        private readonly IProductRepository _productRepository;
+        private readonly ApplicationDbContext _context;
 
-        public UsersController(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
+        public UsersController(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager,
+                                ISellerRepository sellerRepository,
+                                IProductRepository productRepository,
+                                ApplicationDbContext context)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _sellerRepository = sellerRepository;
+            _productRepository = productRepository;
+            _context = context;
         }
 
         public async Task<IActionResult> Index()
@@ -81,6 +92,7 @@ namespace ITech.Controllers
             TempData["StatusMessage"] = "Successfully Assigned (" + roleName + ") to userId: " + userId;
             return RedirectToAction(nameof(ManageRoles), new { id = userId });
         }
+
         public async Task<RedirectToActionResult> RemoveFromRole(string userId, string roleName)
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -93,6 +105,86 @@ namespace ITech.Controllers
             TempData["StatusMessage"] = "Successfully Removed (" + roleName + ") from userId: " + userId;
             return RedirectToAction(nameof(ManageRoles), new { id = userId });
         }
+        public async Task<ViewResult> Manage(string id)
+        {
+            var model = new ManageUserViewModel
+            {
+                User = await _userManager.FindByIdAsync(id)
+            };
+            return View(model);
+        }
+        public RedirectToActionResult ActivateSeller(string id)
+        {
+            var seller = _context.Sellers.FirstOrDefault(s => s.UserId == id) ?? new Seller { UserId = id };
+            seller.Activated = true;
+            if(_context.SaveChanges() > 0)
+            {
+                TempData["StatusMessage"] = "Seller Activated Successfully seller id: " + seller.Id;
+                return RedirectToAction(nameof(Manage), new { id });
+            }
+
+            TempData["StatusMessage"] = "Error: Seller was not Activated  user id: " + id;
+            return RedirectToAction(nameof(Manage), new { id });
+
+        }
+        public RedirectToActionResult DesActivateSeller(string id)
+        {
+            var seller = _context.Sellers.FirstOrDefault(s => s.UserId == id);
+            if(seller == null)
+            {
+                TempData["StatusMessage"] = "Error: Seller is not in the system" + seller.Id;
+                return RedirectToAction(nameof(Manage), new { id });
+            }
+            seller.Activated = false;
+            if (_context.SaveChanges() > 0)
+            {
+                TempData["StatusMessage"] = "Seller Disactivated Successfully seller id: " + seller.Id;
+                return RedirectToAction(nameof(Manage), new { id });
+            }
+
+            TempData["StatusMessage"] = "Error: Could not disactivate seller id: " + seller.Id;
+            return RedirectToAction(nameof(Manage), new { id });
+
+        }
+        public async Task<RedirectToActionResult> DesActivateSellerProducts(string id)
+        {
+            var seller = _context.Sellers.FirstOrDefault(s => s.UserId == id);
+            if (seller == null)
+            {
+                TempData["StatusMessage"] = "Error: Seller is not in the system" + seller.Id;
+                return RedirectToAction(nameof(Manage), new { id });
+            }
+            
+            if (await _productRepository.DesActivateSellerPrdoucts(id) > 0)
+            {
+                TempData["StatusMessage"] = "Products Disactivated Successfully seller id: " + seller.Id;
+                return RedirectToAction(nameof(Manage), new { id });
+            }
+
+            TempData["StatusMessage"] = "Error: Could not disactivate  Products. seller id: " + seller.Id;
+            return RedirectToAction(nameof(Manage), new { id });
+
+        }
+        public async Task<RedirectToActionResult> ActivateSellerProducts(string id)
+        {
+            var seller = _context.Sellers.FirstOrDefault(s => s.UserId == id);
+            if (seller == null)
+            {
+                TempData["StatusMessage"] = "Error: Seller is not in the system" + seller.Id;
+                return RedirectToAction(nameof(Manage), new { id });
+            }
+
+            if (await _productRepository.ActivateSellerPrdoucts(id) > 0)
+            {
+                TempData["StatusMessage"] = "Products Activated Successfully seller id: " + seller.Id;
+                return RedirectToAction(nameof(Manage), new { id });
+            }
+
+            TempData["StatusMessage"] = "Error: Could not disactivate  Products. seller id: " + seller.Id;
+            return RedirectToAction(nameof(Manage), new { id });
+
+        }
+
 
     }
 }

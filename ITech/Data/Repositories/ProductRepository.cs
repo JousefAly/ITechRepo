@@ -224,7 +224,9 @@ namespace ITech.Data.Repositories
 
         public async Task<int> DesActivateSellerPrdoucts(string sellerId)
         {
-            var products = _context.Products.Where(p => p.SellerId == sellerId);
+            var products = _context.Products.Where(p => p.SellerId == sellerId).ToList();
+            if (products == null)
+                return 0;
             foreach( var product in products)
             {
                 product.Activated = false;
@@ -233,7 +235,10 @@ namespace ITech.Data.Repositories
         }
         public async Task<int> ActivateSellerPrdoucts(string sellerId)
         {
-            var products = _context.Products.Where(p => p.SellerId == sellerId);
+
+            var products = _context.Products.Where(p => p.SellerId == sellerId).ToList();
+            if (products == null)
+                return 0;
             foreach (var product in products)
             {
                 product.Activated = true;
