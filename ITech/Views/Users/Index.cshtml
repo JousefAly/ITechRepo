@@ -28,7 +28,7 @@
                     <a  asp-controller="Users" asp-action="ManageRoles" asp-route-id="@user.Id">
                     <i class="fas fa-file-contract" title="Manage Roles"></i>
                     </a>
-                    <a href="#"><i class="fas fa-edit "></i></a>
+                    <a asp-action="Manage" asp-route-id="@user.Id" title="Manage User"><i class="fas fa-user "></i></a>
                     <a asp-controller="Users" asp-action="Delete" asp-route-id="@user.Id" title="Delete User"><i class="fas fa-trash text-danger"></i></a>
                 </td>
 

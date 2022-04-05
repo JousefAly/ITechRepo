@@ -5,11 +5,32 @@
 
 @if (await _userManager.IsInRoleAsync(Model.User, "Seller"))
 {
-<div class="bg-secondary col-md-9">
-    <h6>Edit Selling Actions</h6>
-    <a class="btn btn-success" asp-action="ActivateSeller" asp-route-id="@Model.User.Id">Activate Seller</a>
-    <a class="btn btn-danger" asp-action="DesActivateSeller" asp-route-id="@Model.User.Id">DesActivate Seller</a>
-    <a class="btn btn-success" asp-action="ActivateSellerProducts" asp-route-id="@Model.User.Id">Activate Seller Products</a>
-    <a class="btn btn-danger" asp-action="DesActivateSellerProducts" asp-route-id="@Model.User.Id">DesActivate Seller Products</a>
-</div>
+
+    <div class="card ">
+        <div class="card-header">
+            <h6>Seller Activation Settings</h6>
+
+        </div>
+        <div class="card-body">
+            @if (Model.Seller.Activated)
+            {
+                <p >State : <span class="text-success">Active</span>.</p>
+                <p>Number of Products: @Model.Seller.Products.Count</p>
+                <p class="text-success">Active Products: @Model.Seller.Products.Count(p => p.Activated)</p>
+            }
+            else
+            {
+                <p>State : <span class="text-danger">Not Active</span>.</p>
+                <p>Number of Products: @Model.Seller.Products.Count <span class="text-danger"> Not Active</span></p>
+            }
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <a class="btn btn-success m-1" asp-action="ActivateSeller" asp-route-id="@Model.User.Id">Activate Seller</a>
+                <a class="btn btn-danger m-1" asp-action="DesActivateSeller" asp-route-id="@Model.User.Id">DesActivate Seller</a>
+                <a class="btn btn-success m-1" asp-action="ActivateSellerProducts" asp-route-id="@Model.User.Id">Activate Seller Products</a>
+                <a class="btn btn-danger m-1" asp-action="DesActivateSellerProducts" asp-route-id="@Model.User.Id">DesActivate Seller Products</a>
+            </div>
+        </div>
+    </div>
 }

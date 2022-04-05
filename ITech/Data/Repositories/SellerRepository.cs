@@ -32,16 +32,17 @@ namespace ITech.Data.Repositories
             return _context.SaveChanges();
         }
         //return the seller object for a given appuser or null if not seller
-        public Seller GetUserSeller(AppUser user)
+        public Seller GetUserSeller(AppUser user, bool includeProducts = false)
         {
-            var seller = _context.Sellers.FirstOrDefault(s => s.User == user);
+            var seller = includeProducts ? _context.Sellers.Include(s => s.Products).FirstOrDefault(s => s.User == user) :
+                _context.Sellers.FirstOrDefault(s => s.User == user);
             return seller;
         }
         public bool Update(Seller seller)
         {
             _context.Update(seller);
 
-            return _context.SaveChanges() > 0 ;
+            return _context.SaveChanges() > 0;
         }
         public List<Product> GetSellerProducts(Seller seller)
         {
@@ -57,7 +58,7 @@ namespace ITech.Data.Repositories
         }
 
         public bool Activate(string id)
-        {            
+        {
             var seller = _context.Sellers.Find(id);
             if (seller.Activated)
                 return true;

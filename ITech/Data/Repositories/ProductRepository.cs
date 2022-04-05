@@ -227,23 +227,28 @@ namespace ITech.Data.Repositories
             var products = _context.Products.Where(p => p.SellerId == sellerId).ToList();
             if (products == null)
                 return 0;
+            var deactivatedProducts = products.Count(p => !p.Activated);
             foreach( var product in products)
             {
-                product.Activated = false;
+                product.Activated = false;               
             }
-            return await _context.SaveChangesAsync();
+
+            deactivatedProducts += await _context.SaveChangesAsync();
+            return deactivatedProducts;
         }
         public async Task<int> ActivateSellerPrdoucts(string sellerId)
         {
 
             var products = _context.Products.Where(p => p.SellerId == sellerId).ToList();
+            var activatedProducts = products.Count(p => p.Activated);
             if (products == null)
                 return 0;
             foreach (var product in products)
             {
                 product.Activated = true;
             }
-            return await _context.SaveChangesAsync();
+            activatedProducts += await _context.SaveChangesAsync();
+            return activatedProducts;
         }
     }
 }

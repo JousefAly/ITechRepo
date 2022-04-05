@@ -12,7 +12,7 @@ namespace ITech.Data.Repositories
         Seller Create(AppUser user);
         int SaveChanges();
         //return seller oject for a given user or null if not found
-        Seller GetUserSeller(AppUser user);
+        Seller GetUserSeller(AppUser user, bool includeProducts = false);
         Seller GetBySellerId(string sellerId);
         // return true if updated
         bool Update(Seller seller);

@@ -79,7 +79,7 @@ namespace ITech.Controllers
         }
 
 
-        
+
         public async Task<RedirectToActionResult> AddToRole(string userId, string roleName)
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -87,7 +87,7 @@ namespace ITech.Controllers
             if (!result.Succeeded)
             {
                 TempData["StatusMessage"] = "Error: Could not Assign (" + roleName + ") to userId: " + userId;
-                return RedirectToAction(nameof(ManageRoles), new { id = userId});
+                return RedirectToAction(nameof(ManageRoles), new { id = userId });
             }
             TempData["StatusMessage"] = "Successfully Assigned (" + roleName + ") to userId: " + userId;
             return RedirectToAction(nameof(ManageRoles), new { id = userId });
@@ -107,17 +107,24 @@ namespace ITech.Controllers
         }
         public async Task<ViewResult> Manage(string id)
         {
+            var user = await _userManager.FindByIdAsync(id);
             var model = new ManageUserViewModel
             {
-                User = await _userManager.FindByIdAsync(id)
+                User = user,
+                Seller = _sellerRepository.GetUserSeller(user,  includeProducts: true)
             };
             return View(model);
         }
         public RedirectToActionResult ActivateSeller(string id)
         {
             var seller = _context.Sellers.FirstOrDefault(s => s.UserId == id) ?? new Seller { UserId = id };
-            seller.Activated = true;
-            if(_context.SaveChanges() > 0)
+            if (seller.Activated)
+            {
+                TempData["StatusMessage"] = "Seller Already Activated  seller id: " + seller.Id;
+                return RedirectToAction(nameof(Manage), new { id });
+            }
+            seller.Activated = true;            
+            if (_context.SaveChanges() > 0)
             {
                 TempData["StatusMessage"] = "Seller Activated Successfully seller id: " + seller.Id;
                 return RedirectToAction(nameof(Manage), new { id });
@@ -127,18 +134,25 @@ namespace ITech.Controllers
             return RedirectToAction(nameof(Manage), new { id });
 
         }
-        public RedirectToActionResult DesActivateSeller(string id)
+        public async Task<RedirectToActionResult> DesActivateSeller(string id)
         {
             var seller = _context.Sellers.FirstOrDefault(s => s.UserId == id);
-            if(seller == null)
+            if (seller == null)
             {
                 TempData["StatusMessage"] = "Error: Seller is not in the system" + seller.Id;
                 return RedirectToAction(nameof(Manage), new { id });
             }
+            if (!seller.Activated)
+            {
+                TempData["StatusMessage"] = "Seller is not Activated already seller Id: " + seller.Id;
+                return RedirectToAction(nameof(Manage), new { id });
+            }
+            var desActivatedProductsNum = await _productRepository.DesActivateSellerPrdoucts(seller.Id);
             seller.Activated = false;
             if (_context.SaveChanges() > 0)
             {
-                TempData["StatusMessage"] = "Seller Disactivated Successfully seller id: " + seller.Id;
+                TempData["StatusMessage"] = "Seller Disactivated Successfully seller id: " + seller.Id + ". " +
+                    "(" + desActivatedProductsNum + ") products DesActivated.";
                 return RedirectToAction(nameof(Manage), new { id });
             }
 
@@ -154,8 +168,8 @@ namespace ITech.Controllers
                 TempData["StatusMessage"] = "Error: Seller is not in the system" + seller.Id;
                 return RedirectToAction(nameof(Manage), new { id });
             }
-            
-            if (await _productRepository.DesActivateSellerPrdoucts(id) > 0)
+
+            if (await _productRepository.DesActivateSellerPrdoucts(seller.Id) > 0)
             {
                 TempData["StatusMessage"] = "Products Disactivated Successfully seller id: " + seller.Id;
                 return RedirectToAction(nameof(Manage), new { id });
@@ -173,14 +187,21 @@ namespace ITech.Controllers
                 TempData["StatusMessage"] = "Error: Seller is not in the system" + seller.Id;
                 return RedirectToAction(nameof(Manage), new { id });
             }
-
-            if (await _productRepository.ActivateSellerPrdoucts(id) > 0)
+            if(!seller.Activated)
             {
-                TempData["StatusMessage"] = "Products Activated Successfully seller id: " + seller.Id;
+                TempData["StatusMessage"] = "Error: Can't Activate Products because Seller is deactivated. seller Id: " + seller.Id;
+                return RedirectToAction(nameof(Manage), new { id });
+            }
+            var activatedProductsNum = await _productRepository.ActivateSellerPrdoucts(seller.Id);
+
+            if ( activatedProductsNum > 0)
+            {
+                TempData["StatusMessage"] = "Products Activated Successfully seller id: " + seller.Id + 
+                    ". (" + activatedProductsNum + ") product activated." ;
                 return RedirectToAction(nameof(Manage), new { id });
             }
 
-            TempData["StatusMessage"] = "Error: Could not disactivate  Products. seller id: " + seller.Id;
+            TempData["StatusMessage"] = "Error: Could not activate  Products. seller id: " + seller.Id;
             return RedirectToAction(nameof(Manage), new { id });
 
         }
