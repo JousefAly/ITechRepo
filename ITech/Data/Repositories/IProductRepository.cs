@@ -37,7 +37,9 @@ namespace ITech.Data.Repositories
         bool Activate(int id);
         bool DesActivate(int id);
         //return number of desactivated products
-        int DesActivateSellerPrdoucts(string sellerId);
+        Task<int> DesActivateSellerPrdoucts(string sellerId);
+        //return number of desactivated products
+        Task<int> ActivateSellerPrdoucts(string sellerId);
 
 
     }

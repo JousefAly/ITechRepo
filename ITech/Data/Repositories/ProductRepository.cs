@@ -2,12 +2,10 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ITech.Data.Repositories
@@ -224,9 +222,23 @@ namespace ITech.Data.Repositories
             return _context.SaveChanges() > 0;
         }
 
-        public int DesActivateSellerPrdoucts(string sellerId)
+        public async Task<int> DesActivateSellerPrdoucts(string sellerId)
         {
-            return 0;
+            var products = _context.Products.Where(p => p.SellerId == sellerId);
+            foreach( var product in products)
+            {
+                product.Activated = false;
+            }
+            return await _context.SaveChangesAsync();
+        }
+        public async Task<int> ActivateSellerPrdoucts(string sellerId)
+        {
+            var products = _context.Products.Where(p => p.SellerId == sellerId);
+            foreach (var product in products)
+            {
+                product.Activated = true;
+            }
+            return await _context.SaveChangesAsync();
         }
     }
 }
