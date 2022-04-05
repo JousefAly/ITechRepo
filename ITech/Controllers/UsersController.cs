@@ -53,5 +53,45 @@ namespace ITech.Controllers
             }
 
         }
+        public async Task<ViewResult> ManageRoles(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            var model = new ManageUserRolesViewModel
+            {
+                UserId = id,
+                RoleNames = _roleManager.Roles.Select(r => r.Name).ToArray(),
+                UserRoleNmes = await _userManager.GetRolesAsync(user)
+            };
+            return View(model);
+        }
+
+
+        
+        public async Task<RedirectToActionResult> AddToRole(string userId, string roleName)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            var result = await _userManager.AddToRoleAsync(user, roleName);
+            if (!result.Succeeded)
+            {
+                TempData["StatusMessage"] = "Error: Could not Assign " + roleName + " to userId: " + userId;
+                return RedirectToAction(nameof(ManageRoles));
+            }
+            TempData["StatusMessage"] = "Successfully Assigned " + roleName + " to userId: " + userId;
+            return RedirectToAction(nameof(ManageRoles));
+        }
+        public async Task<RedirectToActionResult> RemoveFromRole(string userId, string roleName)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            var result = await _userManager.RemoveFromRoleAsync(user, roleName);
+            if (!result.Succeeded)
+            {
+                TempData["StatusMessage"] = "Error: Could not Remove " + roleName + " from userId: " + userId;
+                return RedirectToAction(nameof(ManageRoles));
+            }
+            TempData["StatusMessage"] = "Successfully Removed " + roleName + " from userId: " + userId;
+            return RedirectToAction(nameof(ManageRoles));
+        }
+
     }
 }

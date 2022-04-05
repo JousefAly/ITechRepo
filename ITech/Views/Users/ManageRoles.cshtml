@@ -1,0 +1,37 @@
+﻿@model ManageUserRolesViewModel
+
+<partial name="_StatusMessage" model="@TempData["StatusMessage"] as string" />
+
+<table class="table table-striped ">
+    <thead>
+        <tr class="bg-success text-white">
+            <th>Role</th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var roleName in Model.RoleNames)
+        {
+            <tr>
+                <td>@roleName</td>
+                <td>
+                    @if (Model.UserRoleNmes.Contains(roleName))
+                    {
+                        <a asp-action="RemoveFromRole" asp-route-userId="@Model.UserId" asp-route-roleName="@roleName">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-action="AddToRole" asp-route-userId="@Model.UserId" asp-route-roleName="@roleName">
+                            <i class="fas fa-plus text-success"></i>
+                        </a>
+
+                    }
+                </td>
+            </tr>
+
+        }
+    </tbody>
+
+</table>
