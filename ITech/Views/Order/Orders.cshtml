@@ -1,0 +1,10 @@
+﻿@model IEnumerable<Order>
+
+<h1>Orders</h1>
+
+<div>
+    @foreach (var o in Model)
+    {
+        <partial name="_OrderCard" model="o" />
+    }
+</div>

@@ -11,5 +11,6 @@ namespace ITech.Data.Repositories
     {
         //return created order Id
         int CreateOrder(Order order);
+        List<Order> GetAllOrders(bool includeDetails = false);
     }
 }

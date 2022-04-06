@@ -54,5 +54,10 @@ namespace ITech.Controllers
             ViewBag.CheckoutCompleteMessage = "Thanks for your order. Your will recieve it soon!";
             return View();
         }
+        public ViewResult Orders(bool includeDetails = false)
+        {
+
+            return includeDetails ? View(_orderRepository.GetAllOrders(true)) : View(_orderRepository.GetAllOrders());
+        }
     }
 }

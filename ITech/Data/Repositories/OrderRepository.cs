@@ -1,4 +1,5 @@
 ﻿using ITech.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +33,7 @@ namespace ITech.Data.Repositories
                     ProductId = item.ProductId,
                     Amount = item.Amount,
                 };
-           
+
                 order.OrderDetails.Add(orderDetail);
             }
             order.OrderPlaced = DateTime.Now;
@@ -41,6 +42,19 @@ namespace ITech.Data.Repositories
             return _context.SaveChanges() > 0 ? order.OrderId : 0;
 
 
+        }
+
+        public List<Order> GetAllOrders(bool includeDetails = false)
+        {
+            if (includeDetails)
+            {
+               return  _context.Orders
+                    .Include(o => o.User)
+                    .Include(o => o.OrderDetails)
+                    .ThenInclude(od => od.Product)
+                    .ToList();
+            }
+            return _context.Orders.ToList();
         }
     }
 }

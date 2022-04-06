@@ -1,0 +1,24 @@
+﻿@model Order
+
+<div class="card">
+    <div class="card-header">
+        <h4>Placed by:@Model.User.UserName</h4>
+    </div>
+    <div class="card-body">
+        <h6>Details</h6>
+        @foreach (var od in Model.OrderDetails)
+        {
+            <p>(@od.Amount)  @od.Product.Title</p>
+        }
+    </div>
+    <div class="card-footer">
+        <div class="row">
+            <div class="col-9">
+                <p>Placed in: @Model.OrderPlaced.ToString("f")</p>
+            </div>
+            <div class="col-3">
+                <p>Total: @Model.OrderTotal.ToString("c")</p>
+            </div>
+        </div>
+    </div>
+</div>
