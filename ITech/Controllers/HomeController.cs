@@ -1,7 +1,11 @@
-﻿using ITech.Data.Repositories;
+﻿using ITech.Data;
+using ITech.Data.Repositories;
 using ITech.Models;
+using ITech.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -16,14 +20,20 @@ namespace ITech.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly ApplicationDbContext _context;
+        private readonly UserManager<AppUser> _userManager;
 
         public HomeController(ILogger<HomeController> logger,
                                 IProductRepository productRepository,
-                                ICategoryRepository categoryRepository)
+                                ICategoryRepository categoryRepository,
+                                ApplicationDbContext context,
+                                UserManager<AppUser> userManager)
         {
             _logger = logger;
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
+            _context = context;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
@@ -42,9 +52,33 @@ namespace ITech.Controllers
             return View();
         }
         [Authorize]
-        public IActionResult ApplyForJob(string jobName)
+        public IActionResult ApplyForJob(string id)
         {
-            return View();
+            var userId = _userManager.GetUserId(HttpContext.User);
+            var application = _context.JobApplications.
+                FirstOrDefault(ja => ja.ApplicantId == userId && ja.JobId == id) ??
+                new JobApplication
+                {
+                    ApplicantId = userId,
+                    JobId = id,                    
+                };
+            _context.SaveChanges();
+
+            TempData["StatusMessage"] = "Job Applied, Application ID: " + application.Id;
+
+            return RedirectToAction(nameof(Jobs));
+        }
+        [Authorize]
+        public async Task<ViewResult> Jobs()
+        {
+            var userId = _userManager.GetUserId(HttpContext.User);
+            var model = new JobsViewModel
+            {
+                Jobs = await _context.Jobs.ToListAsync(),
+                JobApplications = await _context.JobApplications
+                                .Where(a => a.ApplicantId == userId).ToListAsync()
+            };
+            return View(model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -52,6 +86,7 @@ namespace ITech.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
 
 
 

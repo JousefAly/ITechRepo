@@ -97,7 +97,7 @@ namespace ITech.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-               
+
                 var user = new AppUser
                 {
                     UserName = new MailAddress(Input.Email).User,
@@ -122,7 +122,7 @@ namespace ITech.Areas.Identity.Pages.Account
                         var roleResult = await _userManager.AddToRoleAsync(user, "Seller");
                         var createdSeller = _sellerRepository.Create(user);
                         _sellerRepository.SaveChanges();
-                       
+
                     }
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -143,15 +143,16 @@ namespace ITech.Areas.Identity.Pages.Account
                     else
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
-                        if(Input.Role == "Customer" || Input.Role == "Clerk")
+                        if (Input.Role == "Seller")
+                        {
+
+                            return RedirectToAction("CompleteRegister", "Seller");
+                        }
+                        else
                         {
                             return LocalRedirect(returnUrl);
                         }
-                        if(Input.Role == "Seller")
-                        {
-                           
-                            return RedirectToAction("CompleteRegister", "Seller");
-                        }
+
                     }
                 }
                 foreach (var error in result.Errors)

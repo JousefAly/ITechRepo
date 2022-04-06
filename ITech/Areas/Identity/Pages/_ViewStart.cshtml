@@ -5,5 +5,7 @@
         Layout = "/Views/Shared/_ClerkLayout.cshtml";
     else if (User.IsInRole("Seller"))
         Layout = "/Views/Shared/_SellerLayout.cshtml";
+    else
+        Layout = "/Views/Shared/_Layout.cshtml";
 
 }
