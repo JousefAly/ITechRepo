@@ -19,6 +19,25 @@ namespace ITech.Data.Repositories
             _shoppingCart = shoppingCart;
             _context = context;
         }
+
+        public bool Accept(int orderId)
+        {
+            var order = GetById(orderId);
+            if (order == null)
+                return false;
+            order.Accepted = true;
+            return _context.SaveChanges() > 0;
+        }
+
+        public bool Refuse(int orderId)
+        {
+            var order = GetById(orderId);
+            if (order == null)
+                return false;
+            order.Accepted = false;
+            return _context.SaveChanges() > 0;
+        }
+
         public int CreateOrder(Order order)
         {
             var shoppingCartItems = _shoppingCart.GetShoppingCartItems();
@@ -56,5 +75,19 @@ namespace ITech.Data.Repositories
             }
             return _context.Orders.ToList();
         }
+        public Order GetById(int id, bool includeDetails = false)
+        {
+            if (includeDetails)
+            {
+                return _context.Orders
+                     .Include(o => o.User)
+                     .Include(o => o.OrderDetails)
+                     .ThenInclude(od => od.Product)
+                     .FirstOrDefault(o => o.OrderId == id);
+            }
+            return _context.Orders.Find(id);
+        }
+
+
     }
 }

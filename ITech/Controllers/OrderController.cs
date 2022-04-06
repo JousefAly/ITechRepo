@@ -59,5 +59,25 @@ namespace ITech.Controllers
 
             return includeDetails ? View(_orderRepository.GetAllOrders(true)) : View(_orderRepository.GetAllOrders());
         }
+        public RedirectToActionResult Accept(int id)
+        {
+            if( _orderRepository.GetById(id).Accepted || _orderRepository.Accept(id))
+            {
+                TempData["StatusMessage"] = "Order: " + id + ". Accepetd!";
+                return RedirectToAction(nameof(Orders), new { includeDetails = true });
+            }
+            TempData["StatusMessage"] = "Error: Order: " + id + ". was not accepted!";
+            return RedirectToAction(nameof(Orders), new { includeDetails = true });
+        }
+        public RedirectToActionResult Refuse(int id)
+        {
+            if (!_orderRepository.GetById(id).Accepted || _orderRepository.Refuse(id))
+            {
+                TempData["StatusMessage"] = "Order: " + id + ". Refused!";
+                return RedirectToAction(nameof(Orders), new { includeDetails = true });
+            }
+            TempData["StatusMessage"] = "Error: Order: " + id + ". was not refused !";
+            return RedirectToAction(nameof(Orders), new { includeDetails = true });
+        }
     }
 }

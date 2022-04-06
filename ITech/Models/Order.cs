@@ -12,7 +12,7 @@ namespace ITech.Models
     public class Order
     {
         public int OrderId { get; set; }
-
+        public bool Accepted { get; set; }
         [Required(ErrorMessage = "please enter your address ")]
         [Display(Name = "Address Line ")]
         [StringLength(100)]
