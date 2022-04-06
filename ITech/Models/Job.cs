@@ -14,6 +14,7 @@ namespace ITech.Models
         }
         public string Id { get; set; }
         public string JobTitle { get; set; }
+        public bool Available { get; set; }
         public List<JobApplication> JobApplications { get; set; }
     }
 }

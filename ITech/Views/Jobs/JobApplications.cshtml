@@ -1,0 +1,50 @@
+﻿@model IEnumerable<JobApplication>
+
+@{
+    ViewData["Title"] = "Job Applications";
+}
+
+<h1>Job Applicatins</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table table-striped">
+    <thead class="bg-success">
+        <tr>
+            <th>
+                Job Title
+            </th>
+            <th>
+                Applicant
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Job.JobTitle
+                </td>
+                <td>
+                    @item.Applicant.UserName
+                </td>
+                <td>
+                    @if (item.Accepted)
+                    {
+                        <span class="text-success">Accepted</span>
+                    }
+                    else
+                    {
+                        <a class="btn btn-primary"
+                           asp-controller="Jobs" asp-action="AcceptApplication" asp-route-id="@item.Id">
+                            Accept
+                        </a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

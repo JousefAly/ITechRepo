@@ -24,6 +24,14 @@ namespace ITech.Controllers
         {
             return View(await _context.Jobs.ToListAsync());
         }
+        public async Task<IActionResult> JobApplications()
+        {
+            return View(await _context.JobApplications
+                        .Include(application => application.Job)
+                        .Include(application => application.Applicant)
+                        .ToListAsync());
+        }
+
 
         // GET: Jobs/Details/5
         public async Task<IActionResult> Details(string id)
@@ -143,6 +151,15 @@ namespace ITech.Controllers
             _context.Jobs.Remove(job);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+        public RedirectToActionResult AcceptApplication(string id)
+        {
+            var application = _context.JobApplications.Find(id);
+            if (application == null)
+                return RedirectToAction(nameof(JobApplications));
+            application.Accepted = true;
+            _context.SaveChanges();
+            return RedirectToAction(nameof(JobApplications));
         }
 
         private bool JobExists(string id)
