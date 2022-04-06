@@ -26,6 +26,7 @@ namespace ITech.Data.Repositories
             if (order == null)
                 return false;
             order.Accepted = true;
+            order.AcceptedDate = DateTime.Now;
             return _context.SaveChanges() > 0;
         }
 
@@ -35,6 +36,7 @@ namespace ITech.Data.Repositories
             if (order == null)
                 return false;
             order.Accepted = false;
+            order.AcceptedDate = new DateTime(1,1,1);
             return _context.SaveChanges() > 0;
         }
 

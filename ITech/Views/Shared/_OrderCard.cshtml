@@ -1,10 +1,26 @@
 ﻿@model Order
+@{
+    var statusClass = "primary";
+    var status = "Pending";
+    string acceptedDate = "";
+    if (Model.Accepted)
+
+    {
+        status = "Accepted";
+        statusClass = "success";
+        acceptedDate = "at: " + Model.AcceptedDate.ToString("g") + ". ";
+
+    }
+}
 
 <div class="card m-1">
     <div class="card-header">
         <h4>Customer: @Model.User.UserName</h4>
         <h6>Email: @Model.User.Email</h6>
-        <h7>Status:</h7>
+        <h7 class="font-weight-bold">
+            Status:<span class="text-@statusClass"> @status</span>
+            <span class="text-secondary font-italic"> @acceptedDate</span>
+        </h7>
     </div>
     <div class="card-body">
         <div class="row">
@@ -25,6 +41,22 @@
         <div class="row">
             <div class="col-4">
                 @Model.OrderPlaced.ToString("g")
+            </div>
+            <div class="col-8">
+                @if (Model.Accepted)
+                {
+                    <a class="btn btn-danger float-right"
+                       asp-controller="Order" asp-action="Refuse" asp-route-id="@Model.OrderId">
+                        <i class="fas fa-ban"></i> Refuse
+                    </a>
+                }
+                else
+                {
+                    <a class="btn btn-success float-right"
+                       asp-controller="Order" asp-action="Accept" asp-route-id="@Model.OrderId">
+                        <i class="fas fa-check"></i> Accept
+                    </a>
+                }
             </div>
         </div>
     </div>

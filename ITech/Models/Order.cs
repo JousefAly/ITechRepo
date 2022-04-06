@@ -13,6 +13,7 @@ namespace ITech.Models
     {
         public int OrderId { get; set; }
         public bool Accepted { get; set; }
+        public DateTime AcceptedDate { get; set; }
         [Required(ErrorMessage = "please enter your address ")]
         [Display(Name = "Address Line ")]
         [StringLength(100)]

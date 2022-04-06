@@ -14,6 +14,6 @@ namespace ITech.Data.Repositories
         List<Order> GetAllOrders(bool includeDetails = false);
         bool Accept(int orderId);
         bool Refuse(int orderId);
-        Order GetById(int orderId);
+        Order GetById(int orderId, bool includeDetails = false);
     }
 }
