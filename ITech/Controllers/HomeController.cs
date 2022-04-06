@@ -1,5 +1,6 @@
 ﻿using ITech.Data.Repositories;
 using ITech.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -37,6 +38,11 @@ namespace ITech.Controllers
         }
 
         public IActionResult Privacy()
+        {
+            return View();
+        }
+        [Authorize]
+        public IActionResult ApplyForJob(string jobName)
         {
             return View();
         }

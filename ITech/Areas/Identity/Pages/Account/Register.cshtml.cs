@@ -143,7 +143,7 @@ namespace ITech.Areas.Identity.Pages.Account
                     else
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
-                        if(Input.Role == "Customer")
+                        if(Input.Role == "Customer" || Input.Role == "Clerk")
                         {
                             return LocalRedirect(returnUrl);
                         }
