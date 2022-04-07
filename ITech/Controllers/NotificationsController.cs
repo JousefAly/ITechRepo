@@ -30,7 +30,16 @@ namespace ITech.Controllers
             var user = await  _userManager.GetUserAsync(HttpContext.User);
             if (user == null)
                 return NotFound();
-            return View(await _notificationRepository.GetNotificationsAsync(user));
+            var notifications = await _notificationRepository.GetNotificationsAsync(user);
+            if (!notifications.Any())
+                return View(notifications);
+            notifications = notifications.OrderBy(n => n.Checked).ToList();           
+            return View(notifications);
+        }
+        public RedirectToActionResult Check(string id)
+        {
+            _notificationRepository.Check(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

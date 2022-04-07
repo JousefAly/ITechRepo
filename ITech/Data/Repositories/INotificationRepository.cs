@@ -18,6 +18,7 @@ namespace ITech.Data.Repositories
         Task<string[]> Notify(string senderId, List<AppUser> receivers, string message);
         Task<List<Notification>> GetNotificationsAsync(AppUser user);
         Task<List<Notification>> GetNotificationsAsync(string userId);
+        bool Check(string notificationId);
 
     }
 }

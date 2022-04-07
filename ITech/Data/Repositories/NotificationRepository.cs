@@ -21,6 +21,15 @@ namespace ITech.Data.Repositories
             _userManager = userManager;
         }
 
+        public bool Check(string notificationId)
+        {
+            var notification = _context.Notifications.Find(notificationId);
+            if (notification == null)
+                return false;
+            notification.Checked = true;
+            return _context.SaveChanges() > 0;
+        }
+
         public async Task<List<Notification>> GetNotificationsAsync(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -75,6 +84,7 @@ namespace ITech.Data.Repositories
             }
             return Array.Empty<string>();
         }
+        
 
 
     }

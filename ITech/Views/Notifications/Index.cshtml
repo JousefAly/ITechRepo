@@ -17,5 +17,11 @@
         <h6>@n.Message</h6>
         <hr class="my-1">
         <p>Sent: @n.SentTime</p>
+        @if (!n.Checked)
+        {
+            <a class="btn btn-primary" asp-action="Check" asp-route-id="@n.Id">
+                <i class="fas fa-check"></i>
+            </a>
+        }
     </div>
 }
