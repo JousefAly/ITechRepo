@@ -1,4 +1,5 @@
 ﻿using ITech.Data;
+using ITech.Data.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,17 +14,23 @@ namespace ITech.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<AppUser> _userManager;
+        private readonly INotificationRepository _notificationRepository;
 
         public NotificationsController(ApplicationDbContext context,
-                                       UserManager<AppUser> userManager)
+                                       UserManager<AppUser> userManager,
+                                       INotificationRepository  notificationRepository)
         {
             _context = context;
             _userManager = userManager;
+            _notificationRepository = notificationRepository;
         }
 
-        //public ViewResult Index()
-        //{
-        //    _userManager.GetUserId(HttpContext.User)
-        //}
+        public async  Task<IActionResult> Index()
+        {
+            var user = await  _userManager.GetUserAsync(HttpContext.User);
+            if (user == null)
+                return NotFound();
+            return View(await _notificationRepository.GetNotificationsAsync(user));
+        }
     }
 }

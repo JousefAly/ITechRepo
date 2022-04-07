@@ -11,9 +11,11 @@ namespace ITech.Data.Entites
         public Notification()
         {
             Id = Guid.NewGuid().ToString();
+            SentTime = DateTime.Now;
         }
         public string Id { get; set; }
         public string Message { get; set; }
+        public DateTime SentTime { get; set; }
         public string ReceiverId { get; set; }
         public AppUser Receiver { get; set; }
         public string SenderId { get; set; }

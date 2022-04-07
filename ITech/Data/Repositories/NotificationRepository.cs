@@ -1,5 +1,6 @@
 ﻿using ITech.Data.Entites;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ITech.Data.Repositories
 {
-    public class NotificationRepository : INotificationRespository
+    public class NotificationRepository : INotificationRepository
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<AppUser> _userManager;
@@ -19,6 +20,22 @@ namespace ITech.Data.Repositories
             _context = context;
             _userManager = userManager;
         }
+
+        public async Task<List<Notification>> GetNotificationsAsync(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+                return null;
+            return await _context.Notifications.Where(n => n.ReceiverId == userId).ToListAsync();
+        }
+
+        public async Task<List<Notification>> GetNotificationsAsync(AppUser user)
+        {
+            if (user == null)
+                return null;
+            return await _context.Notifications.Where(n => n.Receiver == user).ToListAsync();
+        }
+
         public async Task<string> Notify(string senderId, string receiverId, string message)
         {
             var sender = await _userManager.FindByIdAsync(senderId);

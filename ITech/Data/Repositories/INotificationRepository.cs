@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ITech.Data.Repositories
 {
-    public interface INotificationRespository
+    public interface INotificationRepository
     {
         //Notify Single User
         //Return  Notification Id
@@ -16,6 +16,8 @@ namespace ITech.Data.Repositories
         //Notify List of Users
         //return array of created Notification Ids
         Task<string[]> Notify(string senderId, List<AppUser> receivers, string message);
+        Task<List<Notification>> GetNotificationsAsync(AppUser user);
+        Task<List<Notification>> GetNotificationsAsync(string userId);
 
     }
 }
