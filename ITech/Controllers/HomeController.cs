@@ -56,14 +56,17 @@ namespace ITech.Controllers
         {
             var userId = _userManager.GetUserId(HttpContext.User);
             var application = _context.JobApplications.
-                FirstOrDefault(ja => ja.ApplicantId == userId && ja.JobId == id) ??
-                new JobApplication
+                FirstOrDefault(ja => ja.ApplicantId == userId && ja.JobId == id);
+            if (application == null)
+            {
+                application = new JobApplication
                 {
                     ApplicantId = userId,
-                    JobId = id,                    
+                    JobId = id,
                 };
-            _context.SaveChanges();
-
+                _context.Add(application);
+                _context.SaveChanges();
+            }
             TempData["StatusMessage"] = "Job Applied, Application ID: " + application.Id;
 
             return RedirectToAction(nameof(Jobs));

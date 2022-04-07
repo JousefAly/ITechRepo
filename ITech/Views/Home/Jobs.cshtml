@@ -4,33 +4,33 @@
 <partial name="_StatusMessage" model="@TempData["StatusMessage"]" />
 @if (Model.Jobs.Any())
 {
-    <table class="table-striped">
-        <thead class="bg-success">
-            <tr class="row">
-                <td class="col-10">
+    <table class=" table table-striped">
+        <thead>
+            <tr >
+                <th >
                     Job
-                </td>
-                <td class="col-2">
+                </th>
+                <th>
                     Apply
-                </td>
+                </th>
             </tr>
         </thead>
         <tbody>
             @foreach (var job in Model.Jobs)
             {
-                <tr class="row">
-                    <td class="col-10">
+                <tr >
+                    <td>
                         @job.JobTitle
                     </td>
                     @if (Model.JobApplications.Exists(a => a.JobId == job.Id))
                     {
-                        <td class="col-2 text-success">
+                        <td class="text-success">
                             Applied
                         </td>
                     }
                     else
                     {
-                        <td class="col-2">
+                        <td >
                             <a class="btn btn-primary" asp-action="ApplyForJob" asp-route-id="@job.Id">
                                 Apply
                             </a>

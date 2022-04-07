@@ -159,7 +159,7 @@ namespace ITech.Controllers
                 return RedirectToAction(nameof(JobApplications));
             application.Accepted = true;
             _context.SaveChanges();
-            return RedirectToAction(nameof(JobApplications));
+            return RedirectToAction("Users","Index");
         }
 
         private bool JobExists(string id)
