@@ -43,6 +43,18 @@ namespace ITech.Data
                 .WithOne()
                 .OnDelete(DeleteBehavior.SetNull);
 
+            builder.Entity<Notification>()
+                .HasOne(n => n.Receiver)
+                .WithMany(r => r.Notifications)
+                .HasForeignKey(n => n.ReceiverId);
+
+
+            builder.Entity<Notification>()
+                .HasOne(n => n.Sender)
+                .WithMany( s => s.SentNotifications)
+                .HasForeignKey(n => n.SenderId);
+                
+
             base.OnModelCreating(builder);
         }
     }

@@ -10,6 +10,7 @@ namespace ITech.Data
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public List<Notification>  Notifications { get; set; }
+        public List<Notification> SentNotifications { get; set; }
         public byte[] ProfilePicture { get; set; }
     }
 }
