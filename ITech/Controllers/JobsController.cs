@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ITech.Data;
 using ITech.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ITech.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class JobsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -159,7 +161,7 @@ namespace ITech.Controllers
                 return RedirectToAction(nameof(JobApplications));
             application.Accepted = true;
             _context.SaveChanges();
-            return RedirectToAction("Users","Index");
+            return RedirectToAction("Index","Users", new { idFilter = application.ApplicantId});
         }
 
         private bool JobExists(string id)

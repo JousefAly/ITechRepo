@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -32,8 +33,27 @@ namespace ITech.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string idFilter = "")
         {
+            if (!string.IsNullOrEmpty(idFilter))
+            {
+                var user = await _userManager.FindByIdAsync(idFilter);
+                var userModel = new List<UserViewModel>
+                {
+                    new UserViewModel
+                    {
+                    Id = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    Roles = _userManager.GetRolesAsync(user).Result
+                    }
+
+                };
+
+                return View(userModel);
+            }
             var users = await _userManager.Users.Select(usr => new UserViewModel
             {
                 Id = usr.Id,
@@ -111,7 +131,7 @@ namespace ITech.Controllers
             var model = new ManageUserViewModel
             {
                 User = user,
-                Seller = _sellerRepository.GetUserSeller(user,  includeProducts: true)
+                Seller = _sellerRepository.GetUserSeller(user, includeProducts: true)
             };
             return View(model);
         }
@@ -123,7 +143,7 @@ namespace ITech.Controllers
                 TempData["StatusMessage"] = "Seller Already Activated  seller id: " + seller.Id;
                 return RedirectToAction(nameof(Manage), new { id });
             }
-            seller.Activated = true;            
+            seller.Activated = true;
             if (_context.SaveChanges() > 0)
             {
                 TempData["StatusMessage"] = "Seller Activated Successfully seller id: " + seller.Id;
@@ -187,17 +207,17 @@ namespace ITech.Controllers
                 TempData["StatusMessage"] = "Error: Seller is not in the system" + seller.Id;
                 return RedirectToAction(nameof(Manage), new { id });
             }
-            if(!seller.Activated)
+            if (!seller.Activated)
             {
                 TempData["StatusMessage"] = "Error: Can't Activate Products because Seller is deactivated. seller Id: " + seller.Id;
                 return RedirectToAction(nameof(Manage), new { id });
             }
             var activatedProductsNum = await _productRepository.ActivateSellerPrdoucts(seller.Id);
 
-            if ( activatedProductsNum > 0)
+            if (activatedProductsNum > 0)
             {
-                TempData["StatusMessage"] = "Products Activated Successfully seller id: " + seller.Id + 
-                    ". (" + activatedProductsNum + ") product activated." ;
+                TempData["StatusMessage"] = "Products Activated Successfully seller id: " + seller.Id +
+                    ". (" + activatedProductsNum + ") product activated.";
                 return RedirectToAction(nameof(Manage), new { id });
             }
 
