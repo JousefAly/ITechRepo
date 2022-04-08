@@ -19,17 +19,20 @@ namespace ITech.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ISellerRepository _sellerRepository;
         private readonly IProductRepository _productRepository;
+        private readonly INotificationRepository _notificationRepository;
         private readonly ApplicationDbContext _context;
 
         public UsersController(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager,
                                 ISellerRepository sellerRepository,
                                 IProductRepository productRepository,
+                                INotificationRepository notificationRepository,
                                 ApplicationDbContext context)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _sellerRepository = sellerRepository;
             _productRepository = productRepository;
+            _notificationRepository = notificationRepository;
             _context = context;
         }
 
@@ -225,7 +228,33 @@ namespace ITech.Controllers
             return RedirectToAction(nameof(Manage), new { id });
 
         }
-
+        public async Task<IActionResult> Notify(string id)
+        {
+            var notification = new Notification
+            {
+                ReceiverId = id,
+                Receiver = await _userManager.FindByIdAsync(id),
+                SenderId = _userManager.GetUserId(HttpContext.User)
+            };
+            return View(notification);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Notify(Notification model)
+        {
+            if (string.IsNullOrEmpty(model.Message))
+            {
+                TempData["StatusMessage"] = "Error: Invalid Message.";
+                return RedirectToAction(nameof(Notify), new { id = model.ReceiverId });
+            }
+            var notificationId = await _notificationRepository.Notify(model.SenderId, model.ReceiverId, model.Message);
+            if (string.IsNullOrEmpty(notificationId))
+            {
+                TempData["StatusMessage"] = "Error: Could not notify user";
+                return RedirectToAction(nameof(Index));
+            }
+            TempData["StatusMessage"] = "Notified User: " + model.ReceiverId + ". Notification Id: " + notificationId;
+            return RedirectToAction(nameof(Index));
+        }
 
     }
 }

@@ -1,0 +1,6 @@
+﻿@{ if (User.IsInRole("Admin"))
+        Layout = "_AdminLayout";
+    else if (User.IsInRole("Clerk"))
+        Layout = "_ClerkLayout";
+
+}
