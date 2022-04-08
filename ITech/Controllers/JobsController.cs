@@ -8,17 +8,25 @@ using Microsoft.EntityFrameworkCore;
 using ITech.Data;
 using ITech.Models;
 using Microsoft.AspNetCore.Authorization;
+using ITech.Data.Repositories;
+using Microsoft.AspNetCore.Identity;
 
 namespace ITech.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    [Authorize(Roles = "Admin")]
     public class JobsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly INotificationRepository _notificationRepository;
+        private readonly UserManager<AppUser> _userManager;
 
-        public JobsController(ApplicationDbContext context)
+        public JobsController(ApplicationDbContext context,
+                                INotificationRepository notificationRepository,
+                                UserManager<AppUser> userManager)
         {
             _context = context;
+            _notificationRepository = notificationRepository;
+            _userManager = userManager;
         }
 
         // GET: Jobs
@@ -61,7 +69,7 @@ namespace ITech.Controllers
 
         // POST: Jobs/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
-      
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,JobTitle")] Job job)
@@ -93,7 +101,7 @@ namespace ITech.Controllers
 
         // POST: Jobs/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("Id,JobTitle")] Job job)
@@ -154,14 +162,17 @@ namespace ITech.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        public RedirectToActionResult AcceptApplication(string id)
+        public async Task<RedirectToActionResult> AcceptApplication(string id)
         {
             var application = _context.JobApplications.Find(id);
             if (application == null)
                 return RedirectToAction(nameof(JobApplications));
             application.Accepted = true;
             _context.SaveChanges();
-            return RedirectToAction("Index","Users", new { idFilter = application.ApplicantId});
+            var senderId = _userManager.GetUserId(HttpContext.User);
+            var message = "Congratulations, your application with id: (" + application.Id + ") is Accepted!";
+            await _notificationRepository.Notify(senderId, application.ApplicantId, message);
+            return RedirectToAction("Index", "Users", new { idFilter = application.ApplicantId });
         }
 
         private bool JobExists(string id)
