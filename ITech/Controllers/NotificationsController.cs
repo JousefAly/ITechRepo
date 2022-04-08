@@ -2,10 +2,7 @@
 using ITech.Data.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ITech.Controllers
@@ -33,7 +30,7 @@ namespace ITech.Controllers
             var notifications = await _notificationRepository.GetNotificationsAsync(user);
             if (!notifications.Any())
                 return View(notifications);
-            notifications = notifications.OrderBy(n => n.Checked).ToList();           
+            notifications = notifications.OrderByDescending(n => n.SentTime).ToList();           
             return View(notifications);
         }
         public RedirectToActionResult Check(string id)
