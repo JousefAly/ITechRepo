@@ -27,6 +27,7 @@ namespace ITech.Data.Repositories
             if (notification == null)
                 return false;
             notification.Checked = true;
+            notification.LastCheckTime = DateTime.Now;
             return _context.SaveChanges() > 0;
         }
 
