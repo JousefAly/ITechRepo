@@ -25,6 +25,9 @@
                 <td>@user.Email</td>
                 <td>@string.Join(" , ", user.Roles.ToList())</td>
                 <td>
+                    <a asp-action="Notify" asp-route-id="@user.Id">
+                        <i class="fas fa-envelope" title="Send notification"></i>
+                    </a>
                     <a  asp-controller="Users" asp-action="ManageRoles" asp-route-id="@user.Id">
                     <i class="fas fa-file-contract" title="Manage Roles"></i>
                     </a>

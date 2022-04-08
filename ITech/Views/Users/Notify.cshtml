@@ -4,8 +4,9 @@
 
 <form asp-controller="Users" asp-action="Notify" method="post">
     <div hidden>
+        <input asp-for="Id" value=""/>
         <input asp-for="ReceiverId" />
-        <input asp-for="SenderId"/>
+        <input asp-for="SenderId" />
     </div>
     <div class="form-group">
         <label asp-for="Message" class="control-label"></label>
