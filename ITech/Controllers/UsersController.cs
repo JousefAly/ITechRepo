@@ -115,6 +115,8 @@ namespace ITech.Controllers
             TempData["StatusMessage"] = "Successfully Assigned (" + roleName + ") to userId: " + userId;
             var message = "You are Assigned as " + roleName + ".";
             await _notificationRepository.Notify(_userManager.GetUserId(HttpContext.User), user.Id, message);
+
+
             return RedirectToAction(nameof(ManageRoles), new { id = userId });
         }
 
