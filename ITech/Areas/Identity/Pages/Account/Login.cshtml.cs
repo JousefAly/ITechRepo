@@ -85,7 +85,7 @@ namespace ITech.Areas.Identity.Pages.Account
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
 
-                
+
                 string username = Input.Email;
 
                 if (_userManager.FindByEmailAsync(Input.Email).Result != null)
@@ -102,11 +102,15 @@ namespace ITech.Areas.Identity.Pages.Account
                     {
                         returnUrl = "~/Admin";
                     }
-                    else if(await _userManager.IsInRoleAsync(user, "Seller"))
+                    else if (await _userManager.IsInRoleAsync(user, "Clerk"))
+                    {
+                        returnUrl = "~/Clerk";
+                    }
+                    else if (await _userManager.IsInRoleAsync(user, "Seller"))
                     {
                         returnUrl = "~/Seller/Index";
                     }
-                    
+
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
