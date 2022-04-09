@@ -11,7 +11,7 @@
         status = "Accepted";
         statusClass = "success";
         handledDate = "at: " + Model.OrderHandeled.ToString("g") + ". ";
-        HandledBy = Model.Handler.UserName;
+        HandledBy = " by: " + Model.Handler.UserName;
 
     }
     else if (!Model.Accepted && hasHandleDate)
@@ -19,7 +19,7 @@
         status = "Refused";
         statusClass = "danger";
         handledDate = "at: " + Model.OrderHandeled.ToString("g") + ". ";
-        HandledBy = Model.Handler.UserName;
+        HandledBy = " by: " +Model.Handler.UserName;
     }
 
 }
@@ -31,6 +31,7 @@
         <h7 class="font-weight-bold">
             Status:<span class="text-@statusClass"> @status</span>
             <span class="text-secondary font-italic"> @handledDate</span>
+            <span class="text-secondary font-italic"> @HandledBy</span>
         </h7>
     </div>
     <div class="card-body">
