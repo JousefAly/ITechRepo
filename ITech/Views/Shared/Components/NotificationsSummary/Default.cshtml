@@ -1,0 +1,15 @@
+﻿@model int
+@if(Model > 0)
+{ 
+<a class="nav-link text-danger" asp-controller="Notifications" asp-action="Index" title="Notifications">
+    <i class="fas fa-bell"></i>
+    <span class="badge">@Model</span>
+</a>
+}
+else
+{
+<a class="nav-link" asp-controller="Notifications" asp-action="Index" title="Notifications">
+    <i class="fas fa-bell"></i>
+   
+</a>
+}
