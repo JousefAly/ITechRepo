@@ -53,7 +53,15 @@ namespace ITech.Data
                 .HasOne(n => n.Sender)
                 .WithMany( s => s.SentNotifications)
                 .HasForeignKey(n => n.SenderId);
-                
+
+            builder.Entity<Order>()
+                .HasOne(o => o.Handler)
+                .WithMany()
+                .HasForeignKey(o => o.HandlerId);
+            builder.Entity<Order>()
+                .HasOne(o => o.User)
+                .WithMany()
+                .HasForeignKey(o => o.UserId);
 
             base.OnModelCreating(builder);
         }

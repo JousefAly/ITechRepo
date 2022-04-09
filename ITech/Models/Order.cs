@@ -43,6 +43,8 @@ namespace ITech.Models
         public List<OrderDetail> OrderDetails { get; set; }
         public string UserId { get; set; }
         public AppUser User { get; set; }
+        public string HandlerId { get; set; }
+        public AppUser Handler { get; set; }
 
 
     }
