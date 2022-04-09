@@ -1,4 +1,5 @@
 ﻿using ITech.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,31 +13,36 @@ namespace ITech.Data.Repositories
     {
         private readonly ShoppingCart _shoppingCart;
         private readonly ApplicationDbContext _context;
+        
 
         public OrderRepository(ShoppingCart shoppingCart,
-                               ApplicationDbContext context)
+                               ApplicationDbContext context)                               
         {
             _shoppingCart = shoppingCart;
             _context = context;
+            
         }
 
-        public bool Accept(int orderId)
+        public bool Accept(int orderId, string handlerId)
         {
+            
             var order = GetById(orderId);
             if (order == null)
                 return false;
             order.Accepted = true;
-            order.AcceptedDate = DateTime.Now;
+            order.HandlerId = handlerId;
+            order.OrderHandeled = DateTime.Now;
             return _context.SaveChanges() > 0;
         }
 
-        public bool Refuse(int orderId)
+        public bool Refuse(int orderId, string handlerId)
         {
             var order = GetById(orderId);
             if (order == null)
                 return false;
             order.Accepted = false;
-            order.AcceptedDate = new DateTime(1,1,1);
+            order.HandlerId = handlerId;
+            order.OrderHandeled = DateTime.Now;
             return _context.SaveChanges() > 0;
         }
 

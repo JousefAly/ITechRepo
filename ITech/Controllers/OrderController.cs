@@ -61,7 +61,7 @@ namespace ITech.Controllers
         }
         public RedirectToActionResult Accept(int id)
         {
-            if( _orderRepository.GetById(id).Accepted || _orderRepository.Accept(id))
+            if( _orderRepository.GetById(id).Accepted || _orderRepository.Accept(id, _userManager.GetUserId(HttpContext.User)))
             {
                 TempData["StatusMessage"] = "Order: " + id + ". Accepetd!";
                 return RedirectToAction(nameof(Orders), new { includeDetails = true });
@@ -71,7 +71,7 @@ namespace ITech.Controllers
         }
         public RedirectToActionResult Refuse(int id)
         {
-            if (!_orderRepository.GetById(id).Accepted || _orderRepository.Refuse(id))
+            if (!_orderRepository.GetById(id).Accepted || _orderRepository.Refuse(id, _userManager.GetUserId(HttpContext.User)))
             {
                 TempData["StatusMessage"] = "Order: " + id + ". Refused!";
                 return RedirectToAction(nameof(Orders), new { includeDetails = true });

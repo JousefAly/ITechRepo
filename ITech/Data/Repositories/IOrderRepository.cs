@@ -12,8 +12,8 @@ namespace ITech.Data.Repositories
         //return created order Id
         int CreateOrder(Order order);
         List<Order> GetAllOrders(bool includeDetails = false);
-        bool Accept(int orderId);
-        bool Refuse(int orderId);
+        bool Accept(int orderId, string handlerId);
+        bool Refuse(int orderId, string handlerId);
         Order GetById(int orderId, bool includeDetails = false);
     }
 }

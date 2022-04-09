@@ -2,15 +2,23 @@
 @{
     var statusClass = "primary";
     var status = "Pending";
-    string acceptedDate = "";
+    string handledDate = "";
+    bool hasHandleDate = DateTime.Compare(Model.OrderHandeled, new DateTime(1,1,1800)) > 0;
     if (Model.Accepted)
 
     {
         status = "Accepted";
         statusClass = "success";
-        acceptedDate = "at: " + Model.AcceptedDate.ToString("g") + ". ";
+        handledDate = "at: " + Model.OrderHandeled.ToString("g") + ". ";
 
     }
+    else if (!Model.Accepted && hasHandleDate)
+    {
+        status = "Refused";
+        statusClass = "danger";
+        handledDate = "at: " + Model.OrderHandeled.ToString("g") + ". ";
+    }
+
 }
 
 <div class="card m-1">
@@ -19,7 +27,7 @@
         <h6>Email: @Model.User.Email</h6>
         <h7 class="font-weight-bold">
             Status:<span class="text-@statusClass"> @status</span>
-            <span class="text-secondary font-italic"> @acceptedDate</span>
+            <span class="text-secondary font-italic"> @handledDate</span>
         </h7>
     </div>
     <div class="card-body">

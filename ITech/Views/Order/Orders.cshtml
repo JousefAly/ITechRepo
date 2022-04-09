@@ -22,7 +22,7 @@
                     <td>@o.OrderId</td>
                     <td>@o.OrderTotal.ToString("c")</td>
                     <td>@o.Accepted</td>
-                    <td>@o.AcceptedDate.ToString("g")</td>
+                    <td>@o.OrderHandeled.ToString("g")</td>
                     <td>
                         <a class="btn btn-danger float-right"
                            asp-controller="Order" asp-action="Refuse" asp-route-id="@o.OrderId">
