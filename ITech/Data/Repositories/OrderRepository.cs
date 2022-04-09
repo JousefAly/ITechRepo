@@ -13,19 +13,19 @@ namespace ITech.Data.Repositories
     {
         private readonly ShoppingCart _shoppingCart;
         private readonly ApplicationDbContext _context;
-        
+
 
         public OrderRepository(ShoppingCart shoppingCart,
-                               ApplicationDbContext context)                               
+                               ApplicationDbContext context)
         {
             _shoppingCart = shoppingCart;
             _context = context;
-            
+
         }
 
         public bool Accept(int orderId, string handlerId)
         {
-            
+
             var order = GetById(orderId);
             if (order == null)
                 return false;
@@ -75,11 +75,12 @@ namespace ITech.Data.Repositories
         {
             if (includeDetails)
             {
-               return  _context.Orders
-                    .Include(o => o.User)
-                    .Include(o => o.OrderDetails)
-                    .ThenInclude(od => od.Product)
-                    .ToList();
+                return _context.Orders
+                     .Include(o => o.User)
+                     .Include(o => o.Handler)
+                     .Include(o => o.OrderDetails)
+                     .ThenInclude(od => od.Product)
+                     .ToList();
             }
             return _context.Orders.ToList();
         }

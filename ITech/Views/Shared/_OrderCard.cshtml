@@ -3,13 +3,15 @@
     var statusClass = "primary";
     var status = "Pending";
     string handledDate = "";
-    bool hasHandleDate = DateTime.Compare(Model.OrderHandeled, new DateTime(1,1,1800)) > 0;
+    string HandledBy = "";
+    bool hasHandleDate = DateTime.Compare(Model.OrderHandeled, new DateTime(1800,1,1)) > 0;
     if (Model.Accepted)
 
     {
         status = "Accepted";
         statusClass = "success";
         handledDate = "at: " + Model.OrderHandeled.ToString("g") + ". ";
+        HandledBy = Model.Handler.UserName;
 
     }
     else if (!Model.Accepted && hasHandleDate)
@@ -17,6 +19,7 @@
         status = "Refused";
         statusClass = "danger";
         handledDate = "at: " + Model.OrderHandeled.ToString("g") + ". ";
+        HandledBy = Model.Handler.UserName;
     }
 
 }
