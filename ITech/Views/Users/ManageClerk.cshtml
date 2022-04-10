@@ -1,20 +1,20 @@
 ﻿@model ManageUserViewModel
 
-<h1>Manage Clerk</h1>
+<h1>Manage Clerk, @Model.User.UserName</h1>
 
 <div class="jumbotron">
     <h2>Clerk Orders:</h2>
     <div class="row">
         @foreach (var o in Model.ClerkManagedOrders)
         {
-            <div class=" col-6 col-md-3">
+            <div class=" col-md-6 ">
                 <partial name="_OrderCard" model="o" />
             </div>
         }
     </div>
 
 </div>
-@if (Model.Orders != null)
+@if (Model.Orders.Any())
 {
     <div class="jumbotron">
         <h2>Orders of Clerk:</h2>

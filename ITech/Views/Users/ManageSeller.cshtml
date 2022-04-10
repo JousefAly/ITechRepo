@@ -1,7 +1,7 @@
 ﻿@model ManageUserViewModel
 
 <partial name="_StatusMessage" model="@TempData["StatusMessage"]" />
-
+<h1>Manage Seller, @Model.User.UserName</h1>
 
 <!--Manage Seller-->
 <div class="card ">
@@ -32,22 +32,22 @@
     </div>
 </div>
 
-<!--Add Orders and own orders here-->
-@if (Model.SellerOrders != null)
-{
-    <div class="jumbotron">
-        <h2>Seller Products stats:</h2>
-        <!-- loop for a partial that display product stats-->
+<!--Add Products and own orders here-->
+@*if (Model.SellerOrders.Any())
+    {
+        <div class="jumbotron">
+            <h2>Seller Products stats:</h2>
+            <!-- loop for a partial that display product stats-->
 
-    </div>
-}
-            else
-            {
-                <div class="jumbotron">
-                    <h2>Seller Does not have Products!</h2>
-                </div>
-            }
-@if (Model.Orders != null)
+        </div>
+    }
+    else
+    {
+        <div class="jumbotron">
+            <h2>Seller Does not have Products!</h2>
+        </div>
+    }*@
+@if (Model.Orders.Any())
 {
     <div class="jumbotron">
         <h2>Ordrers Sellers Asked From ITech:</h2>
