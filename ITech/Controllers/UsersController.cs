@@ -1,6 +1,7 @@
 ﻿using ITech.Data;
 using ITech.Data.Entites;
 using ITech.Data.Repositories;
+using ITech.Models;
 using ITech.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -20,12 +21,14 @@ namespace ITech.Controllers
         private readonly ISellerRepository _sellerRepository;
         private readonly IProductRepository _productRepository;
         private readonly INotificationRepository _notificationRepository;
+        private readonly IOrderRepository _orderRepository;
         private readonly ApplicationDbContext _context;
 
         public UsersController(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager,
                                 ISellerRepository sellerRepository,
                                 IProductRepository productRepository,
                                 INotificationRepository notificationRepository,
+                                IOrderRepository orderRepository,
                                 ApplicationDbContext context)
         {
             _userManager = userManager;
@@ -33,6 +36,7 @@ namespace ITech.Controllers
             _sellerRepository = sellerRepository;
             _productRepository = productRepository;
             _notificationRepository = notificationRepository;
+            _orderRepository = orderRepository;
             _context = context;
         }
 
@@ -135,12 +139,37 @@ namespace ITech.Controllers
         public async Task<ViewResult> Manage(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
-            var model = new ManageUserViewModel
+            if (await _userManager.IsInRoleAsync(user, "Seller"))
             {
-                User = user,
-                Seller = _sellerRepository.GetUserSeller(user, includeProducts: true)
-            };
-            return View(model);
+
+
+                var model = new ManageUserViewModel
+                {
+                    User = user,
+                    Seller = _sellerRepository.GetUserSeller(user, includeProducts: true),
+                    Orders = _orderRepository.GetUserOrders(id, includeDetails: true)
+                };
+                return View("ManageSeller", model);
+            }
+            else if (await _userManager.IsInRoleAsync(user, "Clerk"))
+            {
+                var model = new ManageUserViewModel
+                {
+                    User = user,
+                    ClerkManagedOrders = _orderRepository.GetHandlerOrders(id, includeDetails: true),
+                    Orders = _orderRepository.GetUserOrders(id, includeDetails: true)
+                };
+                return View("ManageClerk", model);
+            }
+            else
+            {
+                var model = new ManageUserViewModel
+                {
+                    User = user,
+                    Orders = _orderRepository.GetUserOrders(id, includeDetails: true)
+                };
+                return View("ManageDefaultUser", model);
+            }
         }
         public RedirectToActionResult ActivateSeller(string id)
         {

@@ -1,0 +1,19 @@
+﻿@model ManageUserViewModel
+<h1>Manage User</h1>
+
+@if (Model.Orders != null)
+{
+    <div class="jumbotron">
+        <h2>User Placed Orders:</h2>
+        <div class="row">
+            @foreach (var o in Model.Orders)
+            {
+                <div class=" col-6 col-md-3">
+                    <partial name="_OrderCard" model="o" />
+                </div>
+            }
+        </div>
+
+    </div>
+
+}

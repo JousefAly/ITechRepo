@@ -1,0 +1,31 @@
+﻿@model ManageUserViewModel
+
+<h1>Manage Clerk</h1>
+
+<div class="jumbotron">
+    <h2>Clerk Orders:</h2>
+    <div class="row">
+        @foreach (var o in Model.ClerkManagedOrders)
+        {
+            <div class=" col-6 col-md-3">
+                <partial name="_OrderCard" model="o" />
+            </div>
+        }
+    </div>
+
+</div>
+@if (Model.Orders != null)
+{
+    <div class="jumbotron">
+        <h2>Orders of Clerk:</h2>
+        <div class="row">
+            @foreach (var o in Model.Orders)
+            {
+                <div class=" col-6 col-md-3">
+                    <partial name="_OrderCard" model="o" />
+                </div>
+            }
+        </div>
+
+    </div>
+}

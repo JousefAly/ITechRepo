@@ -97,6 +97,32 @@ namespace ITech.Data.Repositories
             return _context.Orders.Find(id);
         }
 
+        public Order[] GetHandlerOrders(string handlerId, bool includeDetails = false)
+        {
+            if (includeDetails)
+            {
+                return _context.Orders
+                     .Include(o => o.User)
+                     .Include(o => o.OrderDetails)
+                     .ThenInclude(od => od.Product)
+                     .Where(o => o.HandlerId == handlerId)
+                     .ToArray();
+            }
+            return _context.Orders.Where(o => o.HandlerId == handlerId).ToArray();
+        }
 
+        public Order[] GetUserOrders(string userId, bool includeDetails = false)
+        {
+            if (includeDetails)
+            {
+                return _context.Orders
+                     .Include(o => o.User)
+                     .Include(o => o.OrderDetails)
+                     .ThenInclude(od => od.Product)
+                     .Where(o => o.UserId == userId)
+                     .ToArray();
+            }
+            return _context.Orders.Where(o => o.UserId == userId).ToArray();
+        }
     }
 }

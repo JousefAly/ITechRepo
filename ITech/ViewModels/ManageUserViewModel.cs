@@ -1,5 +1,6 @@
 ﻿using ITech.Data;
 using ITech.Data.Entites;
+using ITech.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,7 @@ namespace ITech.ViewModels
     {
         public AppUser User { get; set; }
         public Seller Seller { get; set; }
+        public Order[] ClerkManagedOrders { get; set; }
+        public Order[] Orders { get; set; }
     }
 }
