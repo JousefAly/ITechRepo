@@ -11,11 +11,11 @@ namespace ITech.Data.Repositories
     {
         //Notify Single User
         //Return  Notification Id
-        Task<string> Notify(string senderId, string receiverId, string message);
+        Task<string> NotifyAsync(string senderId, string receiverId, string message);
 
         //Notify List of Users
         //return array of created Notification Ids
-        Task<string[]> Notify(string senderId, List<AppUser> receivers, string message);
+        Task<string[]> NotifyAsync(string senderId, List<AppUser> receivers, string message);
         Task<List<Notification>> GetNotificationsAsync(AppUser user);
         Task<List<Notification>> GetNotificationsAsync(string userId);
         bool Check(string notificationId);

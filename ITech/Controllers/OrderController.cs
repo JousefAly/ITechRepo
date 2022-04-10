@@ -51,7 +51,7 @@ namespace ITech.Controllers
                 var admin = await _userManager.FindByNameAsync("admin");
                 var message = "You placed Your order Successfully. order Id = " + orderId
                         + ". Order Total: " + order.OrderTotal.ToString("c");
-                await _notificationRepository.Notify(admin.Id, order.User.Id, message);
+                await _notificationRepository.NotifyAsync(admin.Id, order.User.Id, message);
                 _shoppingCart.ClearCart();
                 return RedirectToAction(nameof(CheckoutComplete));
             }
@@ -68,14 +68,14 @@ namespace ITech.Controllers
             return includeDetails ? View(_orderRepository.GetAllOrders(true)) : View(_orderRepository.GetAllOrders());
         }
         [Authorize(Roles = "Admin,Clerk")]
-        public RedirectToActionResult Accept(int id)
+        public async Task<RedirectToActionResult> Accept(int id)
         {
             var order = _orderRepository.GetById(id);
             if (order.Accepted || _orderRepository.Accept(id, _userManager.GetUserId(HttpContext.User)))
             {
                 var message = "Your order : " + order.OrderId + ", With Total amount" + order.OrderTotal.ToString("c") +
                     ". Accepted Successfully. Order will arive soon!";
-                _notificationRepository.Notify(_userManager.GetUserId(HttpContext.User), order.UserId, message);
+                await _notificationRepository.NotifyAsync(_userManager.GetUserId(HttpContext.User), order.UserId, message);
                 TempData["StatusMessage"] = "Order: " + id + ". Accepetd!";
                 return RedirectToAction(nameof(Orders), new { includeDetails = true });
             }
@@ -83,14 +83,14 @@ namespace ITech.Controllers
             return RedirectToAction(nameof(Orders), new { includeDetails = true });
         }
         [Authorize(Roles = "Admin,Clerk")]
-        public RedirectToActionResult Refuse(int id)
+        public async Task<RedirectToActionResult> Refuse(int id)
         {
             var order = _orderRepository.GetById(id);
             if (!order.Accepted || _orderRepository.Refuse(id, _userManager.GetUserId(HttpContext.User)))
             {
                 var message = "Your order : " + order.OrderId + ", With Total amount" + order.OrderTotal.ToString("c") +
                    " is refused unfortunaltely!";
-                _notificationRepository.Notify(_userManager.GetUserId(HttpContext.User), order.UserId, message);
+               await _notificationRepository.NotifyAsync(_userManager.GetUserId(HttpContext.User), order.UserId, message);
                 TempData["StatusMessage"] = "Order: " + id + ". Refused!";
                 return RedirectToAction(nameof(Orders), new { includeDetails = true });
             }

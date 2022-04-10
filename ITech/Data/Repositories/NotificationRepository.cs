@@ -46,7 +46,7 @@ namespace ITech.Data.Repositories
             return await _context.Notifications.Where(n => n.Receiver == user).ToListAsync();
         }
 
-        public async Task<string> Notify(string senderId, string receiverId, string message)
+        public async Task<string> NotifyAsync(string senderId, string receiverId, string message)
         {
             var sender = await _userManager.FindByIdAsync(senderId);
             var receiver = await _userManager.FindByIdAsync(receiverId);
@@ -64,7 +64,7 @@ namespace ITech.Data.Repositories
 
         }
 
-        public async Task<string[]> Notify(string senderId, List<AppUser> receivers, string message)
+        public async Task<string[]> NotifyAsync(string senderId, List<AppUser> receivers, string message)
         {
             var sender = await _userManager.FindByIdAsync(senderId);
             if (sender == null || !receivers.Any() || string.IsNullOrEmpty(message))

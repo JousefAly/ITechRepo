@@ -71,7 +71,7 @@ namespace ITech.Controllers
                 _context.SaveChanges();
                 var admin = await _userManager.FindByNameAsync("admin");
                 var message = "Successfully Applied your application: " + application.Id + ". You will get response soon!";
-                await _notificationRepository.Notify(admin.Id, userId, message);
+                await _notificationRepository.NotifyAsync(admin.Id, userId, message);
             }
             TempData["StatusMessage"] = "Job Applied, Application ID: " + application.Id;
 

@@ -171,7 +171,7 @@ namespace ITech.Controllers
             _context.SaveChanges();
             var senderId = _userManager.GetUserId(HttpContext.User);
             var message = "Congratulations, your application with id: (" + application.Id + ") is Accepted!";
-            await _notificationRepository.Notify(senderId, application.ApplicantId, message);
+            await _notificationRepository.NotifyAsync(senderId, application.ApplicantId, message);
             return RedirectToAction("Index", "Users", new { idFilter = application.ApplicantId });
         }
 

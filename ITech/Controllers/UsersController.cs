@@ -114,7 +114,7 @@ namespace ITech.Controllers
             }
             TempData["StatusMessage"] = "Successfully Assigned (" + roleName + ") to userId: " + userId;
             var message = "You are Assigned as " + roleName + ".";
-            await _notificationRepository.Notify(_userManager.GetUserId(HttpContext.User), user.Id, message);
+            await _notificationRepository.NotifyAsync(_userManager.GetUserId(HttpContext.User), user.Id, message);
 
 
             return RedirectToAction(nameof(ManageRoles), new { id = userId });
@@ -250,7 +250,7 @@ namespace ITech.Controllers
                 TempData["StatusMessage"] = "Error: Invalid Message.";
                 return RedirectToAction(nameof(Notify), new { id = model.ReceiverId });
             }
-            var notificationId = await _notificationRepository.Notify(model.SenderId, model.ReceiverId, model.Message);
+            var notificationId = await _notificationRepository.NotifyAsync(model.SenderId, model.ReceiverId, model.Message);
             if (string.IsNullOrEmpty(notificationId))
             {
                 TempData["StatusMessage"] = "Error: Could not notify user";
