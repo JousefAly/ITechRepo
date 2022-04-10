@@ -22,18 +22,21 @@ namespace ITech.Controllers
         private readonly ICategoryRepository _categoryRepository;
         private readonly ApplicationDbContext _context;
         private readonly UserManager<AppUser> _userManager;
+        private readonly INotificationRepository _notificationRepository;
 
         public HomeController(ILogger<HomeController> logger,
                                 IProductRepository productRepository,
                                 ICategoryRepository categoryRepository,
                                 ApplicationDbContext context,
-                                UserManager<AppUser> userManager)
+                                UserManager<AppUser> userManager,
+                                INotificationRepository notificationRepository)
         {
             _logger = logger;
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
             _context = context;
             _userManager = userManager;
+            _notificationRepository = notificationRepository;
         }
 
         public IActionResult Index()
@@ -52,7 +55,7 @@ namespace ITech.Controllers
             return View();
         }
         [Authorize]
-        public IActionResult ApplyForJob(string id)
+        public async Task<IActionResult> ApplyForJob(string id)
         {
             var userId = _userManager.GetUserId(HttpContext.User);
             var application = _context.JobApplications.
@@ -66,6 +69,9 @@ namespace ITech.Controllers
                 };
                 _context.Add(application);
                 _context.SaveChanges();
+                var admin = await _userManager.FindByNameAsync("admin");
+                var message = "Successfully Applied your application: " + application.Id + ". You will get response soon!";
+                await _notificationRepository.Notify(admin.Id, userId, message);
             }
             TempData["StatusMessage"] = "Job Applied, Application ID: " + application.Id;
 
