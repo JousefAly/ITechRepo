@@ -254,6 +254,7 @@ namespace ITech.Data.Repositories
         public ProductStats GetProductStats(int productId)
         {
             var product = _context.Products
+                            .Include(p => p.ProductImages)
                             .Include(p => p.Seller)
                             .ThenInclude(s => s.User)
                             .FirstOrDefault(p => p.Id == productId);
@@ -285,6 +286,7 @@ namespace ITech.Data.Repositories
         public ProductStats[] GetSellerProductsStats(string sellerId)        
         {
             var products = _context.Products
+                            .Include(p => p.ProductImages)
                             .Include(p => p.Seller)
                             .ThenInclude(s => s.User)
                             .Where(p => p.SellerId == sellerId)

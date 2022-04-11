@@ -1,9 +1,9 @@
 ﻿@model ProductStats
 
-@{ 
+@{
     var statusClass = "danger";
     var status = "Not Active";
-    if(Model.product.Activated)
+    if (Model.product.Activated)
     {
         statusClass = "success";
         status = "Active";
@@ -14,12 +14,21 @@
         <h4>Seller: @Model.product.Seller.User?.FirstName</h4>
         <h6>Email: @Model.product.Seller.User?.Email</h6>
         <h7 class="font-weight-bold">
-            Status:<span class="text-@statusClass"> @status</span>            
+            Status:<span class="text-@statusClass"> @status</span>
         </h7>
+
     </div>
     <div class="card-body">
+        @if (Model.product?.ProductImages.FirstOrDefault(i => i.ImageNumber == 1) != null)
+        {
+            <img class="card-img-top rounded "
+                 src="~/@Model.product.ProductImages.FirstOrDefault(i => i.ImageNumber ==1).ImageUrl"/>
+        }
+
         <p>Sold: @Model.SoldCount</p>
         <p>Number of Customers: @Model.CustomersUsernames.Length</p>
         <p>Total Product Earnings: @Model.TotalSoldAmount.ToString("c")</p>
+
+
     </div>
 </div>

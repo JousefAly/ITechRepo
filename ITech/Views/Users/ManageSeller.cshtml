@@ -35,13 +35,17 @@
 <!--Add Products and own orders here-->
 @if (Model.SellerProductStats.Any())
 {
-    <div class="jumbotron">
+    <div class="jumbotron m-1">
         <h2>Seller Products stats:</h2>
         <!-- loop for a partial that display product stats-->
-        @foreach (var pStat in Model.SellerProductStats)
-        {
-            <partial name="_ProductStats" model="@pStat" />
-        }
+        <div class="row">
+            @foreach (var pStat in Model.SellerProductStats)
+            {
+            <div class="col-md-4">
+                <partial name="_ProductStats" model="@pStat" />
+            </div>
+            }
+        </div>
     </div>
 }
 else
