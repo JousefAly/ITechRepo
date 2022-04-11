@@ -1,0 +1,25 @@
+﻿@model ProductStats
+
+@{ 
+    var statusClass = "danger";
+    var status = "Not Active";
+    if(Model.product.Activated)
+    {
+        statusClass = "success";
+        status = "Active";
+    }
+}
+<div class="card m-1">
+    <div class="card-header">
+        <h4>Seller: @Model.product.Seller.User?.FirstName</h4>
+        <h6>Email: @Model.product.Seller.User?.Email</h6>
+        <h7 class="font-weight-bold">
+            Status:<span class="text-@statusClass"> @status</span>            
+        </h7>
+    </div>
+    <div class="card-body">
+        <p>Sold: @Model.SoldCount</p>
+        <p>Number of Customers: @Model.CustomersUsernames.Length</p>
+        <p>Total Product Earnings: @Model.TotalSoldAmount.ToString("c")</p>
+    </div>
+</div>

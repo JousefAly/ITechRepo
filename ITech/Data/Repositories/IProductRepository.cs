@@ -40,6 +40,9 @@ namespace ITech.Data.Repositories
         Task<int> DesActivateSellerPrdoucts(string sellerId);
         //return number of desactivated products
         Task<int> ActivateSellerPrdoucts(string sellerId);
+        ProductStats GetProductStats(int productId);
+        ProductStats[] GetSellerProductsStats(string sellerId);
+        string[] GetProductDistinctCustomers(int productId);
 
 
     }

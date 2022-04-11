@@ -67,8 +67,8 @@ namespace ITech.Data.Repositories
             {
                 foreach (var p in product.ProductImages.ToList())
                 {
-                    
-                        DeleteProductImage(p.Id);
+
+                    DeleteProductImage(p.Id);
 
                 }
             }
@@ -228,9 +228,9 @@ namespace ITech.Data.Repositories
             if (products == null)
                 return 0;
             var deactivatedProducts = products.Count(p => !p.Activated);
-            foreach( var product in products)
+            foreach (var product in products)
             {
-                product.Activated = false;               
+                product.Activated = false;
             }
 
             deactivatedProducts += await _context.SaveChangesAsync();
@@ -249,6 +249,55 @@ namespace ITech.Data.Repositories
             }
             activatedProducts += await _context.SaveChangesAsync();
             return activatedProducts;
+        }
+
+        public ProductStats GetProductStats(int productId)
+        {
+            var product = _context.Products
+                            .Include(p => p.Seller)
+                            .ThenInclude(s => s.User)
+                            .FirstOrDefault(p => p.Id == productId);
+            if (product == null)
+                return null;
+            var soldCount = _context.OrderDetails
+                                    .Where(od => od.ProductId == productId)
+                                    .Sum(od => od.Amount);
+            return new ProductStats
+            {
+                product = product,
+                SoldCount = soldCount,
+                TotalSoldAmount = soldCount * product.PriceAfterDiscount,
+                CustomersUsernames = GetProductDistinctCustomers(productId)
+            };
+
+        }
+
+        public string[] GetProductDistinctCustomers(int productId)
+        {
+            return _context.Orders
+                .Where(o => o.OrderDetails.Exists(od => od.ProductId == productId))
+                .Select(o => o.User.UserName)
+                .Distinct()
+                .ToArray();
+        }
+
+        public ProductStats[] GetSellerProductsStats(string sellerId)
+        {
+
+            var products = _context.Products
+                            .Include(p => p.Seller)
+                            .ThenInclude(s => s.User)
+                            .Where(p => p.SellerId == sellerId)
+                            .ToArray();
+            if (products == null)
+                return Array.Empty<ProductStats>();
+            var productsStats = new ProductStats[products.Length];
+            for(int i = 0; i < productsStats.Length; i++)
+            {
+                productsStats[i] = GetProductStats(products[i].Id);
+                
+            }
+            return productsStats;
         }
     }
 }

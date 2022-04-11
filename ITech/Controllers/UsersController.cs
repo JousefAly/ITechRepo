@@ -147,7 +147,7 @@ namespace ITech.Controllers
                 {
                     User = user,
                     Seller = _sellerRepository.GetUserSeller(user, includeProducts: true),
-                    
+                    SellerProductStats = _productRepository.GetSellerProductsStats(id),
                     Orders = _orderRepository.GetUserOrders(id, includeDetails: true)
                 };
                 return View("ManageSeller", model);
