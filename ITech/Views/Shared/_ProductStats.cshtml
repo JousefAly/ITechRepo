@@ -24,7 +24,7 @@
             <img class="card-img-top rounded "
                  src="~/@Model.product.ProductImages.FirstOrDefault(i => i.ImageNumber ==1).ImageUrl"/>
         }
-
+        <p>Price: @Model.product.PriceAfterDiscount.ToString("c")</p>
         <p>Sold: @Model.SoldCount</p>
         <p>Number of Customers: @Model.CustomersUsernames.Length</p>
         <p>Total Product Earnings: @Model.TotalSoldAmount.ToString("c")</p>
