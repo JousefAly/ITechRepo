@@ -260,13 +260,19 @@ namespace ITech.Data.Repositories
                             .FirstOrDefault(p => p.Id == productId);
             if (product == null)
                 return null;
+            //try to optimize the next two queries to be in a single query
             var soldCount = _context.OrderDetails
-                                    .Where(od => od.ProductId == productId)
+                                    .Where(od => od.Order.Accepted && od.ProductId == productId )
                                     .Sum(od => od.Amount);
+            int acceptedOrders = _context.Orders
+                                    .Where(o => o.Accepted && o.OrderDetails.Any(od => od.ProductId == productId))
+                                    .Count();
+
             return new ProductStats
             {
-                product = product,
+                Product = product,
                 SoldCount = soldCount,
+                AcceptedOrders = acceptedOrders,
                 TotalSoldAmount = soldCount * product.PriceAfterDiscount,
                 CustomersUsernames = GetProductDistinctCustomers(productId)
             };
@@ -275,8 +281,7 @@ namespace ITech.Data.Repositories
 
         public string[] GetProductDistinctCustomers(int productId)
         {
-            return _context.Orders
-                .Include(o => o.OrderDetails)
+            return _context.Orders                
                 .Where(o => o.OrderDetails.Any(od => od.ProductId == productId))
                 .Select(o => o.User.UserName)
                 .Distinct()

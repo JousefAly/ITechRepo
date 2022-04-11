@@ -117,6 +117,7 @@ namespace ITech.Data.Repositories
             {
                 return _context.Orders
                      .Include(o => o.User)
+                     .Include(o => o.Handler)
                      .Include(o => o.OrderDetails)
                      .ThenInclude(od => od.Product)
                      .Where(o => o.UserId == userId)

@@ -3,7 +3,7 @@
 @{
     var statusClass = "danger";
     var status = "Not Active";
-    if (Model.product.Activated)
+    if (Model.Product.Activated)
     {
         statusClass = "success";
         status = "Active";
@@ -11,21 +11,22 @@
 }
 <div class="card m-1">
     <div class="card-header">
-        <h4>Seller: @Model.product.Seller.User?.FirstName</h4>
-        <h6>Email: @Model.product.Seller.User?.Email</h6>
+        <h4>Seller: @Model.Product.Seller.User?.FirstName</h4>
+        <h6>Email: @Model.Product.Seller.User?.Email</h6>
         <h7 class="font-weight-bold">
             Status:<span class="text-@statusClass"> @status</span>
         </h7>
 
     </div>
     <div class="card-body">
-        @if (Model.product?.ProductImages.FirstOrDefault(i => i.ImageNumber == 1) != null)
+        @if (Model.Product?.ProductImages.FirstOrDefault(i => i.ImageNumber == 1) != null)
         {
             <img class="card-img-top rounded "
-                 src="~/@Model.product.ProductImages.FirstOrDefault(i => i.ImageNumber ==1).ImageUrl"/>
+                 src="~/@Model.Product.ProductImages.FirstOrDefault(i => i.ImageNumber ==1).ImageUrl"/>
         }
-        <p>Price: @Model.product.PriceAfterDiscount.ToString("c")</p>
+        <p>Price: @Model.Product.PriceAfterDiscount.ToString("c")</p>
         <p>Sold: @Model.SoldCount</p>
+        <p>Accepted Orders: @Model.AcceptedOrders .</p>
         <p>Number of Customers: @Model.CustomersUsernames.Length</p>
         <p>Total Product Earnings: @Model.TotalSoldAmount.ToString("c")</p>
 

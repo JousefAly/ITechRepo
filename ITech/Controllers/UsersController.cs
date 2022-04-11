@@ -166,7 +166,7 @@ namespace ITech.Controllers
             {
                 var model = new ManageUserViewModel
                 {
-                    User = user,
+                    User = user,                    
                     Orders = _orderRepository.GetUserOrders(id, includeDetails: true)
                 };
                 return View("ManageDefaultUser", model);
