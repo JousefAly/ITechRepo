@@ -8,6 +8,7 @@
         statusClass = "success";
         status = "Active";
     }
+
 }
 <div class="card m-1">
     <div class="card-header">
@@ -15,6 +16,10 @@
         <h6>Email: @Model.Product.Seller.User?.Email</h6>
         <h7 class="font-weight-bold">
             Status:<span class="text-@statusClass"> @status</span>
+            @if (Model.Product.Stock == 0)
+            {
+                <span class="text-danger"> Out of Stock!</span>
+            }
         </h7>
 
     </div>
@@ -22,7 +27,7 @@
         @if (Model.Product?.ProductImages.FirstOrDefault(i => i.ImageNumber == 1) != null)
         {
             <img class="card-img-top rounded "
-                 src="~/@Model.Product.ProductImages.FirstOrDefault(i => i.ImageNumber ==1).ImageUrl"/>
+                 src="~/@Model.Product.ProductImages.FirstOrDefault(i => i.ImageNumber ==1).ImageUrl" />
         }
         <p>Price: @Model.Product.PriceAfterDiscount.ToString("c")</p>
         <p>Sold: @Model.SoldCount</p>

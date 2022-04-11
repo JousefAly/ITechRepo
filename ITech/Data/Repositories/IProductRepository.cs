@@ -9,6 +9,8 @@ namespace ITech.Data.Repositories
     {
         void Add(Product prodcut);
         void Add(IEnumerable<Product> products);
+        //return Added product
+        Product AddSellerProduct(Seller seller, Product product);
         List<Product> GetAllProducts();
         int SaveChanges();
         ProductDetail AddProductDetail(Product prodcut, ProductDetail detail);
@@ -17,8 +19,6 @@ namespace ITech.Data.Repositories
         //return top products
         //numberOfProducts is how many top products we want to return
         List<Product> GetTopSellingProducts(int numberOfTProducts);
-        //return Added product
-        Product AddSellerProduct(Seller seller, Product product);
         List<Product> GetSellerProducts(Seller seller);
         ProductImage AddProductImage(Product product, ProductImage image);
         bool HasMainImage(int productId);
