@@ -141,13 +141,13 @@ namespace ITech.Controllers
             var user = await _userManager.FindByIdAsync(id);
             if (await _userManager.IsInRoleAsync(user, "Seller"))
             {
-
+                var seller = _sellerRepository.GetUserSeller(user);
 
                 var model = new ManageUserViewModel
                 {
                     User = user,
                     Seller = _sellerRepository.GetUserSeller(user, includeProducts: true),
-                    SellerProductStats = _productRepository.GetSellerProductsStats(id),
+                    SellerProductStats = _productRepository.GetSellerProductsStats(seller.Id),
                     Orders = _orderRepository.GetUserOrders(id, includeDetails: true)
                 };
                 return View("ManageSeller", model);

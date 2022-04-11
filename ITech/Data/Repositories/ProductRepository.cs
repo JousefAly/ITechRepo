@@ -275,15 +275,15 @@ namespace ITech.Data.Repositories
         public string[] GetProductDistinctCustomers(int productId)
         {
             return _context.Orders
-                .Where(o => o.OrderDetails.Exists(od => od.ProductId == productId))
+                .Include(o => o.OrderDetails)
+                .Where(o => o.OrderDetails.Any(od => od.ProductId == productId))
                 .Select(o => o.User.UserName)
                 .Distinct()
                 .ToArray();
         }
 
-        public ProductStats[] GetSellerProductsStats(string sellerId)
+        public ProductStats[] GetSellerProductsStats(string sellerId)        
         {
-
             var products = _context.Products
                             .Include(p => p.Seller)
                             .ThenInclude(s => s.User)
