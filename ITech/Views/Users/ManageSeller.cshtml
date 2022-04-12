@@ -43,6 +43,20 @@
             {
             <div class="col-md-4">
                 <partial name="_ProductStats" model="@pStat" />
+                @if (p.Activated)
+                {
+                    <a class="btn btn-danger mr-1"
+                       asp-controller="Products" asp-action="DeactivateProduct" asp-route-id="@p.Id">
+                        Deactivate
+                    </a>
+                }
+                else
+                {
+                    <a class="btn btn-success mr-1"
+                       asp-controller="Products" asp-action="ActivateProduct" asp-route-id="@p.Id">
+                        Activate
+                    </a>
+                }
             </div>
             }
         </div>

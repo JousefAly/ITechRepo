@@ -169,8 +169,31 @@ namespace ITech.Controllers
 
             return View(_productRepository.GetAllProducts());
         }
+        [Authorize(Roles = "Admin")]
+        public IActionResult ActivateProduct(int id)
+        {
+            if(!_productRepository.Activate(id))
+            {
+                TempData["StatusMessage"] = "Error: Product: " + id + " is not Activated.";
+                return View("ManageProducts", _productRepository.GetAllProducts());
+            }
+            TempData["StatusMessage"] = "Product: " + id + " is Activated.";
+            return View("ManageProducts",_productRepository.GetAllProducts());
+        }
+        [Authorize(Roles = "Admin")]
+        public IActionResult DeactivateProduct(int id)
+        {
+            if (!_productRepository.DesActivate(id))
+            {
+                TempData["StatusMessage"] = "Error: Product: " + id + " is not Dectivated.";
+                return View("ManageProducts", _productRepository.GetAllProducts());
+            }
+            TempData["StatusMessage"] = "Product: " + id + " is Dectivated.";
+            return View("ManageProducts", _productRepository.GetAllProducts());
 
-        
+        }
+
+
 
     }
 }
