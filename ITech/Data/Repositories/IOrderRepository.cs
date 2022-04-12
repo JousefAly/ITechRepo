@@ -1,4 +1,5 @@
-﻿using ITech.Models;
+﻿using ITech.Data.Entites;
+using ITech.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,8 @@ namespace ITech.Data.Repositories
         Order GetById(int orderId, bool includeDetails = false);
         Order[] GetHandlerOrders(string handlerId, bool includeDetails = false);
         Order[] GetUserOrders(string userId, bool includeDetails = false);
+        bool EnsureStock(ShoppingCartItem shoppingCartItem);
+        bool EnsureStock(List<ShoppingCartItem> shoppingCartItems);
         
     }
 }

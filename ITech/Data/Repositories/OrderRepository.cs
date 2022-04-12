@@ -1,4 +1,5 @@
-﻿using ITech.Models;
+﻿using ITech.Data.Entites;
+using ITech.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -141,6 +142,23 @@ namespace ITech.Data.Repositories
             return _context.Orders.Where(o => o.UserId == userId).ToArray();
         }
 
-        
+        public bool EnsureStock(ShoppingCartItem shoppingCartItem)
+        {
+            return _context.Products.Find(shoppingCartItem.ProductId).Stock - shoppingCartItem.Amount >= 0;
+        }
+
+        public bool EnsureStock(List<ShoppingCartItem> shoppingCartItems)
+        {
+            bool flag = true;
+            foreach(var item in shoppingCartItems)
+            {
+                if(!EnsureStock(item))
+                {
+                    flag = false;
+                    break;
+                }
+            }
+            return flag;
+        }
     }
 }
