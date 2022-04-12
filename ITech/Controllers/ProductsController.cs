@@ -193,7 +193,10 @@ namespace ITech.Controllers
 
         }
 
-
+        public ViewResult ProductStats(int id)
+        {            
+            return View(_productRepository.GetProductStats(id));
+        }
 
     }
 }

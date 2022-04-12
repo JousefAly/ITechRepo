@@ -19,7 +19,8 @@
             <a class="btn btn-sm text-dark p-0" asp-controller="EditProduct" asp-action="Index" asp-route-productId="@Model.Id"><i class="fas fa-edit text-primary mr-1"></i>Edit</a>
             @if (User.IsInRole("Admin"))
             {
-                <a class="btn btn-sm text-dark p-0" asp-controller="Products" asp-action="Delete" asp-route-id="@Model.Id"><i class="fas fa-trash text-primary mr-1"></i>Delete</a>
+                <a class="btn btn-sm text-dark p-0" asp-controller="Products" asp-action="ProductStats" asp-route-id="@Model.Id"><i class="fas fa-chart-bar text-success mr-1"></i>Stats</a>
+                <a class="btn btn-sm text-dark p-0" asp-controller="Products" asp-action="Delete" asp-route-id="@Model.Id"><i class="fas fa-trash text-danger mr-1"></i>Delete</a>
             }
         </div>
     </div>

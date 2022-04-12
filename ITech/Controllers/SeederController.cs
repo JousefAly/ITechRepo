@@ -1,5 +1,6 @@
 ﻿using ITech.Data;
 using ITech.Data.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace ITech.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class SeederController : Controller
     {
         private readonly ICategoryRepository _categoryRepository;
