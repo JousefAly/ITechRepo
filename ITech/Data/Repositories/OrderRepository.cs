@@ -28,32 +28,44 @@ namespace ITech.Data.Repositories
         public bool Accept(int orderId, string handlerId)
         {
 
-            var order = GetById(orderId);
+            var order = GetById(orderId, includeDetails: true);
             if (order == null)
                 return false;
             order.Accepted = true;
             order.HandlerId = handlerId;
+            foreach (var item in order.OrderDetails)
+            {
+                _productRepository.RemoveFromStock(item.ProductId, item.Amount);
+            }
             order.OrderHandeled = DateTime.Now;
             return _context.SaveChanges() > 0;
         }
 
         public bool Refuse(int orderId, string handlerId)
         {
-            var order = GetById(orderId);
+            var order = GetById(orderId, includeDetails: true);
             if (order == null)
                 return false;
             order.Accepted = false;
             order.HandlerId = handlerId;
+            foreach (var item in order.OrderDetails)
+            {
+                _productRepository.AddToStock(item.ProductId, item.Amount);
+            }
             order.OrderHandeled = DateTime.Now;
             return _context.SaveChanges() > 0;
         }
 
         public int CreateOrder(Order order)
         {
-            var shoppingCartItems = _shoppingCart.GetShoppingCartItems();
+            List<IProductStockModifier> shoppingCartItems = _shoppingCart.GetShoppingCartItems();
 
             if (!shoppingCartItems.Any())
                 return 0;
+            //Ensure Stock first
+            if (!EnsureStock(shoppingCartItems))
+                return 0;
+            //now stock ensured
             order.OrderDetails = new List<OrderDetail>();
             foreach (var item in shoppingCartItems)
             {
@@ -63,10 +75,10 @@ namespace ITech.Data.Repositories
                     Amount = item.Amount,
                 };          
                 order.OrderDetails.Add(orderDetail);
-
+                _productRepository.RemoveFromStock(item.ProductId, item.Amount);
             }
             order.OrderPlaced = DateTime.Now;
-            order.OrderTotal = _shoppingCart.GetShoppingCartTotal();
+            order.OrderTotal = order.OrderDetails.Sum(od => od.Amount * od.Product.PriceAfterDiscount);
             _context.Add(order);
             return _context.SaveChanges() > 0 ? order.OrderId : 0;
 
@@ -142,15 +154,15 @@ namespace ITech.Data.Repositories
             return _context.Orders.Where(o => o.UserId == userId).ToArray();
         }
 
-        public bool EnsureStock(ShoppingCartItem shoppingCartItem)
+        public bool EnsureStock(IProductStockModifier productStockModifier)
         {
-            return _context.Products.Find(shoppingCartItem.ProductId).Stock - shoppingCartItem.Amount >= 0;
+            return _context.Products.Find(productStockModifier.ProductId).Stock - productStockModifier.Amount >= 0;
         }
 
-        public bool EnsureStock(List<ShoppingCartItem> shoppingCartItems)
+        public bool EnsureStock(List<IProductStockModifier> productStockModifiers)
         {
             bool flag = true;
-            foreach(var item in shoppingCartItems)
+            foreach(var item in productStockModifiers)
             {
                 if(!EnsureStock(item))
                 {
