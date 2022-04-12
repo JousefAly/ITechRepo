@@ -43,6 +43,10 @@ namespace ITech.Data.Repositories
         ProductStats GetProductStats(int productId);
         ProductStats[] GetSellerProductsStats(string sellerId);
         string[] GetProductDistinctCustomers(int productId);
+        //return current Stock
+        int AddToStock(int productId, int amount);
+        //return current stock
+        int RemoveFromStock(int productId, int amount);
 
 
     }

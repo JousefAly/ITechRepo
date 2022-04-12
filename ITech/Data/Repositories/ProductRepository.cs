@@ -306,5 +306,22 @@ namespace ITech.Data.Repositories
             }
             return productsStats;
         }
+
+        public int AddToStock(int productId, int amount)
+        {
+            var product = _context.Products.Find(productId);            
+            product.Stock += amount;
+            return _context.SaveChanges() > 0 ? product.Stock : product.Stock - amount;
+        }
+
+        public int RemoveFromStock(int productId, int amount)
+        {
+            var product = _context.Products.Find(productId);
+            if(product.Stock - amount >= 0)
+            {
+                product.Stock -= amount;
+            }
+            return _context.SaveChanges() > 0 ? product.Stock : product.Stock + amount;
+        }
     }
 }

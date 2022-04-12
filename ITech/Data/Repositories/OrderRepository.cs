@@ -13,14 +13,15 @@ namespace ITech.Data.Repositories
     {
         private readonly ShoppingCart _shoppingCart;
         private readonly ApplicationDbContext _context;
-
+        private readonly IProductRepository _productRepository;
 
         public OrderRepository(ShoppingCart shoppingCart,
-                               ApplicationDbContext context)
+                               ApplicationDbContext context,
+                               IProductRepository productRepository)
         {
             _shoppingCart = shoppingCart;
             _context = context;
-
+            _productRepository = productRepository;
         }
 
         public bool Accept(int orderId, string handlerId)
@@ -59,9 +60,9 @@ namespace ITech.Data.Repositories
                 {
                     ProductId = item.ProductId,
                     Amount = item.Amount,
-                };
-
+                };          
                 order.OrderDetails.Add(orderDetail);
+
             }
             order.OrderPlaced = DateTime.Now;
             order.OrderTotal = _shoppingCart.GetShoppingCartTotal();
@@ -139,5 +140,7 @@ namespace ITech.Data.Repositories
             }
             return _context.Orders.Where(o => o.UserId == userId).ToArray();
         }
+
+        
     }
 }

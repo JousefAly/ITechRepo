@@ -16,6 +16,7 @@ namespace ITech.Data.Repositories
         bool Refuse(int orderId, string handlerId);
         Order GetById(int orderId, bool includeDetails = false);
         Order[] GetHandlerOrders(string handlerId, bool includeDetails = false);
-        Order[] GetUserOrders(string userId, bool includeDetails = false);     
+        Order[] GetUserOrders(string userId, bool includeDetails = false);
+        
     }
 }

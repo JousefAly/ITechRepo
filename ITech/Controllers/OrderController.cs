@@ -52,6 +52,7 @@ namespace ITech.Controllers
                 var message = "You placed Your order Successfully. order Id = " + orderId
                         + ". Order Total: " + order.OrderTotal.ToString("c");
                 await _notificationRepository.NotifyAsync(admin.Id, order.User.Id, message);
+
                 _shoppingCart.ClearCart();
                 return RedirectToAction(nameof(CheckoutComplete));
             }
