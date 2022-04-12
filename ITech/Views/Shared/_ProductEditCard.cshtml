@@ -1,7 +1,7 @@
 ﻿@model Product
 <!--Product card Start-->
 
-    <div class="card product-item border-0 mb-4">
+    <div class="card product-item border-0 m-2">
         <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
             @if (Model.ProductImages.Any()
               && Model.ProductImages.FirstOrDefault(p => p.ImageNumber == 1) != null)
