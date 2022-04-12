@@ -136,6 +136,7 @@ namespace ITech.Controllers
             TempData["StatusMessage"] = "Successfully Removed (" + roleName + ") from userId: " + userId;
             return RedirectToAction(nameof(ManageRoles), new { id = userId });
         }
+        //Bad Code Divide action into sub actions
         public async Task<ViewResult> Manage(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
