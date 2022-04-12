@@ -37,5 +37,15 @@ namespace ITech.Controllers
             ViewBag.RowsAffected = rowsAffected.ToString();
             return View();
         }
+        public IActionResult AddStockToNonStockProducts(int amount)
+        {
+            var products = _context.Products.Where(p => p.Stock <= 0).ToArray();
+            foreach (var p in products)
+            {
+                p.Stock += 10;
+            }
+            ViewBag.RowsAffected = _context.SaveChanges().ToString();
+            return View();
+        }
     }
 }
