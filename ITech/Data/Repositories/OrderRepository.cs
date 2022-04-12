@@ -33,6 +33,9 @@ namespace ITech.Data.Repositories
                 return false;
             order.Accepted = true;
             order.HandlerId = handlerId;
+            if (!EnsureStock(order.OrderDetails))
+                return false;
+
             foreach (var item in order.OrderDetails)
             {
                 _productRepository.RemoveFromStock(item.ProductId, item.Amount);
@@ -58,7 +61,7 @@ namespace ITech.Data.Repositories
 
         public int CreateOrder(Order order)
         {
-            List<IProductStockModifier> shoppingCartItems = _shoppingCart.GetShoppingCartItems();
+            var shoppingCartItems = _shoppingCart.GetShoppingCartItems();
 
             if (!shoppingCartItems.Any())
                 return 0;
@@ -154,17 +157,30 @@ namespace ITech.Data.Repositories
             return _context.Orders.Where(o => o.UserId == userId).ToArray();
         }
 
-        public bool EnsureStock(IProductStockModifier productStockModifier)
+        public bool EnsureStock(int productId, int amount)
         {
-            return _context.Products.Find(productStockModifier.ProductId).Stock - productStockModifier.Amount >= 0;
+            return _context.Products.Find(productId).Stock - amount >= 0;
         }
 
-        public bool EnsureStock(List<IProductStockModifier> productStockModifiers)
+        public bool EnsureStock(List<ShoppingCartItem> shoppingCartItems)
         {
             bool flag = true;
-            foreach(var item in productStockModifiers)
+            foreach(var item in shoppingCartItems)
             {
-                if(!EnsureStock(item))
+                if(!EnsureStock(item.ProductId, item.Amount))
+                {
+                    flag = false;
+                    break;
+                }
+            }
+            return flag;
+        }
+        public bool EnsureStock(List<OrderDetail> orderDetails)
+        {
+            bool flag = true;
+            foreach (var item in orderDetails)
+            {
+                if (!EnsureStock(item.ProductId, item.Amount))
                 {
                     flag = false;
                     break;
