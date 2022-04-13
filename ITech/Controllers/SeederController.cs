@@ -51,7 +51,7 @@ namespace ITech.Controllers
             var products = _context.Products.Where(p => p.Stock <= 0).ToArray();
             foreach (var p in products)
             {
-                p.Stock += 10;
+                p.Stock += amount;
             }
             ViewBag.RowsAffected = _context.SaveChanges().ToString();
             return View();
