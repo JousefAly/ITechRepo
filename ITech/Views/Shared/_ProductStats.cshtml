@@ -14,14 +14,15 @@
     <div class="card-header">
         <h4>Seller: @Model.Product.Seller.User?.FirstName</h4>
         <h6>Email: @Model.Product.Seller.User?.Email</h6>
-        <h7 class="font-weight-bold">
+        <h6 class="font-weight-bold">
             Status:<span class="text-@statusClass"> @status</span>
             @if (Model.Product.Stock == 0)
             {
                 <span class="text-danger"> Out of Stock!</span>
             }
-        </h7>
-
+        </h6>
+        <h6>@Model.Product.Title</h6>
+        <p class="font-italic">Launched: @Model.Product.LaunchTime</p>
     </div>
     <div class="card-body">
         @if (Model.Product?.ProductImages.FirstOrDefault(i => i.ImageNumber == 1) != null)
