@@ -1,6 +1,7 @@
 ﻿using ITech.Data;
 using ITech.Data.Repositories;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,20 +11,26 @@ using System.Threading.Tasks;
 
 namespace ITech.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    [Authorize(Roles = "Admin")]
     public class SeederController : Controller
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IProductRepository _productRepository;
         private readonly ApplicationDbContext _context;
+        private readonly ISellerRepository _sellerRepository;
+        private readonly UserManager<AppUser> _userManager;
 
         public SeederController(ICategoryRepository categoryRepository,
                                 IProductRepository productRepository,
-                                ApplicationDbContext context)
+                                ApplicationDbContext context,
+                                ISellerRepository sellerRepository,
+                                UserManager<AppUser> userManager)
         {
             _categoryRepository = categoryRepository;
             _productRepository = productRepository;
             _context = context;
+            _sellerRepository = sellerRepository;
+            _userManager = userManager;
         }
         public IActionResult SeedCategories(int desiredSeed)
         {
@@ -47,6 +54,52 @@ namespace ITech.Controllers
                 p.Stock += 10;
             }
             ViewBag.RowsAffected = _context.SaveChanges().ToString();
+            return View();
+        }
+        public async Task<IActionResult> AddDefaultSeller()
+        {
+            var defaultSeller = new AppUser
+            {
+                UserName = "DefaultSeller",
+                Email = "DefaultSeller@Default.com"
+            };
+            var result = await _userManager.CreateAsync(defaultSeller, "123456");
+            if (!result.Succeeded)
+            {
+                ViewBag.Message = "Didn't Create default user";
+            }
+            var seller = _sellerRepository.Create(defaultSeller);
+            ViewBag.Message = "Created Default Seller successfully";
+            if(seller == null)
+            {
+                ViewBag.Message = "Error: Created Default User but did not create seller";
+                ViewBag.SellerId = "";
+            }
+            ViewBag.SellerId = seller.Id;
+            return View(defaultSeller);
+
+        }
+        public async Task<IActionResult> AddDefaultSellerToProductsWithoutSeller()
+        {
+            var user = await _userManager.FindByNameAsync("DefaultSeller");
+            if(user == null)
+            {
+                ViewBag.Message = "DefaultUser not found";
+                return View();
+            }
+            var seller = _sellerRepository.GetUserSeller(user);
+            if(seller == null)
+            {
+                ViewBag.Message = "DefaultUser Found but Seller Not Found";
+                return View();
+            }
+            var products = _context.Products.Where(p => p.Seller == null).ToArray();
+            foreach (var product in products)
+            {
+                product.Seller = seller;
+            }
+            ViewBag.Message = _context.SaveChanges() + " Rows Affected.";
+            
             return View();
         }
     }

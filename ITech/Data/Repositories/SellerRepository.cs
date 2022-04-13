@@ -24,7 +24,7 @@ namespace ITech.Data.Repositories
                 User = user
             };
             _context.Sellers.Add(seller);
-            return seller;
+            return _context.SaveChanges() > 0 ? seller : null;
         }
 
         public int SaveChanges()

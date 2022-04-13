@@ -121,7 +121,7 @@ namespace ITech.Areas.Identity.Pages.Account
                     {
                         var roleResult = await _userManager.AddToRoleAsync(user, "Seller");
                         var createdSeller = _sellerRepository.Create(user);
-                        _sellerRepository.SaveChanges();
+                        
 
                     }
 
