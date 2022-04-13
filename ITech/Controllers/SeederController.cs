@@ -61,20 +61,32 @@ namespace ITech.Controllers
             var defaultSeller = new AppUser
             {
                 UserName = "DefaultSeller",
-                Email = "DefaultSeller@Default.com"
+
+                Email = "DefaultSeller@Default.com",
+                PhoneNumber = "0111111111",
+                FirstName = "DefaultSellerFirstName",
+                LastName = "DefaultSellerLastName"
             };
+
             var result = await _userManager.CreateAsync(defaultSeller, "123456");
             if (!result.Succeeded)
             {
                 ViewBag.Message = "Didn't Create default user";
+                return View(defaultSeller);
             }
-            var seller = _sellerRepository.Create(defaultSeller);
+
+
+            var seller =  _sellerRepository.Create(defaultSeller);
             ViewBag.Message = "Created Default Seller successfully";
-            if(seller == null)
+            if (seller == null)
             {
                 ViewBag.Message = "Error: Created Default User but did not create seller";
                 ViewBag.SellerId = "";
+                return View(defaultSeller);
             }
+            seller.Activated = true;
+            seller.Address = "Default Address";
+            _context.SaveChanges();
             ViewBag.SellerId = seller.Id;
             return View(defaultSeller);
 
@@ -82,13 +94,13 @@ namespace ITech.Controllers
         public async Task<IActionResult> AddDefaultSellerToProductsWithoutSeller()
         {
             var user = await _userManager.FindByNameAsync("DefaultSeller");
-            if(user == null)
+            if (user == null)
             {
                 ViewBag.Message = "DefaultUser not found";
                 return View();
             }
             var seller = _sellerRepository.GetUserSeller(user);
-            if(seller == null)
+            if (seller == null)
             {
                 ViewBag.Message = "DefaultUser Found but Seller Not Found";
                 return View();
@@ -99,7 +111,7 @@ namespace ITech.Controllers
                 product.Seller = seller;
             }
             ViewBag.Message = _context.SaveChanges() + " Rows Affected.";
-            
+
             return View();
         }
     }
