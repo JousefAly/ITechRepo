@@ -48,6 +48,7 @@ namespace ITech.Data.Repositories
         //return current stock
         int RemoveFromStock(int productId, int amount);
         Product[] Search(string searchString);
+        Product[] TrendyProducts(int numberOfProducts);
 
     }
 }

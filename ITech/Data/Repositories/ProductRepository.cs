@@ -262,7 +262,7 @@ namespace ITech.Data.Repositories
                 return null;
             //try to optimize the next two queries to be in a single query
             var soldCount = _context.OrderDetails
-                                    .Where(od => od.Order.Accepted && od.ProductId == productId )
+                                    .Where(od => od.Order.Accepted && od.ProductId == productId)
                                     .Sum(od => od.Amount);
             int acceptedOrders = _context.Orders
                                     .Where(o => o.Accepted && o.OrderDetails.Any(od => od.ProductId == productId))
@@ -281,14 +281,14 @@ namespace ITech.Data.Repositories
 
         public string[] GetProductDistinctCustomers(int productId)
         {
-            return _context.Orders                
+            return _context.Orders
                 .Where(o => o.OrderDetails.Any(od => od.ProductId == productId))
                 .Select(o => o.User.UserName)
                 .Distinct()
                 .ToArray();
         }
 
-        public ProductStats[] GetSellerProductsStats(string sellerId)        
+        public ProductStats[] GetSellerProductsStats(string sellerId)
         {
             var products = _context.Products
                             .Include(p => p.ProductImages)
@@ -299,17 +299,17 @@ namespace ITech.Data.Repositories
             if (products == null)
                 return Array.Empty<ProductStats>();
             var productsStats = new ProductStats[products.Length];
-            for(int i = 0; i < productsStats.Length; i++)
+            for (int i = 0; i < productsStats.Length; i++)
             {
                 productsStats[i] = GetProductStats(products[i].Id);
-                
+
             }
             return productsStats;
         }
 
         public int AddToStock(int productId, int amount)
         {
-            var product = _context.Products.Find(productId);            
+            var product = _context.Products.Find(productId);
             product.Stock += amount;
             return _context.SaveChanges() > 0 ? product.Stock : product.Stock - amount;
         }
@@ -317,17 +317,17 @@ namespace ITech.Data.Repositories
         public int RemoveFromStock(int productId, int amount)
         {
             var product = _context.Products.Find(productId);
-            if(product.Stock - amount >= 0)
+            if (product.Stock - amount >= 0)
             {
                 product.Stock -= amount;
             }
             return _context.SaveChanges() > 0 ? product.Stock : product.Stock + amount;
         }
 
-        
+
         public Product[] Search(string searchString)
         {
-            var  productsQuery = _context.Products
+            var productsQuery = _context.Products
                                 .Include(p => p.ProductDetails)
                                 .Include(p => p.ProductImages)
                                 .Where(p => EF.Functions.Like(p.Title, $"%{searchString}%") ||
@@ -335,6 +335,11 @@ namespace ITech.Data.Repositories
                                         EF.Functions.Like(p.Category.Name, $"%{searchString}%"))
                                 .ToArray();
             return productsQuery;
+        }
+
+        public Product[] TrendyProducts(int numberOfProducts)
+        {
+            throw new NotImplementedException();
         }
     }
 }
