@@ -197,6 +197,12 @@ namespace ITech.Controllers
         {            
             return View(_productRepository.GetProductStats(id));
         }
+        [HttpPost]
+        public IActionResult SearchProducts(string searchString)
+        {
+            searchString ??= "";
+            return View(_productRepository.Search(searchString));
+        }
 
     }
 }

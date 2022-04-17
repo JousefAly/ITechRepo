@@ -323,5 +323,18 @@ namespace ITech.Data.Repositories
             }
             return _context.SaveChanges() > 0 ? product.Stock : product.Stock + amount;
         }
+
+        
+        public Product[] Search(string searchString)
+        {
+            var  productsQuery = _context.Products
+                                .Include(p => p.ProductDetails)
+                                .Include(p => p.ProductImages)
+                                .Where(p => EF.Functions.Like(p.Title, $"%{searchString}%") ||
+                                        EF.Functions.Like(p.Brand, $"%{searchString}%") ||
+                                        EF.Functions.Like(p.Category.Name, $"%{searchString}%"))
+                                .ToArray();
+            return productsQuery;
+        }
     }
 }
