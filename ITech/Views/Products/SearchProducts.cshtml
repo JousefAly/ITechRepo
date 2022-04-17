@@ -3,14 +3,17 @@
 <h1>Search Results</h1>
 @if (Model.Any())
 {
-    
-    @foreach (var product in Model)
-    {
-        <partial name="_ProductCard" model="product" />
+    <div class="row">
+        @foreach (var product in Model)
+        {
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <partial name="_ProductCard" model="product" />
+            </div>
 
-    }
+        }
+    </div>
 }
 else
-	{
-	         <h3>No Matching Results</h3>
-	}
+{
+    <h3>No Matching Results</h3>
+}
