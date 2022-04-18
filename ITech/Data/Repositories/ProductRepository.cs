@@ -341,5 +341,17 @@ namespace ITech.Data.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public Product[] TopSellingProducts(int numberOfProducts)
+        {
+            var products = _context.Products                                
+                                .OrderByDescending(p => p.OrderDetails.Sum(od => od.Amount))
+                                .OrderByDescending(p => p.OrderDetails.Max(od => od.Order.OrderPlaced))
+                                .Take(numberOfProducts)
+                                .ToArray();
+
+           
+            return products;
+        }
     }
 }

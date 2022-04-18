@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ITech.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -47,6 +48,7 @@ namespace ITech.Data.Entites
         public Seller Seller { get; set; }
         public List<ProductDetail> ProductDetails { get; set; }
         public List<ProductImage> ProductImages { get; set; }
+        public List<OrderDetail> OrderDetails { get; set; }
 
 
     }

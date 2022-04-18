@@ -203,6 +203,11 @@ namespace ITech.Controllers
             searchString ??= "";
             return View(_productRepository.Search(searchString));
         }
-
+        public IActionResult TopSellingProducts(int numOfProducts)
+        {
+            
+            var products = _productRepository.TopSellingProducts(numOfProducts);
+            return Ok();
+        }
     }
 }
