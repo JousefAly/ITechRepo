@@ -379,5 +379,20 @@ namespace ITech.Data.Repositories
                   .ToArray();
 
         }
+
+        public Product[] GetProductsByCategory(string categoryName, bool includeDetails = false)
+        {
+            if(includeDetails)
+            {
+                return _context.Products
+                    .Include(p => p.ProductImages)
+                    .Include(p => p.ProductDetails)
+                    .Where(p => p.Category.Name == categoryName)
+                    .ToArray();
+            }
+            return _context.Products
+                    .Where(p => p.Category.Name == categoryName)
+                    .ToArray();
+        }
     }
 }

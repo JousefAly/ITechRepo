@@ -18,29 +18,32 @@ namespace ITech.Controllers
     {
         private readonly IProductRepository _productRepository;
         private readonly ISellerRepository _sellerRepository;
+        private readonly ICategoryRepository _categoryRepository1;
         private readonly ICategoryRepository _categoryRepository;
         private readonly UserManager<AppUser> _userManager;
         private readonly IWebHostEnvironment _hostEnvironment;
 
         public ProductsController(IProductRepository productRepository,
-                                  ISellerRepository sellerRepository,
-                                  ICategoryRepository categoryRepository,
+                                  ISellerRepository sellerRepository,                                  
                                   UserManager<AppUser> userManager,
                                   IWebHostEnvironment hostEnvironment)
         {
             _productRepository = productRepository;
-            _sellerRepository = sellerRepository;
-            _categoryRepository = categoryRepository;
+            _sellerRepository = sellerRepository;                        
             _userManager = userManager;
             _hostEnvironment = hostEnvironment;
         }
 
         //return all products   
-        public IActionResult Index()
+        public IActionResult Index(string category = "")
         {
-
+            if(!string.IsNullOrEmpty(category))
+            {
+                return View(_productRepository.GetProductsByCategory(category, includeDetails: true).ToList());
+            }
             return View(_productRepository.GetAllProducts());
         }
+       
         public IActionResult Detail(int id)
         {
             var model = new ProductDetailViewModel

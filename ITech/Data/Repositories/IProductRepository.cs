@@ -16,8 +16,8 @@ namespace ITech.Data.Repositories
         ProductDetail AddProductDetail(Product prodcut, ProductDetail detail);
         Product GetProductByITSIN(string iTSIN);
         Product GetById(int id);
-        
-        
+
+        Product[] GetProductsByCategory(string categoryName, bool includeDetails = false);
         List<Product> GetSellerProducts(Seller seller);
         ProductImage AddProductImage(Product product, ProductImage image);
         bool HasMainImage(int productId);
