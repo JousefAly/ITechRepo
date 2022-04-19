@@ -44,7 +44,8 @@ namespace ITech.Controllers
             var model = new HomeIndexViewModel
             {
                 AllCategories = _categoryRepository.GetAllCategories(),
-                TrendyProducts = _productRepository.GetTopSellingProducts(8)
+                TopSellingProducts = _productRepository.GetTopSellingProducts(10, true)
+                                        .Where(psa => psa.SoldAmount > 0).ToArray()
             };
 
             return View(model);

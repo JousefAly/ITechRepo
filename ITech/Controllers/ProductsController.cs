@@ -206,7 +206,7 @@ namespace ITech.Controllers
         public IActionResult TopSellingProducts(int numOfProducts)
         {
             
-            var products = _productRepository.TopSellingProducts(numOfProducts);
+            var products = _productRepository.GetTopSellingProducts(numOfProducts);
             return Ok();
         }
     }

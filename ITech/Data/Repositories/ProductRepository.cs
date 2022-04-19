@@ -101,14 +101,7 @@ namespace ITech.Data.Repositories
             return _context.Products.FirstOrDefault(p => p.ITSIN == iTSIN);
         }
 
-        public List<Product> GetTopSellingProducts(int numberOfTProducts)
-        {
-            var products = _context.Products.Include(p => p.ProductImages)
-                                            .OrderBy(p => p.Title)
-                                            .Take(numberOfTProducts).ToList();
-            return products;
 
-        }
 
         public bool HasMainImage(int productId)
         {
@@ -341,17 +334,50 @@ namespace ITech.Data.Repositories
         {
             throw new NotImplementedException();
         }
+        /*
+         * Result SQL
+         * 
+         N'SELECT TOP(@__p_0) [p].[Id], [p].[Activated], [p].[Brand], [p].[CategoryId], [p].[DiscountPercentage], [p].[ITSIN], [p].[LaunchTime], [p].[Price], [p].[PriceAfterDiscount], [p].[SellerId], [p].[ShortDescription], [p].[Stock], [p].[Title], (
+            SELECT COALESCE(SUM([o].[Amount]), 0)
+            FROM [OrderDetails] AS [o]
+            WHERE [p].[Id] = [o].[ProductId]) AS [SoldAmount]
+        FROM [Products] AS [p]
+        ORDER BY (
+            SELECT COALESCE(SUM([o0].[Amount]), 0)
+            FROM [OrderDetails] AS [o0]
+            WHERE [p].[Id] = [o0].[ProductId]) DESC, (
+            SELECT MAX([o2].[OrderPlaced])
+            FROM [OrderDetails] AS [o1]
+            INNER JOIN [Orders] AS [o2] ON [o1].[OrderId] = [o2].[OrderId]
+            WHERE [p].[Id] = [o1].[ProductId]) DESC, [p].[Title], [p].[Id]',N'@__p_0 int',@__p_0=3
+         */
 
-        public Product[] TopSellingProducts(int numberOfProducts)
+        public ProductSoldAmount[] GetTopSellingProducts(int numberOfProducts, bool includeImagesAndDetails = false)
         {
-            var products = _context.Products                                
-                                .OrderByDescending(p => p.OrderDetails.Sum(od => od.Amount))
-                                .OrderByDescending(p => p.OrderDetails.Max(od => od.Order.OrderPlaced))
-                                .Take(numberOfProducts)
-                                .ToArray();
+            if (includeImagesAndDetails)
+            {
+                return _context.Products
+                            .Include(p => p.ProductImages)
+                            .Include(p => p.ProductDetails)
+                            .OrderByDescending(p => p.OrderDetails.Sum(od => od.Amount))
+                            .ThenByDescending(p => p.OrderDetails.Max(od => od.Order.OrderPlaced))
+                            .ThenBy(p => p.Title)
+                            .ThenBy(p => p.Id)
+                            .Select(p => new ProductSoldAmount { Product = p, SoldAmount = p.OrderDetails.Sum(od => od.Amount) })
+                            .Take(numberOfProducts)
+                            .ToArray();
 
-           
-            return products;
+            }
+
+            return _context.Products
+                  .OrderByDescending(p => p.OrderDetails.Sum(od => od.Amount))
+                  .ThenByDescending(p => p.OrderDetails.Max(od => od.Order.OrderPlaced))
+                  .ThenBy(p => p.Title)
+                  .ThenBy(p => p.Id)
+                  .Select(p => new ProductSoldAmount { Product = p, SoldAmount = p.OrderDetails.Sum(od => od.Amount) })
+                  .Take(numberOfProducts)
+                  .ToArray();
+
         }
     }
 }

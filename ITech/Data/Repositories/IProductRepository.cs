@@ -16,9 +16,8 @@ namespace ITech.Data.Repositories
         ProductDetail AddProductDetail(Product prodcut, ProductDetail detail);
         Product GetProductByITSIN(string iTSIN);
         Product GetById(int id);
-        //return top products
-        //numberOfProducts is how many top products we want to return
-        List<Product> GetTopSellingProducts(int numberOfTProducts);
+        
+        
         List<Product> GetSellerProducts(Seller seller);
         ProductImage AddProductImage(Product product, ProductImage image);
         bool HasMainImage(int productId);
@@ -50,7 +49,7 @@ namespace ITech.Data.Repositories
         Product[] Search(string searchString);
         // Get the most recent order products
         Product[] TrendyProducts(int numberOfProducts);
-        Product[] TopSellingProducts(int numberOfProducts);
+        ProductSoldAmount[] GetTopSellingProducts(int numberOfProducts, bool includeImagesAndDetails = false);
 
     }
 }
