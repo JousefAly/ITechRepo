@@ -90,6 +90,10 @@ namespace ITech.Controllers
             };
             return View(model);
         }
+        public ViewResult Contact()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -97,7 +101,7 @@ namespace ITech.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-
+        
 
 
 
