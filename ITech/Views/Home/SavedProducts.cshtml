@@ -10,8 +10,9 @@
         <div class="row">
             @foreach (var product in Model)
             {
-                <div class="col-md-4 col-6"></div>
-                <partial name="_ProductCard" model="product" />
+                <div class="col-md-3 col-6">
+                    <partial name="_ProductCard" model="product" />
+                </div>
             }
         </div>
     </div>
