@@ -1,0 +1,22 @@
+﻿@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "Saved Products";
+}
+
+@if (Model.Any())
+{
+    <div class="jumbotron">
+        <h4>Saved  Products</h4>
+        <div class="row">
+            @foreach (var product in Model)
+            {
+                <div class="col-md-4 col-6"></div>
+                <partial name="_ProductCard" model="product" />
+            }
+        </div>
+    </div>
+}
+else
+{
+    <h2>You don't have saved products.</h2>
+}

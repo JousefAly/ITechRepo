@@ -394,5 +394,34 @@ namespace ITech.Data.Repositories
                     .Where(p => p.Category.Name == categoryName)
                     .ToArray();
         }
+
+        public bool SaveProduct(string userId, int productId)
+        {
+            
+            var product = _context.Products.Include(p => p.SavingUsers).FirstOrDefault(p => p.Id == productId);
+            var user = _context.AppUsers.Find(userId);
+            if (product == null || user == null)
+                return false;
+            if(product.SavingUsers.Any(usr => usr.Id == userId))
+            {
+                return true;
+            }
+
+            product.SavingUsers.Add(user);
+            return _context.SaveChanges() > 0;
+        }
+
+        public Product[] GetUserSavedProducts(string userId)
+        {
+            var user = _context.AppUsers
+                .Include(usr => usr.SavedProducts)
+                    .ThenInclude(p => p.ProductImages)
+                .Include(usr => usr.SavedProducts)
+                    .ThenInclude(p => p.ProductDetails)
+                .FirstOrDefault(usr => usr.Id == userId);
+            if (user == null)
+                return Array.Empty<Product>();
+            return user.SavedProducts.ToArray();
+        }
     }
 }

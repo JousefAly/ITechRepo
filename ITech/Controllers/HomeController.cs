@@ -95,6 +95,21 @@ namespace ITech.Controllers
             return View();
         }
 
+        [Authorize]
+        public IActionResult SaveProduct(int id)
+        {
+            
+            _productRepository.SaveProduct(_userManager.GetUserId(HttpContext.User), id);
+            return RedirectToAction(nameof(SavedProducts));
+        }
+
+        [Authorize]
+        public IActionResult SavedProducts()
+        {
+            var products = _productRepository.GetUserSavedProducts(_userManager.GetUserId(HttpContext.User));
+            return View(products);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

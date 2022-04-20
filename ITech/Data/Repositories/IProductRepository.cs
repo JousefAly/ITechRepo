@@ -51,5 +51,8 @@ namespace ITech.Data.Repositories
         Product[] TrendyProducts(int numberOfProducts);
         ProductSoldAmount[] GetTopSellingProducts(int numberOfProducts, bool includeImagesAndDetails = false);
 
+        // save product if not saved and return whether product is saved
+        bool SaveProduct(string userId, int productId);
+        Product[] GetUserSavedProducts(string userId);
     }
 }
