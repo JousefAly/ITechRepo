@@ -52,7 +52,12 @@ namespace ITech.Data.Repositories
         ProductSoldAmount[] GetTopSellingProducts(int numberOfProducts, bool includeImagesAndDetails = false);
 
         // save product if not saved and return whether product is saved
+        // also return false if product is already saved
         bool SaveProduct(string userId, int productId);
+        //Remove product and return true only if product is removed from saved products 
+        // return flase if product is not saved already
+        bool RemoveSavedProduct(string userId, int productId);
         Product[] GetUserSavedProducts(string userId);
+
     }
 }

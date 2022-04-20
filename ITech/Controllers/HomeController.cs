@@ -104,6 +104,14 @@ namespace ITech.Controllers
         }
 
         [Authorize]
+        public IActionResult RemoveSavedProduct(int id)
+        {
+
+            _productRepository.RemoveSavedProduct(_userManager.GetUserId(HttpContext.User), id);
+            return RedirectToAction(nameof(SavedProducts));
+        }
+
+        [Authorize]
         public IActionResult SavedProducts()
         {
             var products = _productRepository.GetUserSavedProducts(_userManager.GetUserId(HttpContext.User));

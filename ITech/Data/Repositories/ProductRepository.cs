@@ -382,7 +382,7 @@ namespace ITech.Data.Repositories
 
         public Product[] GetProductsByCategory(string categoryName, bool includeDetails = false)
         {
-            if(includeDetails)
+            if (includeDetails)
             {
                 return _context.Products
                     .Include(p => p.ProductImages)
@@ -397,20 +397,32 @@ namespace ITech.Data.Repositories
 
         public bool SaveProduct(string userId, int productId)
         {
-            
-            var product = _context.Products.Include(p => p.SavingUsers).FirstOrDefault(p => p.Id == productId);
-            var user = _context.AppUsers.Find(userId);
+
+            var product = _context.Products.Find(productId);
+            var user = _context.AppUsers.Include(usr => usr.SavedProducts).FirstOrDefault(usr => usr.Id == userId);
             if (product == null || user == null)
                 return false;
-            if(product.SavingUsers.Any(usr => usr.Id == userId))
+            if (user.SavedProducts.Any(p => p.Id == productId))
             {
-                return true;
+                return false;
             }
 
-            product.SavingUsers.Add(user);
+            user.SavedProducts.Add(product);
             return _context.SaveChanges() > 0;
         }
 
+        public bool RemoveSavedProduct(string userId, int productId)
+        {
+            var user = _context.AppUsers.Include(usr => usr.SavedProducts).FirstOrDefault(usr => usr.Id == userId);
+            var product = _context.Products.Find(productId);
+            if (user == null || product == null)
+                return false;
+            var savedProduct = user.SavedProducts.FirstOrDefault(p => p.Id == productId);
+            if (savedProduct == null)
+                return false;
+            user.SavedProducts.Remove(savedProduct);
+            return _context.SaveChanges() > 0;
+        }
         public Product[] GetUserSavedProducts(string userId)
         {
             var user = _context.AppUsers
