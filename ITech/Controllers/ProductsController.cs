@@ -24,11 +24,13 @@ namespace ITech.Controllers
         private readonly IWebHostEnvironment _hostEnvironment;
 
         public ProductsController(IProductRepository productRepository,
+                                  ICategoryRepository categoryRepository,
                                   ISellerRepository sellerRepository,                                  
                                   UserManager<AppUser> userManager,
                                   IWebHostEnvironment hostEnvironment)
         {
             _productRepository = productRepository;
+            _categoryRepository = categoryRepository;
             _sellerRepository = sellerRepository;                        
             _userManager = userManager;
             _hostEnvironment = hostEnvironment;
