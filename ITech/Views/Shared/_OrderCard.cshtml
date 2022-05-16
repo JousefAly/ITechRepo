@@ -1,0 +1,75 @@
+﻿@model Order
+@{
+    var statusClass = "primary";
+    var status = "Pending";
+    string handledDate = "";
+    string HandledBy = "";
+    bool hasHandleDate = DateTime.Compare(Model.OrderHandeled, new DateTime(1800,1,1)) > 0;
+    if (Model.Accepted)
+
+    {
+        status = "Accepted";
+        statusClass = "success";
+        handledDate = "at: " + Model.OrderHandeled.ToString("g") + ". ";
+        HandledBy = " by: " + Model.Handler.UserName;
+
+    }
+    else if (!Model.Accepted && hasHandleDate)
+    {
+        status = "Refused";
+        statusClass = "danger";
+        handledDate = "at: " + Model.OrderHandeled.ToString("g") + ". ";
+        HandledBy = " by: " +Model.Handler.UserName;
+    }
+
+}
+
+<div class="card m-1">
+    <div class="card-header">
+        <h4>Customer: @Model.User.UserName</h4>
+        <h6>Email: @Model.User.Email</h6>
+        <h7 class="font-weight-bold">
+            Status:<span class="text-@statusClass"> @status</span>
+            <span class="text-secondary font-italic"> @handledDate</span>
+            <span class="text-secondary font-italic"> @HandledBy</span>
+        </h7>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-8">
+                <h6>Details</h6>
+                @foreach (var od in Model.OrderDetails)
+                {
+                    <p>(@od.Amount)  @od.Product.Title</p>
+                }
+            </div>
+            <div class="col-4 p-0">
+
+                <p class="font-weight-bold"><span class="font-weight-bold">Total</span>: @Model.OrderTotal.ToString("c")</p>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="row">
+            <div class="col-4">
+                @Model.OrderPlaced.ToString("g")
+            </div>
+            <div class="col-8">
+                @if (Model.Accepted)
+                {
+                    <a class="btn btn-danger float-right"
+                       asp-controller="Order" asp-action="Refuse" asp-route-id="@Model.OrderId">
+                        <i class="fas fa-ban"></i> Refuse
+                    </a>
+                }
+                else
+                {
+                    <a class="btn btn-success float-right"
+                       asp-controller="Order" asp-action="Accept" asp-route-id="@Model.OrderId">
+                        <i class="fas fa-check"></i> Accept
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+</div>

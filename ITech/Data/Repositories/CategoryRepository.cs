@@ -30,6 +30,10 @@ namespace ITech.Data.Repositories
         {
             return _context.Categories.FirstOrDefault(c => c.Name == name);
         }
+        public List<Category> GetAllCategories()
+        {
+            return _context.Categories.ToList();
+        }
 
         public int SaveChanges()
         {

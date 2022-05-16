@@ -1,9 +1,11 @@
 ﻿using ITech.Data.Entites;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ITech.Data.Repositories
@@ -11,10 +13,13 @@ namespace ITech.Data.Repositories
     public class ProductRepository : IProductRepository
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public ProductRepository(ApplicationDbContext context)
+        public ProductRepository(ApplicationDbContext context,
+                                 IWebHostEnvironment hostEnvironment)
         {
             _context = context;
+            _hostEnvironment = hostEnvironment;
         }
         public void Add(Product product)
         {
@@ -28,21 +33,67 @@ namespace ITech.Data.Repositories
         }
 
 
-        public void AddProductDetail(Product product, ProductDetail detail)
+        public ProductDetail AddProductDetail(Product product, ProductDetail detail)
         {
-            detail.ITSIN = product.ITSIN;
-            detail.Product = product;
-            
+
+            product.ProductDetails.Add(detail);
+
+            return _context.SaveChanges() > 0 ? detail : null;
+
+        }
+
+        public ProductImage AddProductImage(Product product, ProductImage image)
+        {
+            product.ProductImages.Add(image);
+            if (_context.SaveChanges() == 0)
+                return null;
+            return image;
+        }
+
+        public Product AddSellerProduct(Seller seller, Product product)
+        {
+            product.Seller = seller;
+            _context.Products.Add(product);
+            _context.SaveChanges();
+            return product;
+        }
+
+        public bool Delete(int productId)
+        {
+            //first delete all product images from server then delete product which will delete all it's dependent
+            //relations by cascading delete
+            var product = GetById(productId);
+            if (product.ProductImages != null && product.ProductImages.Any())
+            {
+                foreach (var p in product.ProductImages.ToList())
+                {
+
+                    DeleteProductImage(p.Id);
+
+                }
+            }
+
+            //now delete product
+            _context.Products.Remove(product);
+            return _context.SaveChanges() > 0;
         }
 
         public List<Product> GetAllProducts()
         {
-            return _context.Products.Include(p => p.Category).ToList();           
+            return _context.Products
+                .Include(p => p.Category)
+                .Include(p => p.ProductDetails)
+                .Include(p => p.ProductImages)
+                .ToList();
         }
         //return product with its details
         public Product GetById(int id)
         {
-            return _context.Products.Include(p => p.ProductDetails).FirstOrDefault(p => p.Id == id);
+            return _context.Products
+                .Include(p => p.Category)
+                .Include(p => p.ProductDetails)
+                .Include(p => p.ProductImages)
+                .FirstOrDefault(p => p.Id == id);
         }
 
         public Product GetProductByITSIN(string iTSIN)
@@ -50,9 +101,339 @@ namespace ITech.Data.Repositories
             return _context.Products.FirstOrDefault(p => p.ITSIN == iTSIN);
         }
 
+
+
+        public bool HasMainImage(int productId)
+        {
+
+            return _context.Products.Include(p => p.ProductImages)
+                                    .FirstOrDefault(p => p.Id == productId).ProductImages
+                                    .FirstOrDefault(pi => pi.ImageNumber == 1) != null;
+        }
+
+
         public int SaveChanges()
         {
             return _context.SaveChanges();
+        }
+        public List<Product> GetSellerProducts(Seller seller)
+        {
+            return _context.Products
+                .Include(p => p.ProductDetails)
+                .Include(p => p.ProductImages)
+                .Where(p => p.Seller == seller).ToList();
+        }
+
+        public Product Update(Product product)
+        {
+            _context.Update(product);
+            _context.SaveChanges();
+            return product;
+        }
+        public ProductDetail UpdateProductDetail(ProductDetail productDetail)
+        {
+            _context.Update(productDetail);
+            return _context.SaveChanges() > 0 ? productDetail : null;
+        }
+
+        public bool DeleteProductDetail(int detailId)
+        {
+
+            _context.Remove(_context.ProductDetails.Find(detailId));
+            return _context.SaveChanges() > 0;
+        }
+        //upload image to server files then connect it with product in db
+        //upload image to wwwroot/img/products then connect image with its product
+        //change the image name to unique name with productId attached to it
+        //return created image
+        public async Task<ProductImage> AddProductImage(IFormFile imageFile, int imageNumber, int productId)
+        {
+
+            string wwwrootPath = _hostEnvironment.WebRootPath;
+            string fileName = Path.GetFileNameWithoutExtension(imageFile.FileName);
+            string extension = Path.GetExtension(imageFile.FileName);
+            string imageUniqueName = fileName + DateTime.Now.ToString("yymmssfff") + "-"
+                                     + productId.ToString() + extension;
+            var path = Path.Combine(wwwrootPath + "/img/products/", imageUniqueName);
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            {
+                await imageFile.CopyToAsync(fileStream);
+            }
+            //now image uploaded connect it with product in db
+
+            var productImage = new ProductImage
+            {
+                ImageNumber = imageNumber,
+                ImageUrl = "img/products/" + imageUniqueName,
+                ProductId = productId
+            };
+
+
+            _context.Add(productImage);
+            return _context.SaveChanges() > 0 ? productImage : null;
+        }
+        public ProductImage GetProductImage(int imageId)
+        {
+
+            return _context.ProductImages.Find(imageId);
+        }
+        public bool DeleteProductImage(int imageId)
+        {
+            //delete from files
+            var image = GetProductImage(imageId);
+            if (image == null)
+            {
+                return false;
+            }
+            string wwwrootPath = _hostEnvironment.WebRootPath;
+            string imageName = image.ImageUrl.Substring(13);
+            string path = Path.Combine(wwwrootPath + "/img/products/", imageName);
+            File.Delete(path);
+            if (File.Exists(path))
+            {
+                return false;
+            }
+            _context.ProductImages.Remove(image);
+            return _context.SaveChanges() > 0;
+        }
+
+        public bool Activate(int id)
+        {
+            var product = _context.Products.Find(id);
+            if (product.Activated)
+                return true;
+            product.Activated = true;
+            return _context.SaveChanges() > 0;
+        }
+
+        public bool DesActivate(int id)
+        {
+            var product = _context.Products.Find(id);
+            if (!product.Activated)
+                return true;
+            product.Activated = false;
+            return _context.SaveChanges() > 0;
+        }
+
+        public async Task<int> DesActivateSellerPrdoucts(string sellerId)
+        {
+            var products = _context.Products.Where(p => p.SellerId == sellerId).ToList();
+            if (products == null)
+                return 0;
+            var deactivatedProducts = products.Count(p => !p.Activated);
+            foreach (var product in products)
+            {
+                product.Activated = false;
+            }
+
+            deactivatedProducts += await _context.SaveChangesAsync();
+            return deactivatedProducts;
+        }
+        public async Task<int> ActivateSellerPrdoucts(string sellerId)
+        {
+
+            var products = _context.Products.Where(p => p.SellerId == sellerId).ToList();
+            var activatedProducts = products.Count(p => p.Activated);
+            if (products == null)
+                return 0;
+            foreach (var product in products)
+            {
+                product.Activated = true;
+            }
+            activatedProducts += await _context.SaveChangesAsync();
+            return activatedProducts;
+        }
+
+        public ProductStats GetProductStats(int productId)
+        {
+            var product = _context.Products
+                            .Include(p => p.ProductImages)
+                            .Include(p => p.Seller)
+                            .ThenInclude(s => s.User)
+                            .FirstOrDefault(p => p.Id == productId);
+            if (product == null)
+                return null;
+            //try to optimize the next two queries to be in a single query
+            var soldCount = _context.OrderDetails
+                                    .Where(od => od.Order.Accepted && od.ProductId == productId)
+                                    .Sum(od => od.Amount);
+            int acceptedOrders = _context.Orders
+                                    .Where(o => o.Accepted && o.OrderDetails.Any(od => od.ProductId == productId))
+                                    .Count();
+
+            return new ProductStats
+            {
+                Product = product,
+                SoldCount = soldCount,
+                AcceptedOrders = acceptedOrders,
+                TotalSoldAmount = soldCount * product.PriceAfterDiscount,
+                CustomersUsernames = GetProductDistinctCustomers(productId)
+            };
+
+        }
+
+        public string[] GetProductDistinctCustomers(int productId)
+        {
+            return _context.Orders
+                .Where(o => o.OrderDetails.Any(od => od.ProductId == productId))
+                .Select(o => o.User.UserName)
+                .Distinct()
+                .ToArray();
+        }
+
+        public ProductStats[] GetSellerProductsStats(string sellerId)
+        {
+            var products = _context.Products
+                            .Include(p => p.ProductImages)
+                            .Include(p => p.Seller)
+                            .ThenInclude(s => s.User)
+                            .Where(p => p.SellerId == sellerId)
+                            .ToArray();
+            if (products == null)
+                return Array.Empty<ProductStats>();
+            var productsStats = new ProductStats[products.Length];
+            for (int i = 0; i < productsStats.Length; i++)
+            {
+                productsStats[i] = GetProductStats(products[i].Id);
+
+            }
+            return productsStats;
+        }
+
+        public int AddToStock(int productId, int amount)
+        {
+            var product = _context.Products.Find(productId);
+            product.Stock += amount;
+            return _context.SaveChanges() > 0 ? product.Stock : product.Stock - amount;
+        }
+
+        public int RemoveFromStock(int productId, int amount)
+        {
+            var product = _context.Products.Find(productId);
+            if (product.Stock - amount >= 0)
+            {
+                product.Stock -= amount;
+            }
+            return _context.SaveChanges() > 0 ? product.Stock : product.Stock + amount;
+        }
+
+
+        public Product[] Search(string searchString)
+        {
+            var productsQuery = _context.Products
+                                .Include(p => p.ProductDetails)
+                                .Include(p => p.ProductImages)
+                                .Where(p => EF.Functions.Like(p.Title, $"%{searchString}%") ||
+                                        EF.Functions.Like(p.Brand, $"%{searchString}%") ||
+                                        EF.Functions.Like(p.Category.Name, $"%{searchString}%"))
+                                .ToArray();
+            return productsQuery;
+        }
+
+        public Product[] TrendyProducts(int numberOfProducts)
+        {
+            throw new NotImplementedException();
+        }
+        /*
+         * Result SQL
+         * 
+         N'SELECT TOP(@__p_0) [p].[Id], [p].[Activated], [p].[Brand], [p].[CategoryId], [p].[DiscountPercentage], [p].[ITSIN], [p].[LaunchTime], [p].[Price], [p].[PriceAfterDiscount], [p].[SellerId], [p].[ShortDescription], [p].[Stock], [p].[Title], (
+            SELECT COALESCE(SUM([o].[Amount]), 0)
+            FROM [OrderDetails] AS [o]
+            WHERE [p].[Id] = [o].[ProductId]) AS [SoldAmount]
+        FROM [Products] AS [p]
+        ORDER BY (
+            SELECT COALESCE(SUM([o0].[Amount]), 0)
+            FROM [OrderDetails] AS [o0]
+            WHERE [p].[Id] = [o0].[ProductId]) DESC, (
+            SELECT MAX([o2].[OrderPlaced])
+            FROM [OrderDetails] AS [o1]
+            INNER JOIN [Orders] AS [o2] ON [o1].[OrderId] = [o2].[OrderId]
+            WHERE [p].[Id] = [o1].[ProductId]) DESC, [p].[Title], [p].[Id]',N'@__p_0 int',@__p_0=3
+         */
+
+        public ProductSoldAmount[] GetTopSellingProducts(int numberOfProducts, bool includeImagesAndDetails = false)
+        {
+            if (includeImagesAndDetails)
+            {
+                return _context.Products
+                            .Include(p => p.ProductImages)
+                            .Include(p => p.ProductDetails)
+                            .OrderByDescending(p => p.OrderDetails.Sum(od => od.Amount))
+                            .ThenByDescending(p => p.OrderDetails.Max(od => od.Order.OrderPlaced))
+                            .ThenBy(p => p.Title)
+                            .ThenBy(p => p.Id)
+                            .Select(p => new ProductSoldAmount { Product = p, SoldAmount = p.OrderDetails.Sum(od => od.Amount) })
+                            .Take(numberOfProducts)
+                            .ToArray();
+
+            }
+
+            return _context.Products
+                  .OrderByDescending(p => p.OrderDetails.Sum(od => od.Amount))
+                  .ThenByDescending(p => p.OrderDetails.Max(od => od.Order.OrderPlaced))
+                  .ThenBy(p => p.Title)
+                  .ThenBy(p => p.Id)
+                  .Select(p => new ProductSoldAmount { Product = p, SoldAmount = p.OrderDetails.Sum(od => od.Amount) })
+                  .Take(numberOfProducts)
+                  .ToArray();
+
+        }
+
+        public Product[] GetProductsByCategory(string categoryName, bool includeDetails = false)
+        {
+            if (includeDetails)
+            {
+                return _context.Products
+                    .Include(p => p.ProductImages)
+                    .Include(p => p.ProductDetails)
+                    .Where(p => p.Category.Name == categoryName)
+                    .ToArray();
+            }
+            return _context.Products
+                    .Where(p => p.Category.Name == categoryName)
+                    .ToArray();
+        }
+
+        public bool SaveProduct(string userId, int productId)
+        {
+
+            var product = _context.Products.Find(productId);
+            var user = _context.AppUsers.Include(usr => usr.SavedProducts).FirstOrDefault(usr => usr.Id == userId);
+            if (product == null || user == null)
+                return false;
+            if (user.SavedProducts.Any(p => p.Id == productId))
+            {
+                return false;
+            }
+
+            user.SavedProducts.Add(product);
+            return _context.SaveChanges() > 0;
+        }
+
+        public bool RemoveSavedProduct(string userId, int productId)
+        {
+            var user = _context.AppUsers.Include(usr => usr.SavedProducts).FirstOrDefault(usr => usr.Id == userId);
+            var product = _context.Products.Find(productId);
+            if (user == null || product == null)
+                return false;
+            var savedProduct = user.SavedProducts.FirstOrDefault(p => p.Id == productId);
+            if (savedProduct == null)
+                return false;
+            user.SavedProducts.Remove(savedProduct);
+            return _context.SaveChanges() > 0;
+        }
+        public Product[] GetUserSavedProducts(string userId)
+        {
+            var user = _context.AppUsers
+                .Include(usr => usr.SavedProducts)
+                    .ThenInclude(p => p.ProductImages)
+                .Include(usr => usr.SavedProducts)
+                    .ThenInclude(p => p.ProductDetails)
+                .FirstOrDefault(usr => usr.Id == userId);
+            if (user == null)
+                return Array.Empty<Product>();
+            return user.SavedProducts.ToArray();
         }
     }
 }

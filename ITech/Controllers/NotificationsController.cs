@@ -1,0 +1,42 @@
+﻿using ITech.Data;
+using ITech.Data.Repositories;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace ITech.Controllers
+{
+    public class NotificationsController : Controller
+    {
+        private readonly ApplicationDbContext _context;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly INotificationRepository _notificationRepository;
+
+        public NotificationsController(ApplicationDbContext context,
+                                       UserManager<AppUser> userManager,
+                                       INotificationRepository  notificationRepository)
+        {
+            _context = context;
+            _userManager = userManager;
+            _notificationRepository = notificationRepository;
+        }
+
+        public async  Task<IActionResult> Index()
+        {
+            var user = await  _userManager.GetUserAsync(HttpContext.User);
+            if (user == null)
+                return NotFound();
+            var notifications = await _notificationRepository.GetNotificationsAsync(user);
+            if (!notifications.Any())
+                return View(notifications);
+            notifications = notifications.OrderByDescending(n => n.SentTime).ToList();           
+            return View(notifications);
+        }
+        public RedirectToActionResult Check(string id)
+        {
+            _notificationRepository.Check(id);
+            return RedirectToAction(nameof(Index));
+        }
+    }
+}

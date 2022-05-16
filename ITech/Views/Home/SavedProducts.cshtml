@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "Saved Products";
+}
+
+@if (Model.Any())
+{
+    <div class="jumbotron">
+        <h4>Saved  Products</h4>
+        <div class="row">
+            @foreach (var product in Model)
+            {
+                <div class="col-md-3 col-6">
+                    <partial name="_ProductCard" model="product" />
+                    <a asp-controller="Home" asp-action="RemoveSavedProduct" asp-route-id="@product.Id">
+                        <i class="fas fa-trash text-danger"></i> Remove
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <h2>You don't have saved products.</h2>
+}

@@ -125,24 +125,26 @@ namespace ITech.Data
         //seed then return affected rows
         private int SeedCategoriesInDbManually()
         {
-            var categories = new List<Category>()
-            {
-                new Category
-                {
-                  Name = "Phones",
-                  Description = "This category includes all phones in website",
-                },
-                new Category
-                {
-                    Name = "Laptops",
-                    Description = "This category includes all laptops in webiste"
-                }
-            };
-            foreach (var category in categories)
-            {
-                _categoryRepository.AddCategory(category);
-            }
-            return _categoryRepository.SaveChanges();
+            // seeding from migraions automatic
+            return 0;
+
+            //var categories = new List<Category>()
+            //{
+            //    new Category
+            //    {
+            //      Name = "Phones",
+            //      Description = "This category includes all phones in website",
+            //    },
+            //    new Category
+            //    {
+            //        Name = "Laptops",
+            //        Description = "This category includes all laptops in webiste"
+            //    }
+            //};
+            //foreach (var category in categories)
+            //{
+            //    _categoryRepository.AddCategory(category);
+            //}
         }
         //seed then return affected rows
         private int SeedProductsInDbManually()
@@ -154,16 +156,16 @@ namespace ITech.Data
                   Title = "Nokia C1 - 5.45-inch 16GB/1GB Dual SIM 3G Mobile Phone - Charcoal",
                   ShortDescription = "Level up to the new Nokia C1. Enjoy your entertainment – anytime, anywhere – with the large screen and all-day battery life. Raise your selfie game with the front-facing flash and 5 MP camera. Do more with Android 9 Pie (Go edition) – watch your favorite videos, view your photos and even find your way home all while offline.",
                   Price = 1059m,
-                  Image1Name = "Mock1.1.jpg",
-                  Image2Name = "MockEmpty.jpg",
-                  Image3Name = "MockEmpty.jpg",
-                  Image4Name = "MockEmpty.jpg",
-                  Image5Name = "MockEmpty.jpg",
-                  Image6Name = "MockEmpty.jpg",
-                  Image7Name = "MockEmpty.jpg",
-                  Image8Name = "MockEmpty.jpg",
-
                   ITSIN = "IT-Mock-1",
+                  Brand= "Nokia",
+                  ProductImages = new List<ProductImage>
+                  {
+                      new ProductImage
+                      {
+                          ImageNumber = 1,
+                          ImageUrl = "img/mockImages/Mock1.1.jpg"
+                      }
+                  },
 
                   Category = _categoryRepository.GetCategoryByName("Phones"),
                   ProductDetails = new List<ProductDetail>()
@@ -196,15 +198,53 @@ namespace ITech.Data
                   Title = "XIAOMI Redmi 9T - 6.53-inch 128GB/6GB Dual SIM Mobile Phone - Twilight Blue",
                   ShortDescription = "Brighten up your life with Redmi 9T's luminous aesthetic. The back glistens in the light giving off a captivating radiance. Pick your favorite from four stunning colors; Twilight Blue, Sunrise Orange, Ocean Green and Carbon Gray.",
                   Price = 3450m,
-                  Image1Name = "Mock2.1.jpg",
-                  Image2Name = "Mock2.2.jpg",
-                  Image3Name = "Mock2.3.jpg",
-                  Image4Name = "Mock2.4.jpg",
-                  Image5Name = "Mock2.5.jpg",
-                  Image6Name = "Mock2.6.jpg",
-                  Image7Name = "Mock2.7.jpg",
-                  Image8Name = "Mock2.8.jpg",
-                  ITSIN = "IT-Mock-2",
+                  ITSIN = "IT-Mock-1",
+                  Brand= "XIAOMI",
+                  ProductImages = new List<ProductImage>
+                  {
+                      new ProductImage
+                      {
+                          ImageNumber = 1,
+                          ImageUrl = "img/mockImages/Mock2.1.jpg"
+                      },
+
+                      new ProductImage
+                      {
+                          ImageNumber = 2,
+                          ImageUrl = "img/mockImages/Mock2.2.jpg"
+                      },
+                      new ProductImage
+                      {
+                          ImageNumber = 3,
+                          ImageUrl = "img/mockImages/Mock2.3.jpg"
+                      },
+                      new ProductImage
+                      {
+                          ImageNumber = 4,
+                          ImageUrl = "img/mockImages/Mock2.4.jpg"
+                      },
+                      new ProductImage
+                      {
+                          ImageNumber = 5,
+                          ImageUrl = "img/mockImages/Mock2.5.jpg"
+                      },
+                      new ProductImage
+                      {
+                          ImageNumber = 6,
+                          ImageUrl = "img/mockImages/Mock2.6.jpg"
+                      },
+                      new ProductImage
+                      {
+                          ImageNumber = 7,
+                          ImageUrl = "img/mockImages/Mock2.7.jpg"
+                      },
+                      new ProductImage
+                      {
+                          ImageNumber = 8,
+                          ImageUrl = "img/mockImages/Mock2.8.jpg"
+                      }
+
+                  },
                   Category = _categoryRepository.GetCategoryByName("Phones"),
                   ProductDetails = new List<ProductDetail>()
                   {
@@ -237,14 +277,36 @@ namespace ITech.Data
                   Title = "Samsung Galaxy A12 - 6.5-inch 64GB/4GB Dual SIM Mobile Phone - Blue",
                   ShortDescription = "This is a very nice phone",
                   Price = 2777m,
-                  Image1Name = "Mock3.1.jpg",
-                  Image2Name = "Mock3.2.jpg",
-                  Image3Name = "Mock3.3.jpg",
-                  Image4Name = "Mock3.4.jpg",
-                  Image5Name = "Mock3.5.jpg",
-                  Image6Name = "MockEmpty.jpg",
-                  Image7Name = "MockEmpty.jpg",
-                  Image8Name = "MockEmpty.jpg",
+                  Brand= "Samsung",
+                  ProductImages = new List<ProductImage>
+                  {
+                      new ProductImage
+                      {
+                          ImageNumber = 1,
+                          ImageUrl = "img/mockImages/Mock3.1.jpg"
+                      },
+
+                      new ProductImage
+                      {
+                          ImageNumber = 2,
+                          ImageUrl = "img/mockImages/Mock3.2.jpg"
+                      },
+                      new ProductImage
+                      {
+                          ImageNumber = 3,
+                          ImageUrl = "img/mockImages/Mock3.3.jpg"
+                      },
+                      new ProductImage
+                      {
+                          ImageNumber = 4,
+                          ImageUrl = "img/mockImages/Mock3.4.jpg"
+                      },
+                      new ProductImage
+                      {
+                          ImageNumber = 5,
+                          ImageUrl = "img/mockImages/Mock3.5.jpg"
+                      }
+                  },
                   ITSIN = "IT-Mock-3",
                   Category = _categoryRepository.GetCategoryByName("Phones"),
                   ProductDetails = new List<ProductDetail>()
@@ -278,14 +340,37 @@ namespace ITech.Data
                   Title = "HP ProBook 450 G7 Laptop - Intel Core I7 - 8GB RAM - 1TB HDD - 15.6-inch HD - 2GB GPU - Windows 10 Pro - Natural Silver + Laptop Bag",
                   ShortDescription = "Full-featured, thin, and light, the reliable HP ProBook 450 offers essential commercial features at an affordable price to every business. Automatic security solutions, powerful performance, and long battery life help keep your business productive.",
                   Price = 15555m,
-                  Image1Name = "Mock4.1.jpg",
-                  Image2Name = "Mock4.2.jpg",
-                  Image3Name = "Mock4.3.jpg",
-                  Image4Name = "Mock4.4.jpg",
-                  Image5Name = "Mock4.5.jpg",
-                  Image6Name = "MockEmpty.jpg",
-                  Image7Name = "MockEmpty.jpg",
-                  Image8Name = "MockEmpty.jpg",
+                   Brand= "HP",
+                  ProductImages = new List<ProductImage>
+                  {
+                      new ProductImage
+                      {
+                          ImageNumber = 1,
+                          ImageUrl = "img/mockImages/Mock4.1.jpg"
+                      },
+
+                      new ProductImage
+                      {
+                          ImageNumber = 2,
+                          ImageUrl = "img/mockImages/Mock4.2.jpg"
+                      },
+                      new ProductImage
+                      {
+                          ImageNumber = 3,
+                          ImageUrl = "img/mockImages/Mock4.3.jpg"
+                      },
+                      new ProductImage
+                      {
+                          ImageNumber = 4,
+                          ImageUrl = "img/mockImages/Mock4.4.jpg"
+                      },
+                      new ProductImage
+                      {
+                          ImageNumber = 5,
+                          ImageUrl = "img/mockImages/Mock4.5.jpg"
+                      }
+                    
+                  },
                   ITSIN = "IT-Mock-4",
                   Category = _categoryRepository.GetCategoryByName("Laptops"),
                   ProductDetails = new List<ProductDetail>()
@@ -320,14 +405,31 @@ namespace ITech.Data
                   Title = "Lenovo IdeaPad L3 Laptop - Intel Core I7 - 8GB RAM - 1TB HDD + 256GB SSD - 15.6-inch FHD - 2GB GPU - DOS - Abyss Blue",
                   ShortDescription = "The new Lenovo™ IdeaPad™ L3 brings everything you need in an everyday-use laptop, but offers powerful memory and Intel® processing options, making it perfect for anyone who wants to do more than just surf the internet. Enjoy its FHD display and stereo speakers with your favorite streaming movies and shows and take it anywhere with a battery that lasts all day. Work, school, or home, the IdeaPad L3 has something for everyone.",
                   Price = 13760m,
-                  Image1Name = "Mock5.1.jpg",
-                  Image2Name = "Mock5.2.jpg",
-                  Image3Name = "Mock5.3.jpg",
-                  Image4Name = "Mock5.4.jpg",
-                  Image5Name = "MockEmpty.jpg",
-                  Image6Name = "MockEmpty.jpg",
-                  Image7Name = "MockEmpty.jpg",
-                  Image8Name = "MockEmpty.jpg",
+                  Brand= "Lenovo",
+                  ProductImages = new List<ProductImage>
+                  {
+                      new ProductImage
+                      {
+                          ImageNumber = 1,
+                          ImageUrl = "img/mockImages/Mock5.1.jpg"
+                      },
+
+                      new ProductImage
+                      {
+                          ImageNumber = 2,
+                          ImageUrl = "img/mockImages/Mock5.2.jpg"
+                      },
+                      new ProductImage
+                      {
+                          ImageNumber = 3,
+                          ImageUrl = "img/mockImages/Mock5.3.jpg"
+                      },
+                      new ProductImage
+                      {
+                          ImageNumber = 4,
+                          ImageUrl = "img/mockImages/Mock5.4.jpg"
+                      }
+                  },
                   ITSIN = "IT-Mock-5",
                   Category = _categoryRepository.GetCategoryByName("Laptops"),
                   ProductDetails = new List<ProductDetail>()

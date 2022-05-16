@@ -1,4 +1,5 @@
 ﻿using ITech.Data.Entites;
+using System.Collections.Generic;
 
 namespace ITech.Data.Repositories
 {
@@ -8,5 +9,6 @@ namespace ITech.Data.Repositories
         Category GetCategoryByName(string name);
         int SaveChanges();
         Category GetCategoryById(int id);
+        List<Category> GetAllCategories();
     }
 }

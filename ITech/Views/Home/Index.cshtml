@@ -1,359 +1,149 @@
-﻿@model List<Product>
+﻿@model HomeIndexViewModel
 @{
     ViewData["Title"] = "Home Page";
 }
 
-<section class="header_two">
-    <div class="content">
-        <div class="text-center text-capitalize">
-            <h4>What is in your mind?</h4>
+@section RestOfNavContainer {
+
+    <!--crousel start-->
+    <div id="header-carousel" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active" style="height: 410px;">
+                <img class="img-fluid" src="~/img/carousel-1.jpg" alt="Image">
+                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                    <div class="p-3" style="max-width: 700px;">
+                        <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
+                        <h3 class="display-4 text-white font-weight-semi-bold mb-4">Gaming Laptop</h3>
+                        <a href="" class="btn btn-light py-2 px-3">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item" style="height: 410px;">
+                <img class="img-fluid" src="~/img/carousel-2.jpg" alt="Image">
+                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                    <div class="p-3" style="max-width: 700px;">
+                        <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
+                        <h3 class="display-4 text-white font-weight-semi-bold mb-4">Reasonable Price</h3>
+                        <a href="" class="btn btn-light py-2 px-3">Shop Now</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <form action="/" method="post" class="search">
-            <input type="text" name="name" value="" placeholder="Search ..." class="search_input form-control" style=" border-bottom-left-radius: 25px;" />
-            <button class="search_button"><i class="fa fa-search"></i></button>
-        </form>
+        <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
+            <div class="btn btn-dark" style="width: 45px; height: 45px;">
+                <span class="carousel-control-prev-icon mb-n2"></span>
+            </div>
+        </a>
+        <a class="carousel-control-next" href="#header-carousel" data-slide="next">
+            <div class="btn btn-dark" style="width: 45px; height: 45px;">
+                <span class="carousel-control-next-icon mb-n2"></span>
+            </div>
+        </a>
     </div>
+    <!--crousel end-->
 
-</section>
-
-<div style="position:relative">
-
-    <h1 class="title-text text-center">Recently Arrival</h1>
-
+}
+<!-- Featured Start -->
+<div class="container-fluid pt-5">
+    <div class="row px-xl-5 pb-3">
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                <h1 class="fa fa-check text-primary m-0 mr-3"></h1>
+                <h5 class="font-weight-semi-bold m-0">Quality Product</h5>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                <h1 class="fa fa-shipping-fast text-primary m-0 mr-2"></h1>
+                <h5 class="font-weight-semi-bold m-0">Fast Shipping</h5>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                <h1 class="fas fa-exchange-alt text-primary m-0 mr-3"></h1>
+                <h5 class="font-weight-semi-bold m-0">14-Day Return</h5>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                <h1 class="fa fa-phone-volume text-primary m-0 mr-3"></h1>
+                <h5 class="font-weight-semi-bold m-0">24/7 Support</h5>
+            </div>
+        </div>
+    </div>
 </div>
+<!-- Featured End -->
+<!-- Categories Start -->
+<div class="container-fluid pt-5">
+    <div class="row px-xl-5 pb-3">
+        <div class="col-lg-4 col-md-6 pb-1">
+            <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
+                <p class="text-right">15 Products</p>
+                <a href="" class="cat-img position-relative overflow-hidden mb-3">
+                    <img class="img-fluid img-category" src="~/img/PhonesCategory.jpg" alt="">
+                </a>
+                <h5 class="font-weight-semi-bold m-0">Phones</h5>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 pb-1">
+            <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
+                <p class="text-right">15 Products</p>
+                <a href="" class="cat-img position-relative overflow-hidden mb-3">
+                    <img class="img-fluid" src="img/LaptopsCategory.jpg" alt="">
+                </a>
+                <h5 class="font-weight-semi-bold m-0">Laptops</h5>
+            </div>
+        </div>
 
+        <div class="col-lg-4 col-md-6 pb-1">
+            <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
+                <p class="text-right">15 Products</p>
+                <a href="" class="cat-img position-relative overflow-hidden mb-3">
+                    <img class="img-fluid" src="img/AccessoriesCategory.jpg" alt="">
+                </a>
+                <h5 class="font-weight-semi-bold m-0">Accessories</h5>
+            </div>
+        </div>
 
-
-
-
-<section class="slider">
-
-    <ul class="autoWidth cs-hidden">
-
-        @foreach (var Product in Model)
+    </div>
+</div>
+<!-- Categories End -->
+<!-- Offer Start -->
+<div class="container-fluid offer pt-5">
+    <div class="row px-xl-5">
+        <div class="col-md-6 pb-4">
+            <div class="position-relative bg-secondary text-center text-md-right text-white mb-2 py-5 px-5">
+                <img src="img/gamer-bndle.jpg" alt="">
+                <div class="position-relative" style="z-index: 1;">
+                    <h5 class="text-uppercase text-primary mb-3">30% off when buy together</h5>
+                    <h1 class="mb-4 font-weight-semi-bold">Gamer Bundle</h1>
+                    <a href="" class="btn btn-outline-primary py-md-2 px-md-3">Shop Now</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 pb-4">
+            <div class="position-relative bg-secondary text-center text-md-left text-white mb-2 py-5 px-5">
+                <img src="img/summer-offer.jpg" alt="">
+                <div class="position-relative" style="z-index: 1;">
+                    <h5 class="text-uppercase text-primary mb-3">20% off the all order</h5>
+                    <h1 class="mb-4 font-weight-semi-bold">Summer Collection</h1>
+                    <a href="" class="btn btn-outline-primary py-md-2 px-md-3">Shop Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Offer End -->
+<div class="container-fluid pt-5">
+    <div class="text-center mb-4">
+        <h2 class="section-title px-5"><span class="px-2">Trendy Products</span></h2>
+    </div>
+    <div class="row px-xl-5 pb-3">
+        @foreach (var item in Model.TopSellingProducts)
         {
-
-
-            <li class="item-a">
-
-                <div class="box">
-                    <div class="slide-image">
-
-                        <img src="~/img/mockImages/@Product.Image1Name" />
-                        <div class="overlay">
-                            <a href="#" class="buy-btn">Buy Now</a>
-                        </div>
-                    </div>
-
-
-
-                    <div class="detail-box">
-                        <div class="type">
-                            <a asp-controller="Product" asp-action="Details" asp-route-id="@Product.Id">@Product.Title</a>
-
-                        </div>
-
-                        <a href="#" class="price">@Product.Price EGP</a>
-
-
-                    </div>
-
-                </div>
-
-            </li>
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <partial name="_ProductCard" model="item.Product" />
+            </div>
         }
-      
-    </ul>
-            
-</section>
-
-<div style="position:relative">
-
-    <h1 class="title-text text-center">Mobiles </h1>
-
+    </div>
 </div>
-
-<section class="slider">
-
-    <ul class="autoWidth cs-hidden">
-        <li class="item-a">
-
-            <div class="box">
-                <div class="slide-image">
-
-                    <img src="~/img/Slide_Images/tech-image2.jpg" />
-                    <div class="overlay">
-                        <a href="#" class="buy-btn">Buy Now</a>
-                    </div>
-                </div>
-
-
-
-                <div class="detail-box">
-                    <div class="type">
-                        <a href="#">Rabbed cardigan</a>
-                        <span>Noe Arri</span>
-                    </div>
-
-                    <a href="#" class="price">$23</a>
-                </div>
-
-            </div>
-
-        </li>
-        <li class="item-b">
-
-            <div class="box">
-                <div class="slide-image">
-
-                    <img src="~/img/Slide_Images/tech-image1.jpg" alt="1" />
-                    <div class="overlay">
-                        <a href="#" class="buy-btn">Buy Now</a>
-                    </div>
-                </div>
-
-
-
-                <div class="detail-box">
-                    <div class="type">
-                        <a href="#">Rabbed cardigan</a>
-                        <span>Noe Arri</span>
-                    </div>
-
-                    <a href="#" class="price">$23</a>
-                </div>
-
-            </div>
-
-
-        </li>
-        <li class="item-c">
-
-            <div class="box">
-                <div class="slide-image">
-
-                    <img src="~/img/Slide_Images/tech-image3.jpg" />
-                    <div class="overlay">
-                        <a href="#" class="buy-btn">Buy Now</a>
-                    </div>
-                </div>
-
-
-
-                <div class="detail-box">
-                    <div class="type">
-                        <a href="#">Rabbed cardigan</a>
-                        <span>Noe Arri</span>
-                    </div>
-
-                    <a href="#" class="price">$23</a>
-                </div>
-
-            </div>
-
-
-        </li>
-        <li class="item-d">
-
-            <div class="box">
-                <div class="slide-image">
-
-                    <img src="~/img/Slide_Images/tech-image2.jpg" />
-                    <div class="overlay">
-                        <a href="#" class="buy-btn">Buy Now</a>
-                    </div>
-                </div>
-
-
-
-                <div class="detail-box">
-                    <div class="type">
-                        <a href="#">Rabbed cardigan</a>
-                        <span>Noe Arri</span>
-                    </div>
-
-                    <a href="#" class="price">$23</a>
-                </div>
-
-            </div>
-
-
-        </li>
-
-        <li class="item-e">
-
-            <div class="box">
-                <div class="slide-image">
-
-                    <img src="~/img/Slide_Images/tech-image1.jpg" />
-                    <div class="overlay">
-                        <a href="#" class="buy-btn">Buy Now</a>
-                    </div>
-                </div>
-
-
-
-                <div class="detail-box">
-                    <div class="type">
-                        <a href="#">Rabbed cardigan</a>
-                        <span>Noe Arri</span>
-                    </div>
-
-                    <a href="#" class="price">$23</a>
-                </div>
-
-            </div>
-
-
-        </li>
-
-    </ul>
-</section>
-
-
-<div style="position:relative">
-
-    <h1 class="title-text text-center">Laptops </h1>
-
-</div>
-
-<section class="slider">
-
-    <ul class="autoWidth cs-hidden">
-        <li class="item-a">
-
-            <div class="box">
-                <div class="slide-image">
-
-                    <img src="~/img/Slide_Images/tech-image2.jpg" />
-                    <div class="overlay">
-                        <a href="#" class="buy-btn">Buy Now</a>
-                    </div>
-                </div>
-
-
-
-                <div class="detail-box">
-                    <div class="type">
-                        <a href="#">Rabbed cardigan</a>
-                        <span>Noe Arri</span>
-                    </div>
-
-                    <a href="#" class="price">$23</a>
-                </div>
-
-            </div>
-
-        </li>
-        <li class="item-b">
-
-            <div class="box">
-                <div class="slide-image">
-
-                    <img src="~/img/Slide_Images/tech-image1.jpg" alt="1" />
-                    <div class="overlay">
-                        <a href="#" class="buy-btn">Buy Now</a>
-                    </div>
-                </div>
-
-
-
-                <div class="detail-box">
-                    <div class="type">
-                        <a href="#">Rabbed cardigan</a>
-                        <span>Noe Arri</span>
-                    </div>
-
-                    <a href="#" class="price">$23</a>
-                </div>
-
-            </div>
-
-
-        </li>
-        <li class="item-c">
-
-            <div class="box">
-                <div class="slide-image">
-
-                    <img src="~/img/Slide_Images/tech-image3.jpg" />
-                    <div class="overlay">
-                        <a href="#" class="buy-btn">Buy Now</a>
-                    </div>
-                </div>
-
-
-
-                <div class="detail-box">
-                    <div class="type">
-                        <a href="#">Rabbed cardigan</a>
-                        <span>Noe Arri</span>
-                    </div>
-
-                    <a href="#" class="price">$23</a>
-                </div>
-
-            </div>
-
-
-        </li>
-        <li class="item-d">
-
-            <div class="box">
-                <div class="slide-image">
-
-                    <img src="~/img/Slide_Images/tech-image2.jpg" />
-                    <div class="overlay">
-                        <a href="#" class="buy-btn">Buy Now</a>
-                    </div>
-                </div>
-
-
-
-                <div class="detail-box">
-                    <div class="type">
-                        <a href="#">Rabbed cardigan</a>
-                        <span>Noe Arri</span>
-                    </div>
-
-                    <a href="#" class="price">$23</a>
-                </div>
-
-            </div>
-
-
-        </li>
-
-        <li class="item-e">
-
-            <div class="box">
-                <div class="slide-image">
-
-                    <img src="~/img/Slide_Images/tech-image1.jpg" />
-                    <div class="overlay">
-                        <a href="#" class="buy-btn">Buy Now</a>
-                    </div>
-                </div>
-
-
-
-                <div class="detail-box">
-                    <div class="type">
-                        <a href="#">Rabbed cardigan</a>
-                        <span>Noe Arri</span>
-                    </div>
-
-                    <a href="#" class="price">$23</a>
-                </div>
-
-            </div>
-
-
-        </li>
-        
-
-    </ul>
-</section>
-
-
-

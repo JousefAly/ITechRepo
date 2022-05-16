@@ -1,0 +1,9 @@
+﻿@model ShoppingCartViewModel
+
+@if (Model.ShoppingCartItems.Count > 0)
+{
+    <a class="btn border" asp-controller="ShoppingCart" asp-action="Index">
+        <i class="fas fa-shopping-cart text-primary"></i>
+        <span class="badge">@Model.ShoppingCartItems.Count</span>
+    </a>
+}

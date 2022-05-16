@@ -1,0 +1,37 @@
+﻿@model List<Product>
+@{
+
+}
+<partial name="_StatusMessage" model="@TempData["StatusMessage"]" />
+<h1>Manage All Products</h1>
+<div class="continer">
+    <div class="row">
+
+        @foreach (var p in Model)
+        {
+            <div class="col-6 col-md-3">
+                <partial name="_ProductEditCard" model="@p" />
+                @if (p.Activated)
+                {
+                    <a class="btn btn-danger m-2"
+                       asp-controller="Products" asp-action="DeactivateProduct" asp-route-id="@p.Id">
+                        Deactivate
+                    </a>
+                }
+                else
+                {
+                    <a class="btn btn-success m-2"
+                       asp-controller="Products" asp-action="ActivateProduct" asp-route-id="@p.Id">
+                        Activate
+                    </a>
+                }
+            </div>
+        }
+
+
+    </div>
+</div>
+
+
+
+

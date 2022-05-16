@@ -14,7 +14,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Admin" asp-action="Index">ITech</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ITech</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -22,10 +22,48 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Products" asp-action="ManageProducts">Manage Products</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Roles" asp-action="Index">Manage Roles</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Users" asp-action="Index">Manage Users</a>
+                        </li>
+                        <li class="dropdown nav-item">
+                            <a asp-controller="Order"
+                               asp-action="Orders"
+                               asp-route-includeDetails="true"
+                               class="dropdown-toggle nav-link" data-toggle="dropdown">Orders<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Order" asp-action="Orders" asp-route-includeDetails="true">
+                                        View all Orders
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown nav-item">
+                            <a asp-controller="Jobs"
+                               asp-action="Index"                               
+                               class="dropdown-toggle nav-link" data-toggle="dropdown">Jobs<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Jobs" asp-action="Index">
+                                        All Jobs
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Jobs" asp-action="Create">
+                                        Add Job
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Jobs" asp-action="JobApplications">
+                                        Job Applications
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
 
                     </ul>

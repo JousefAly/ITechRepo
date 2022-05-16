@@ -1,0 +1,80 @@
+﻿@model EditProductDetailsViewModel
+@{
+    ViewData["Title"] = "EditDetails";
+}
+
+<h1>Edit Details</h1>
+<partial name="_StatusMessage" model="@Model.StatusMessage" />
+
+@if (Model.ProductDetails.Any())
+{
+    <h3>Details</h3>
+    <table class="table-responsive table-striped mt-1">
+        <thead class="thead-dark">
+            <tr>
+                <th class="col-3 mr-2" scope="col">Title</th>
+                <th class="col-8" scope="col">Content</th>
+                <th class="col-1" scope="col">Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var detail in Model.ProductDetails)
+            {
+
+                <tr>
+                    <th class="col-3 mr-2" scope="row">@detail.Title</th>
+                    <td class="col-8">@detail.Content</td>
+                    <td class="col-1">
+                        <a asp-action="EditDetails" asp-route-productId="@Model.ProductId" asp-route-detailId="@detail.Id"><i class="fas fa-edit" title="Edit"></i></a>
+                        <a asp-action="DeleteDetail" asp-route-productId="@Model.ProductId" asp-route-detailId="@detail.Id"><i class="fas fa-trash" title="Delete"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a class="btn btn-success mt-2" asp-controller="Products"
+       asp-action="AddProductDetail" asp-route-productId="@Model.ProductId">Add</a>
+    @if (Model.DetailToEdit != null)
+    {
+        <div>
+            <form asp-action="EditDetail"  method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div hidden>
+                    <input asp-for="ProductId" value="@Model.ProductId" />
+                    <input asp-for="DetailToEdit.Id" value="@Model.DetailToEdit.Id" />
+                    <input asp-for="DetailToEdit.ProductId" value="@Model.DetailToEdit.ProductId" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="DetailToEdit.Title" class="col-md-2 control-label"></label>
+                    <div class="col-md-5">
+                        <input asp-for="DetailToEdit.Title" class="form-control"  />
+                        <span asp-validation-for="DetailToEdit.Title" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DetailToEdit.Content" class="col-md-2 control-label"></label>
+                    <div class="col-md-5">
+                        <textarea class="form-control" asp-for="DetailToEdit.Content" rows="3" ></textarea>
+                        <span asp-validation-for="DetailToEdit.Content" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-5">
+                        <input type="submit" class="btn btn-primary" value="Edit" />
+                        <a class="btn btn-danger" asp-action="EditDetails" asp-route-productId="@Model.ProductId">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    }
+
+
+}
+else
+{
+    <h3>This product Does not have Detilas yet!</h3>
+    <a class="btn btn-success" asp-controller="Products" asp-action="AddProductDetail" asp-route-productId="@Model.ProductId">Add</a>
+}
+
+
+

@@ -1,0 +1,24 @@
+﻿@{
+    if (User.IsInRole("Admin"))
+        Layout = "/Views/Shared/_AdminLayout.cshtml";
+    else if (User.IsInRole("Seller"))
+        Layout = "/Views/Shared/_SellerLayout.cshtml";
+    else
+        Layout = "/Views/Shared/_Layout.cshtml";
+
+}
+
+<h2>Manage Product</h2>
+
+<div>
+
+    <hr />
+    <div class="row">
+        <div class="col-md-3">
+            <partial name="_ManageProductNav" />
+        </div>
+        <div class="col-md-9">
+            @RenderBody()
+        </div>
+    </div>
+</div>

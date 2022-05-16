@@ -1,0 +1,38 @@
+﻿@model Seller
+@{
+    var errorMessage = TempData["errorMessage"] as string;
+    var seller = Model;
+
+}
+<h1>Congratulation you made your account</h1>
+<p>Complete your Information @User.Identity.Name</p>
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <h5 class="alert-danger">@errorMessage</h5>
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CompleteRegister" method="post" >
+            <h4>Complete Your Info</h4>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Address" class="col-md-2 control-label"></label>
+                <div class="col-md-5">
+                    <input asp-for="Address" class="form-control" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+            </div>
+            <!--send the seller id with the form post-->
+            <div class="invisible">
+                <input asp-for="Id" type="text" value="@Model.Id"/>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-5">
+                    <input type="submit" class="btn btn-primary" value="Submit" />
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

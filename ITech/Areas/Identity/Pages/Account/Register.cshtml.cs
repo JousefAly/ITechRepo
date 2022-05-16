@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using ITech.Data;
+using ITech.Data.Repositories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -25,17 +26,23 @@ namespace ITech.Areas.Identity.Pages.Account
         private readonly UserManager<AppUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ICustomerRepository _customerRepository;
+        private readonly ISellerRepository _sellerRepository;
 
         public RegisterModel(
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ICustomerRepository customerRepository,
+            ISellerRepository sellerRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _customerRepository = customerRepository;
+            _sellerRepository = sellerRepository;
         }
 
         [BindProperty]
@@ -72,6 +79,9 @@ namespace ITech.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Display(Name = "Role")]
+            public string Role { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -87,6 +97,7 @@ namespace ITech.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
+
                 var user = new AppUser
                 {
                     UserName = new MailAddress(Input.Email).User,
@@ -94,10 +105,25 @@ namespace ITech.Areas.Identity.Pages.Account
                     FirstName = Input.FirstName,
                     LastName = Input.LastName
                 };
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+                    //now add the role
+                    if (Input.Role == "Customer")
+                    {
+                        var roleResult = await _userManager.AddToRoleAsync(user, "Customer");
+                        var createdCustomer = _customerRepository.Create(user);
+                        _customerRepository.SaveChanges();
+                    }
+                    if (Input.Role == "Seller")
+                    {
+                        var roleResult = await _userManager.AddToRoleAsync(user, "Seller");
+                        var createdSeller = _sellerRepository.Create(user);
+                        
+
+                    }
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
@@ -117,7 +143,16 @@ namespace ITech.Areas.Identity.Pages.Account
                     else
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                        if (Input.Role == "Seller")
+                        {
+
+                            return RedirectToAction("CompleteRegister", "Seller");
+                        }
+                        else
+                        {
+                            return LocalRedirect(returnUrl);
+                        }
+
                     }
                 }
                 foreach (var error in result.Errors)

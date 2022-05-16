@@ -1,0 +1,108 @@
+﻿@model ProductDetailViewModel
+@{
+
+}
+@section Styles{
+    <link href="~/css/product/ProductDetailStyle.css" rel="stylesheet" />
+}
+<div class="container">
+    <div class="card-wrapper m-2   p2">
+        <div class="card">
+            <!-- card left -->
+            <div class="product-imgs">
+                <div class="img-display">
+                    <div class="img-showcase">
+                        @foreach (var img in Model.Product.ProductImages)
+                        {
+                            if (!string.IsNullOrEmpty(img.ImageUrl))
+                            {
+                                <img src="~/@img.ImageUrl" alt="@img.ImageNumber">
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="img-select">
+                    <div class="row">
+                        @foreach (var img in Model.Product.ProductImages)
+                        {
+                            <div class="img-item col-2">
+                                <a href="#" data-id="@img.ImageNumber">
+                                    <img src="~/@img.ImageUrl" alt="@img.ImageNumber">
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <!-- card right -->
+            <div class="product-content">
+                <h2 class="product-title">@Model.Product.Title</h2>
+                <a href="#" class="product-link">@Model.Product.Brand</a>
+                <!--Rating Start (add later)-->
+                <div class="product-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    <span>4.7(21)</span>
+                </div>
+                <!--Rating End (add later)-->
+                <!--Price Start-->
+
+                @if (Model.Product.DiscountPercentage > 0)
+                {
+                    <div class="product-price">
+                        <p class="last-price">Old Price: <span>EGP @Model.Product.Price </span></p>
+                        <p class="new-price">
+                            New Price:
+                            <span>
+                                EGP @Model.Product.PriceAfterDiscount (@Model.Product.DiscountPercentage%)
+                            </span>
+                        </p>
+                    </div>
+                }
+                else
+                {
+                    <div class="product-price">
+                        <p class="new-price">
+                            Price:
+                            <span>
+                                EGP @Model.Product.Price
+                            </span>
+                        </p>
+                    </div>
+                }
+                <!--Price End-->
+                <div class="product-detail">
+                    <h2>about this item: </h2>
+                    <p>@Model.Product.ShortDescription</p>
+                    <h2>Details</h2>
+                    <ul>
+                        @foreach (var detail in Model.Product.ProductDetails)
+                        {
+                            <li>@detail.Title: <span>@detail.Content</span></li>
+                        }
+                    </ul>
+                </div>
+
+                <div class="purchase-info">
+                    <input type="number" min="0" value="1">
+                    <button type="button" class="btn">
+                        Add to Cart <i class="fas fa-shopping-cart"></i>
+                    </button>
+                    <button type="button" class="btn">Save <i class="fas fa-heart"></i></button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts{
+    <script src="~/js/product/ProductDetailScript.js"></script>
+}

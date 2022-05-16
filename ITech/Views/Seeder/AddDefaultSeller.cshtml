@@ -1,0 +1,16 @@
+﻿@model AppUser
+@{
+    ViewData["Title"] = "AddDefaultSeller";
+}
+
+<h1>Add Default Seller</h1>
+<h2>@ViewBag.Message</h2>
+@if (!string.IsNullOrEmpty(Model.Id))
+{
+    <h4>User</h4>
+    <p>UserId = @Model.Id</p>
+    <p>SellerId = @ViewBag.SellerId</p>
+    <p>UserName = @Model.UserName</p>
+    <p>Email = @Model.Email</p>
+    <p>Password Hash = @Model.PasswordHash</p>
+}

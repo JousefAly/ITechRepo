@@ -16,8 +16,23 @@ namespace ITech.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.12")
+                .HasAnnotation("ProductVersion", "5.0.15")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("AppUserProduct", b =>
+                {
+                    b.Property<int>("SavedProductsId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SavingUsersId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("SavedProductsId", "SavingUsersId");
+
+                    b.HasIndex("SavingUsersId");
+
+                    b.ToTable("AppUserProduct");
+                });
 
             modelBuilder.Entity("ITech.Data.Entites.Category", b =>
                 {
@@ -29,6 +44,9 @@ namespace ITech.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -37,12 +55,64 @@ namespace ITech.Data.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("ITech.Data.Entites.Customer", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
+
+                    b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("ITech.Data.Entites.Notification", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("Checked")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastCheckTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReceiverId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SenderId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("SentTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReceiverId");
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("Notifications");
+                });
+
             modelBuilder.Entity("ITech.Data.Entites.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Activated")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Brand")
                         .HasColumnType("nvarchar(max)");
@@ -55,33 +125,6 @@ namespace ITech.Data.Migrations
 
                     b.Property<string>("ITSIN")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image1Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image2Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image3Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image4Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image5Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image6Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image7Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image8Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("InStock")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime>("LaunchTime")
                         .HasColumnType("datetime2");
@@ -98,7 +141,7 @@ namespace ITech.Data.Migrations
                     b.Property<string>("ShortDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SoldCount")
+                    b.Property<int>("Stock")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -126,7 +169,7 @@ namespace ITech.Data.Migrations
                     b.Property<string>("ITSIN")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProductId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -152,14 +195,60 @@ namespace ITech.Data.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProductId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductImage");
+                    b.ToTable("ProductImages");
+                });
+
+            modelBuilder.Entity("ITech.Data.Entites.Seller", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("Activated")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
+
+                    b.ToTable("Sellers");
+                });
+
+            modelBuilder.Entity("ITech.Data.Entites.ShoppingCartItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ShoppingCartId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ShoppingCartItems");
                 });
 
             modelBuilder.Entity("ITech.Data.Seed", b =>
@@ -184,6 +273,129 @@ namespace ITech.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Seeds");
+                });
+
+            modelBuilder.Entity("ITech.Models.Job", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("Available")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("JobTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Jobs");
+                });
+
+            modelBuilder.Entity("ITech.Models.JobApplication", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("Accepted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ApplicantId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("JobId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicantId");
+
+                    b.HasIndex("JobId");
+
+                    b.ToTable("JobApplications");
+                });
+
+            modelBuilder.Entity("ITech.Models.Order", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Accepted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("AddressLine")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Governorate")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("HandlerId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("OrderHandeled")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("OrderPlaced")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("OrderTotal")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("OrderId");
+
+                    b.HasIndex("HandlerId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("ITech.Models.OrderDetail", b =>
+                {
+                    b.Property<int>("OrderDetailId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderDetailId");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderDetails");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -404,11 +616,44 @@ namespace ITech.Data.Migrations
                     b.HasDiscriminator().HasValue("AppUser");
                 });
 
-            modelBuilder.Entity("ITech.Data.Entites.Seller", b =>
+            modelBuilder.Entity("AppUserProduct", b =>
                 {
-                    b.HasBaseType("ITech.Data.AppUser");
+                    b.HasOne("ITech.Data.Entites.Product", null)
+                        .WithMany()
+                        .HasForeignKey("SavedProductsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasDiscriminator().HasValue("Seller");
+                    b.HasOne("ITech.Data.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("SavingUsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ITech.Data.Entites.Customer", b =>
+                {
+                    b.HasOne("ITech.Data.AppUser", "User")
+                        .WithOne()
+                        .HasForeignKey("ITech.Data.Entites.Customer", "UserId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ITech.Data.Entites.Notification", b =>
+                {
+                    b.HasOne("ITech.Data.AppUser", "Receiver")
+                        .WithMany("Notifications")
+                        .HasForeignKey("ReceiverId");
+
+                    b.HasOne("ITech.Data.AppUser", "Sender")
+                        .WithMany("SentNotifications")
+                        .HasForeignKey("SenderId");
+
+                    b.Navigation("Receiver");
+
+                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("ITech.Data.Entites.Product", b =>
@@ -430,16 +675,92 @@ namespace ITech.Data.Migrations
                 {
                     b.HasOne("ITech.Data.Entites.Product", "Product")
                         .WithMany("ProductDetails")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Product");
                 });
 
             modelBuilder.Entity("ITech.Data.Entites.ProductImage", b =>
                 {
-                    b.HasOne("ITech.Data.Entites.Product", null)
+                    b.HasOne("ITech.Data.Entites.Product", "Product")
                         .WithMany("ProductImages")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("ITech.Data.Entites.Seller", b =>
+                {
+                    b.HasOne("ITech.Data.AppUser", "User")
+                        .WithOne()
+                        .HasForeignKey("ITech.Data.Entites.Seller", "UserId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ITech.Data.Entites.ShoppingCartItem", b =>
+                {
+                    b.HasOne("ITech.Data.Entites.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("ITech.Models.JobApplication", b =>
+                {
+                    b.HasOne("ITech.Data.AppUser", "Applicant")
+                        .WithMany()
+                        .HasForeignKey("ApplicantId");
+
+                    b.HasOne("ITech.Models.Job", "Job")
+                        .WithMany("JobApplications")
+                        .HasForeignKey("JobId");
+
+                    b.Navigation("Applicant");
+
+                    b.Navigation("Job");
+                });
+
+            modelBuilder.Entity("ITech.Models.Order", b =>
+                {
+                    b.HasOne("ITech.Data.AppUser", "Handler")
+                        .WithMany()
+                        .HasForeignKey("HandlerId");
+
+                    b.HasOne("ITech.Data.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Handler");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ITech.Models.OrderDetail", b =>
+                {
+                    b.HasOne("ITech.Models.Order", "Order")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ITech.Data.Entites.Product", "Product")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -500,6 +821,8 @@ namespace ITech.Data.Migrations
 
             modelBuilder.Entity("ITech.Data.Entites.Product", b =>
                 {
+                    b.Navigation("OrderDetails");
+
                     b.Navigation("ProductDetails");
 
                     b.Navigation("ProductImages");
@@ -508,6 +831,23 @@ namespace ITech.Data.Migrations
             modelBuilder.Entity("ITech.Data.Entites.Seller", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("ITech.Models.Job", b =>
+                {
+                    b.Navigation("JobApplications");
+                });
+
+            modelBuilder.Entity("ITech.Models.Order", b =>
+                {
+                    b.Navigation("OrderDetails");
+                });
+
+            modelBuilder.Entity("ITech.Data.AppUser", b =>
+                {
+                    b.Navigation("Notifications");
+
+                    b.Navigation("SentNotifications");
                 });
 #pragma warning restore 612, 618
         }

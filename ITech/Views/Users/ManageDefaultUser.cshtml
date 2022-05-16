@@ -1,0 +1,26 @@
+﻿@model ManageUserViewModel
+<h1>Manage Default User, @Model.User.UserName</h1>
+
+
+@if (Model.Orders.Any())
+{
+    <div class="jumbotron">
+        <h2>User Placed Orders:</h2>
+        <div class="row">
+            @foreach (var o in Model.Orders)
+            {
+                <div class="  col-md-6">
+                    <partial name="_OrderCard" model="o" />
+                </div>
+            }
+        </div>
+
+    </div>
+
+}
+else
+{
+    <div class="jumbotron">
+        <h2>User Does not place Orders yet</h2>
+    </div>
+}

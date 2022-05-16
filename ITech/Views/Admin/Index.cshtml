@@ -24,9 +24,12 @@
                 <th scope="row">@product.Id</th>
                 <td>@product.Title</td>
                 <td>@product.Price.ToString("c")</td>
-                <td>@product.Category.Name</td>
+                @if (product.Category != null)
+                {
+                    <td>@product.Category.Name</td>
+                }
 
-                <td><img src="/img/mockImages/@product.Image1Name" width="250" height="250" /></td>
+                <td>@*<img src="/img/mockImages/@product.Image1Name" width="250" height="250" />*@</td>
 
             </tr>
 

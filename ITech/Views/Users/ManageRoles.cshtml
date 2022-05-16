@@ -1,0 +1,45 @@
+﻿@model ManageUserRolesViewModel
+@{ 
+    ViewData["Title"] = "Manage User Roles";
+}
+<h1>Manage User Roles</h1>
+<partial name="_StatusMessage" model="@TempData["StatusMessage"] as string" />
+<h3>User is in Role(s) : @string.Join(", ", Model.UserRoleNames)</h3>
+<h5>Username: @Model.Username</h5>
+
+<table class="table table-striped col-md-6">
+    <thead>
+        <tr class="bg-success text-white">
+            <th>Role</th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var roleName in Model.RoleNames)
+        {
+        <tr>
+            @if (Model.UserRoleNames.Contains(roleName))
+            {
+                <td>@roleName <i class="fas fa-eye "></i></td>
+                <td>
+                    <a class="nav-link" asp-action="RemoveFromRole" asp-route-userId="@Model.UserId" asp-route-roleName="@roleName">
+                        Remove <i class="fas fa-ban text-danger"></i>
+                    </a>
+                </td>
+            }
+            else
+            {
+                <td>@roleName <i class="fas fa-eye-slash "></i></td>
+                <td>
+                    <a class="nav-link"  asp-action="AddToRole" asp-route-userId="@Model.UserId" asp-route-roleName="@roleName">
+                        Assign <i class="fas fa-key text-success"></i>
+                    </a>
+
+                </td>
+            }
+        </tr>
+
+        }
+    </tbody>
+
+</table>
