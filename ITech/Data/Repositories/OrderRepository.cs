@@ -75,7 +75,8 @@ namespace ITech.Data.Repositories
                 var orderDetail = new OrderDetail
                 {
                     ProductId = item.ProductId,
-                    Amount = item.Amount,
+                    Product = item.Product,
+                    Amount = item.Amount
                 };          
                 order.OrderDetails.Add(orderDetail);
                 _productRepository.RemoveFromStock(item.ProductId, item.Amount);
