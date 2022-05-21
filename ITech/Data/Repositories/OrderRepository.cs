@@ -76,6 +76,7 @@ namespace ITech.Data.Repositories
                 {
                     ProductId = item.ProductId,
                     Amount = item.Amount,
+                    Product = item.Product
                 };          
                 order.OrderDetails.Add(orderDetail);
                 _productRepository.RemoveFromStock(item.ProductId, item.Amount);
