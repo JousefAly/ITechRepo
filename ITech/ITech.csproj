@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="SQLScripts\Products\" />
     <Folder Include="wwwroot\img\products\" />
   </ItemGroup>
 
