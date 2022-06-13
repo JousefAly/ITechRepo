@@ -133,13 +133,15 @@ namespace ITech.Data.Repositories
         {
             if (includeDetails)
             {
-                return _context.Orders
+                
+                var orders = _context.Orders
                      .Include(o => o.User)
                      .Include(o => o.Handler)
                      .Include(o => o.OrderDetails)
                      .ThenInclude(od => od.Product)
                      .Where(o => o.UserId == userId)
                      .ToArray();
+                return orders;
             }
             return _context.Orders.Where(o => o.UserId == userId).ToArray();
         }

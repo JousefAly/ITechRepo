@@ -4,7 +4,7 @@
     var status = "Pending";
     string handledDate = "";
     string HandledBy = "";
-    bool hasHandleDate = DateTime.Compare(Model.OrderHandeled, new DateTime(1800,1,1)) > 0;
+    bool hasHandleDate = DateTime.Compare(Model.OrderHandeled, new DateTime(1800, 1, 1)) > 0;
     if (Model.Accepted)
 
     {
@@ -19,7 +19,7 @@
         status = "Refused";
         statusClass = "danger";
         handledDate = "at: " + Model.OrderHandeled.ToString("g") + ". ";
-        HandledBy = " by: " +Model.Handler.UserName;
+        HandledBy = " by: " + Model.Handler.UserName;
     }
 
 }
@@ -30,8 +30,8 @@
         <h6>Email: @Model.User.Email</h6>
         <h7 class="font-weight-bold">
             Status:<span class="text-@statusClass"> @status</span>
-            <span class="text-secondary font-italic"> @handledDate</span>
-            <span class="text-secondary font-italic"> @HandledBy</span>
+            <span class="text-dark font-italic"> @handledDate</span>
+            <span class="text-dark font-italic"> @HandledBy</span>
         </h7>
     </div>
     <div class="card-body">
@@ -55,19 +55,22 @@
                 @Model.OrderPlaced.ToString("g")
             </div>
             <div class="col-8">
-                @if (Model.Accepted)
+                @if (User.IsInRole("Admin") || User.IsInRole("Clerk"))
                 {
-                    <a class="btn btn-danger float-right"
-                       asp-controller="Order" asp-action="Refuse" asp-route-id="@Model.OrderId">
-                        <i class="fas fa-ban"></i> Refuse
-                    </a>
-                }
-                else
-                {
-                    <a class="btn btn-success float-right"
-                       asp-controller="Order" asp-action="Accept" asp-route-id="@Model.OrderId">
-                        <i class="fas fa-check"></i> Accept
-                    </a>
+                    @if (Model.Accepted)
+                    {
+                        <a class="btn btn-danger float-right"
+                           asp-controller="Order" asp-action="Refuse" asp-route-id="@Model.OrderId">
+                            <i class="fas fa-ban"></i> Refuse
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-success float-right"
+                           asp-controller="Order" asp-action="Accept" asp-route-id="@Model.OrderId">
+                            <i class="fas fa-check"></i> Accept
+                        </a>
+                    }
                 }
             </div>
         </div>

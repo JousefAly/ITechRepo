@@ -107,10 +107,10 @@ namespace ITech.Controllers
             TempData["StatusMessage"] = "Error: Order: " + id + ". was not refused !";
             return RedirectToAction(nameof(Orders), new { includeDetails = true });
         }
-        public IActionResult MyOrders(string userId)
+        public IActionResult MyOrders(string id)
         {
 
-            var orders = _orderRepository.GetUserOrders(userId, true);
+            var orders = _orderRepository.GetUserOrders(id, true);
 
             return View("Orders",orders);
         }
