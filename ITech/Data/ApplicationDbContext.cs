@@ -46,12 +46,13 @@ namespace ITech.Data
             builder.Entity<Notification>()
                 .HasOne(n => n.Receiver)
                 .WithMany(r => r.Notifications)
-                .HasForeignKey(n => n.ReceiverId);
+                .HasForeignKey(n => n.ReceiverId)
+                .OnDelete(DeleteBehavior.Cascade);
 
 
             builder.Entity<Notification>()
                 .HasOne(n => n.Sender)
-                .WithMany( s => s.SentNotifications)
+                .WithMany(s => s.SentNotifications)
                 .HasForeignKey(n => n.SenderId);
 
             builder.Entity<Order>()
