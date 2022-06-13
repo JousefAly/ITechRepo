@@ -2,5 +2,9 @@
         Layout = "_AdminLayout";
     else if (User.IsInRole("Clerk"))
         Layout = "_ClerkLayout";
+    else if (User.IsInRole("Seller"))
+        Layout = "_SellerLayout";
+    else
+        Layout = "_Layout";
 
 }

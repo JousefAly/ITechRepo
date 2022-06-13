@@ -64,6 +64,7 @@ namespace ITech.Controllers
             ViewBag.CheckoutCompleteMessage = "Thanks for your order. Your will recieve it soon!";
             return View();
         }
+        [Authorize(Roles = "Admin,Clerk")]
         public ViewResult Orders(bool includeDetails = false)
         {
 
@@ -105,6 +106,13 @@ namespace ITech.Controllers
             }
             TempData["StatusMessage"] = "Error: Order: " + id + ". was not refused !";
             return RedirectToAction(nameof(Orders), new { includeDetails = true });
+        }
+        public IActionResult MyOrders(string userId)
+        {
+
+            var orders = _orderRepository.GetUserOrders(userId, true);
+
+            return View("Orders",orders);
         }
     }
 }
