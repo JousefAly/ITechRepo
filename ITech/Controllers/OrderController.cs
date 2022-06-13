@@ -4,6 +4,7 @@ using ITech.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ITech.Controllers
@@ -66,7 +67,14 @@ namespace ITech.Controllers
         public ViewResult Orders(bool includeDetails = false)
         {
 
-            return includeDetails ? View(_orderRepository.GetAllOrders(true)) : View(_orderRepository.GetAllOrders());
+            //return includeDetails ? View(_orderRepository.GetAllOrders(true)) : View(_orderRepository.GetAllOrders());
+            var orders = new List<Order>();
+            if (includeDetails)
+                orders = _orderRepository.GetAllOrders(true);
+            else
+                orders = _orderRepository.GetAllOrders();
+            return View(orders);
+
         }
         [Authorize(Roles = "Admin,Clerk")]
         public async Task<RedirectToActionResult> Accept(int id)
@@ -91,7 +99,7 @@ namespace ITech.Controllers
             {
                 var message = "Your order : " + order.OrderId + ", With Total amount" + order.OrderTotal.ToString("c") +
                    " is refused unfortunaltely!";
-               await _notificationRepository.NotifyAsync(_userManager.GetUserId(HttpContext.User), order.UserId, message);
+                await _notificationRepository.NotifyAsync(_userManager.GetUserId(HttpContext.User), order.UserId, message);
                 TempData["StatusMessage"] = "Order: " + id + ". Refused!";
                 return RedirectToAction(nameof(Orders), new { includeDetails = true });
             }

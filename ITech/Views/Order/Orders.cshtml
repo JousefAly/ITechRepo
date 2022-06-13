@@ -2,54 +2,61 @@
 
 <h1>Orders</h1>
 <partial name="_StatusMessage" model="@TempData["StatusMessage"]" />
-@if (Model.First().OrderDetails == null)
+@if (Model.Any())
 {
-    <div>
-        <table class="table table-striped">
-            <thead class="bg-dark text-light">
-                <tr>
-                    <td>Order Id</td>
-                    <td>Total</td>
-                    <td>Accepted</td>
-                    <td>Accepted Date</td>
-                    <td class="float-right">Actions</td>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var o in Model)
-                {
-                <tr>
-                    <td>@o.OrderId</td>
-                    <td>@o.OrderTotal.ToString("c")</td>
-                    <td>@o.Accepted</td>
-                    <td>@o.OrderHandeled.ToString("g")</td>
-                    <td>
-                        <a class="btn btn-danger float-right"
-                           asp-controller="Order" asp-action="Refuse" asp-route-id="@o.OrderId">
-                            <i class="fas fa-ban"></i> Refuse
-                        </a>
-                        <a class="btn btn-success float-right"
-                           asp-controller="Order" asp-action="Accept" asp-route-id="@o.OrderId">
-                            <i class="fas fa-check"></i> Accept
-                        </a>
-                    </td>
-                </tr>
-                }
+    @if (Model.First().OrderDetails == null)
+    {
+        <div>
+            <table class="table table-striped">
+                <thead class="bg-dark text-light">
+                    <tr>
+                        <td>Order Id</td>
+                        <td>Total</td>
+                        <td>Accepted</td>
+                        <td>Accepted Date</td>
+                        <td class="float-right">Actions</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var o in Model)
+                    {
+                        <tr>
+                            <td>@o.OrderId</td>
+                            <td>@o.OrderTotal.ToString("c")</td>
+                            <td>@o.Accepted</td>
+                            <td>@o.OrderHandeled.ToString("g")</td>
+                            <td>
+                                <a class="btn btn-danger float-right"
+                                   asp-controller="Order" asp-action="Refuse" asp-route-id="@o.OrderId">
+                                    <i class="fas fa-ban"></i> Refuse
+                                </a>
+                                <a class="btn btn-success float-right"
+                                   asp-controller="Order" asp-action="Accept" asp-route-id="@o.OrderId">
+                                    <i class="fas fa-check"></i> Accept
+                                </a>
+                            </td>
+                        </tr>
+                    }
 
-            </tbody>
-        </table>
-    </div>
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+
+
+        <div class="row">
+            @foreach (var o in Model)
+            {
+                <div class="col-md-6">
+                    <partial name="_OrderCard" model="o" />
+                </div>
+            }
+        </div>
+    }
 }
 else
 {
-
-
-    <div class="row">
-        @foreach (var o in Model)
-        {
-            <div class="col-md-6">
-                <partial name="_OrderCard" model="o" />
-            </div>
-        }
-    </div>
+    <h2>No Orders!</h2>
 }
