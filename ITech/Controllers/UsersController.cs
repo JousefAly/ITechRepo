@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -42,10 +43,12 @@ namespace ITech.Controllers
 
         public async Task<IActionResult> Index(string idFilter = "")
         {
-            if (!string.IsNullOrEmpty(idFilter))
+            try
             {
-                var user = await _userManager.FindByIdAsync(idFilter);
-                var userModel = new List<UserViewModel>
+                if (!string.IsNullOrEmpty(idFilter))
+                {
+                    var user = await _userManager.FindByIdAsync(idFilter);
+                    var userModel = new List<UserViewModel>
                 {
                     new UserViewModel
                     {
@@ -59,19 +62,25 @@ namespace ITech.Controllers
 
                 };
 
-                return View(userModel);
-            }
-            var users = await _userManager.Users.Select(usr => new UserViewModel
-            {
-                Id = usr.Id,
-                FirstName = usr.FirstName,
-                LastName = usr.LastName,
-                UserName = usr.UserName,
-                Email = usr.Email,
-                Roles = _userManager.GetRolesAsync(usr).Result
-            }).ToListAsync();
+                    return View(userModel);
+                }
+                var users = await _userManager.Users.Select(usr => new UserViewModel
+                {
+                    Id = usr.Id,
+                    FirstName = usr.FirstName,
+                    LastName = usr.LastName,
+                    UserName = usr.UserName,
+                    Email = usr.Email,
+                    Roles = _userManager.GetRolesAsync(usr).Result
+                }).ToListAsync();
 
-            return View(users);
+                return View(users);
+            }
+            catch(Exception ex)
+            {
+                TempData["StatusMessage"] = "Error: Something went wrong. Try to refresh!";
+                return View();
+            }
         }
         public async Task<IActionResult> Delete(string id)
         {
