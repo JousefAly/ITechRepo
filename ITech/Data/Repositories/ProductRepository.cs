@@ -435,5 +435,10 @@ namespace ITech.Data.Repositories
                 return Array.Empty<Product>();
             return user.SavedProducts.ToArray();
         }
+        string[] GetYoutubeVideoIds(string query)
+        {
+            
+            return Array.Empty<string>();
+        }
     }
 }
