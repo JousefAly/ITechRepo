@@ -99,15 +99,20 @@
         </div>
     </div>
 </div>
-<!--Test Youtube videos-->
-<div>
-    @foreach (var video in Model.YoutubeVideos)
-    {
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/@video.Id"
-                title="YouTube video player" frameborder="0" allow="accelerometer; autoplay;
+<!--Youtube videos-->
+<div class="jumbotron">
+    <h3>Video reviews</h3>
+    <div class="row">
+        @foreach (var video in Model.YoutubeVideos)
+        {
+            <div class="col-md-6">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/@video.Id"
+                        title="YouTube video player" frameborder="0" allow="accelerometer; autoplay;
             clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
 
-    }
+        }
+    </div>
 </div>
 
 

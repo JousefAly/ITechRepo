@@ -48,13 +48,20 @@ namespace ITech.Controllers
        
         public async Task<IActionResult> Detail(int id)
         {
-            var product = _productRepository.GetById(id);
-            var model = new ProductDetailViewModel
+            try
             {
-                Product = product,
-                YoutubeVideos = await _productRepository.GetYoutubeVideos(product.Title)
-            };
-            return View(model);
+                var product = _productRepository.GetById(id);
+                var model = new ProductDetailViewModel
+                {
+                    Product = product,
+                    YoutubeVideos = await _productRepository.GetYoutubeVideos(product.Title)
+                };
+                return View(model);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest("Something went wrong");
+            }
         }
         public IActionResult ManageProduct(int id)
         {

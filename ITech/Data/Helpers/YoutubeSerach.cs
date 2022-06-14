@@ -19,7 +19,7 @@ namespace ITech.Data.Helpers
             });
             var searchListRequest = youtubeService.Search.List("snippet");
             searchListRequest.Q = query;     // but search terms here
-            searchListRequest.MaxResults = 5;   // Number of results
+            searchListRequest.MaxResults = 6;   // Number of results
 
             var searchListResponse = await searchListRequest.ExecuteAsync();
 
