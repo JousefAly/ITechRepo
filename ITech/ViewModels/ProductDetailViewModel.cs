@@ -1,4 +1,5 @@
 ﻿using ITech.Data.Entites;
+using ITech.Data.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace ITech.ViewModels
     public class ProductDetailViewModel
     {
         public Product Product { get; set; }
+        public List<YoutubeVideo> YoutubeVideos { get; set; }
     }
 }

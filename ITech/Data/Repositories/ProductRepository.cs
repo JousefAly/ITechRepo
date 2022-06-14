@@ -1,4 +1,5 @@
 ﻿using ITech.Data.Entites;
+using ITech.Data.Helpers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -435,10 +436,11 @@ namespace ITech.Data.Repositories
                 return Array.Empty<Product>();
             return user.SavedProducts.ToArray();
         }
-        string[] GetYoutubeVideoIds(string query)
+        public async Task<List<YoutubeVideo>> GetYoutubeVideos(string query)
         {
-            
-            return Array.Empty<string>();
+
+            return await YoutubeSerach.Run(query);
+
         }
     }
 }

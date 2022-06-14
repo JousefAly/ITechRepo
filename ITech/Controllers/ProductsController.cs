@@ -18,7 +18,7 @@ namespace ITech.Controllers
     {
         private readonly IProductRepository _productRepository;
         private readonly ISellerRepository _sellerRepository;
-        private readonly ICategoryRepository _categoryRepository1;
+        
         private readonly ICategoryRepository _categoryRepository;
         private readonly UserManager<AppUser> _userManager;
         private readonly IWebHostEnvironment _hostEnvironment;
@@ -46,11 +46,13 @@ namespace ITech.Controllers
             return View(_productRepository.GetAllProducts());
         }
        
-        public IActionResult Detail(int id)
+        public async Task<IActionResult> Detail(int id)
         {
+            var product = _productRepository.GetById(id);
             var model = new ProductDetailViewModel
             {
-                Product = _productRepository.GetById(id)
+                Product = product,
+                YoutubeVideos = await _productRepository.GetYoutubeVideos(product.Title)
             };
             return View(model);
         }
