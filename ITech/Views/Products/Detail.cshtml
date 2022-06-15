@@ -87,11 +87,19 @@
                 </div>
 
                 <div class="purchase-info">
-                    <input type="number" min="0" value="1">
-                    <button type="button" class="btn">
+
+                    <a class="btn btn-primary"
+                       asp-controller="ShoppingCart" asp-action="AddToCart"
+                       asp-route-productId="@Model.Product.Id">
                         Add to Cart <i class="fas fa-shopping-cart"></i>
-                    </button>
-                    <button type="button" class="btn">Save <i class="fas fa-heart"></i></button>
+                    </a>
+                    @*<button type="button" class="btn">
+                            Add to Cart <i class="fas fa-shopping-cart"></i>
+                        </button>*@
+                    <a class="btn btn-primary"
+                       asp-controller="Home" asp-action="SaveProduct" asp-route-id="@Model.Product.Id">
+                        Save <i class="fas fa-heart"></i>
+                    </a>
                 </div>
 
 
