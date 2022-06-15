@@ -11,6 +11,7 @@ namespace ITech.ViewModels
     public class ProductDetailViewModel
     {
         public Product Product { get; set; }
+        public double TotalRating { get; set; } = 0.0;
         public List<YoutubeVideo> YoutubeVideos { get; set; }
     }
 }

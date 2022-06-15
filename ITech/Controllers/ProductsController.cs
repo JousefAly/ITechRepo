@@ -18,20 +18,20 @@ namespace ITech.Controllers
     {
         private readonly IProductRepository _productRepository;
         private readonly ISellerRepository _sellerRepository;
-        
+
         private readonly ICategoryRepository _categoryRepository;
         private readonly UserManager<AppUser> _userManager;
         private readonly IWebHostEnvironment _hostEnvironment;
 
         public ProductsController(IProductRepository productRepository,
                                   ICategoryRepository categoryRepository,
-                                  ISellerRepository sellerRepository,                                  
+                                  ISellerRepository sellerRepository,
                                   UserManager<AppUser> userManager,
                                   IWebHostEnvironment hostEnvironment)
         {
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
-            _sellerRepository = sellerRepository;                        
+            _sellerRepository = sellerRepository;
             _userManager = userManager;
             _hostEnvironment = hostEnvironment;
         }
@@ -39,13 +39,13 @@ namespace ITech.Controllers
         //return all products   
         public IActionResult Index(string category = "")
         {
-            if(!string.IsNullOrEmpty(category))
+            if (!string.IsNullOrEmpty(category))
             {
                 return View(_productRepository.GetProductsByCategory(category, includeDetails: true).ToList());
             }
             return View(_productRepository.GetAllProducts());
         }
-       
+
         public async Task<IActionResult> Detail(int id)
         {
             try
@@ -54,11 +54,12 @@ namespace ITech.Controllers
                 var model = new ProductDetailViewModel
                 {
                     Product = product,
+                    TotalRating = _productRepository.GetProductRating(id),
                     YoutubeVideos = await _productRepository.GetYoutubeVideos(product.Title)
                 };
                 return View(model);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest("Something went wrong");
             }
@@ -66,7 +67,7 @@ namespace ITech.Controllers
         public IActionResult ManageProduct(int id)
         {
             return View(_productRepository.GetById(id));
-        }      
+        }
         public IActionResult CreateProduct()
         {
             ViewBag.Categories = _categoryRepository.GetAllCategories();
@@ -162,7 +163,7 @@ namespace ITech.Controllers
         {
             var productId = _productRepository.GetProductImage(imageId).ProductId;
             if (!_productRepository.DeleteProductImage(imageId))
-                TempData["StatusMessage"] = " Error: Image was not deleted"; 
+                TempData["StatusMessage"] = " Error: Image was not deleted";
             TempData["StatusMessage"] = "Image Deleted Successfully";
             return RedirectToAction(nameof(ManageProduct), new { id = productId });
         }
@@ -177,7 +178,7 @@ namespace ITech.Controllers
             TempData["StatusMessage"] = "Product was deleted successfully.";
             return RedirectToAction(nameof(ManageProducts));
         }
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult ManageProducts()
         {
 
@@ -186,13 +187,13 @@ namespace ITech.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult ActivateProduct(int id)
         {
-            if(!_productRepository.Activate(id))
+            if (!_productRepository.Activate(id))
             {
                 TempData["StatusMessage"] = "Error: Product: " + id + " is not Activated.";
                 return View("ManageProducts", _productRepository.GetAllProducts());
             }
             TempData["StatusMessage"] = "Product: " + id + " is Activated.";
-            return View("ManageProducts",_productRepository.GetAllProducts());
+            return View("ManageProducts", _productRepository.GetAllProducts());
         }
         [Authorize(Roles = "Admin")]
         public IActionResult DeactivateProduct(int id)
@@ -208,7 +209,7 @@ namespace ITech.Controllers
         }
 
         public ViewResult ProductStats(int id)
-        {            
+        {
             return View(_productRepository.GetProductStats(id));
         }
         [HttpPost]
@@ -224,9 +225,25 @@ namespace ITech.Controllers
         }
         public IActionResult TopSellingProducts(int numOfProducts)
         {
-            
+
             var products = _productRepository.GetTopSellingProducts(numOfProducts);
             return Ok();
+        }
+        public async Task<IActionResult> Rate(int rate, int productId)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var succeeded = _productRepository.AddRating(new Rating
+            {
+                Rate = rate,
+                ProductId = productId,
+                User = user
+            });
+            if (!succeeded)
+            {
+                TempData["StatusMessage"] = "Error: Could not add rate!";
+                return RedirectToAction(nameof(Detail), new { id = productId});
+            }
+            return RedirectToAction(nameof(Detail), new { id = productId });
         }
     }
 }

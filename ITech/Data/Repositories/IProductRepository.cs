@@ -61,7 +61,8 @@ namespace ITech.Data.Repositories
         Product[] GetUserSavedProducts(string userId);
         Task<List<YoutubeVideo>> GetYoutubeVideos(string query);
 
-
+        bool AddRating(Rating rating);
+        double GetProductRating(int productId);
 
     }
 }

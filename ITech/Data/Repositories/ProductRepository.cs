@@ -443,5 +443,20 @@ namespace ITech.Data.Repositories
             return await YoutubeSerach.Run(query);
 
         }
+        public bool AddRating(Rating rating)
+        {
+            _context.Add(rating);
+            return _context.SaveChanges() > 0;
+        }
+        public double GetProductRating(int productId)
+        {
+            var product = _context.Products.Include(p => p.Ratings).FirstOrDefault(p => p.Id == productId);
+            if (product.Ratings.Any())
+            {
+                var rateAverage = product.Ratings.Sum(r => r.Rate) / (double)product.Ratings.Count;
+                return rateAverage;
+            }
+            return 0.0;
+        }
     }
 }

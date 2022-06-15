@@ -5,6 +5,7 @@
 @section Styles{
     <link href="~/css/product/ProductDetailStyle.css" rel="stylesheet" />
 }
+<partial name="_StatusMessage" model="@TempData["StatusMessage"]" />
 <div class="container">
     <div class="card-wrapper m-2   p2">
         <div class="card">
@@ -43,6 +44,7 @@
                     @Model.Product.Brand
                 </a>
                 <!--Rating Start (add later)-->
+                <p>Rating is : @Model.TotalRating</p>
                 <div class="product-rating">
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
