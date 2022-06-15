@@ -217,6 +217,11 @@ namespace ITech.Controllers
             searchString ??= "";
             return View(_productRepository.Search(searchString));
         }
+        public IActionResult BrandProducts(string searchString)
+        {
+            searchString ??= "";
+            return View("SearchProducts", _productRepository.Search(searchString));
+        }
         public IActionResult TopSellingProducts(int numOfProducts)
         {
             

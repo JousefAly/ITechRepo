@@ -37,7 +37,11 @@
             <!-- card right -->
             <div class="product-content">
                 <h2 class="product-title">@Model.Product.Title</h2>
-                <a href="#" class="product-link">@Model.Product.Brand</a>
+                <a class="product-link"
+                   asp-controller="Products" asp-action="BrandProducts"
+                   asp-route-searchString="@Model.Product.Brand">
+                    @Model.Product.Brand
+                </a>
                 <!--Rating Start (add later)-->
                 <div class="product-rating">
                     <i class="fas fa-star"></i>
