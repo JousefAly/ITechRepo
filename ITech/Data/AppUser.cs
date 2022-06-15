@@ -12,6 +12,7 @@ namespace ITech.Data
         public List<Notification>  Notifications { get; set; }
         public List<Notification> SentNotifications { get; set; }
         public List<Product> SavedProducts { get; set; }
+        public List<Rating> Ratings { get; set; }
         public byte[] ProfilePicture { get; set; }
     }
 }

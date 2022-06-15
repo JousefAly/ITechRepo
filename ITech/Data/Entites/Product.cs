@@ -50,6 +50,7 @@ namespace ITech.Data.Entites
         public List<ProductImage> ProductImages { get; set; }
         public List<OrderDetail> OrderDetails { get; set; }
         public List<AppUser> SavingUsers { get; set; }
+        public List<Rating> Ratings { get; set; }
 
 
     }

@@ -28,7 +28,7 @@ namespace ITech.Data
         public DbSet<Job> Jobs { get; set; }
         public DbSet<JobApplication> JobApplications { get; set; }
         public DbSet<Notification> Notifications { get; set; }
-
+        public DbSet<Rating> Ratings { get; set; }
 
         public DbSet<Seed> Seeds { get; set; }
 
