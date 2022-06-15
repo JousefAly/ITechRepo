@@ -438,7 +438,8 @@ namespace ITech.Data.Repositories
         }
         public async Task<List<YoutubeVideo>> GetYoutubeVideos(string query)
         {
-
+            query += " review ";
+            query += " مراجعة";
             return await YoutubeSerach.Run(query);
 
         }
