@@ -458,5 +458,9 @@ namespace ITech.Data.Repositories
             }
             return 0.0;
         }
+       public int GetProductRatingCount(int productId)
+        {
+            return _context.Ratings.Count(r => r.ProductId == productId);
+        }
     }
 }

@@ -55,6 +55,7 @@ namespace ITech.Controllers
                 {
                     Product = product,
                     TotalRating = _productRepository.GetProductRating(id),
+                    RatingCount = _productRepository.GetProductRatingCount(id),
                     YoutubeVideos = await _productRepository.GetYoutubeVideos(product.Title)
                 };
                 return View(model);
@@ -229,6 +230,7 @@ namespace ITech.Controllers
             var products = _productRepository.GetTopSellingProducts(numOfProducts);
             return Ok();
         }
+        [Authorize]
         public async Task<IActionResult> Rate(int rate, int productId)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);

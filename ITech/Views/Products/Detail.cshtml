@@ -44,14 +44,25 @@
                     @Model.Product.Brand
                 </a>
                 <!--Rating Start (add later)-->
-                <p>Rating is : @Model.TotalRating</p>
+                
                 <div class="product-rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                    <span>4.7(21)</span>
+                    <a asp-action="Rate" asp-route-rate="1" asp-route-productId="@Model.Product.Id">
+                        <i class="fas fa-star"></i>
+                    </a>
+                    <a asp-action="Rate" asp-route-rate="2" asp-route-productId="@Model.Product.Id">
+                        <i class="fas fa-star"></i>
+                    </a>
+                    <a asp-action="Rate" asp-route-rate="3" asp-route-productId="@Model.Product.Id">
+                        <i class="fas fa-star"></i>
+                    </a>
+                    <a asp-action="Rate" asp-route-rate="4" asp-route-productId="@Model.Product.Id">
+                        <i class="fas fa-star"></i>
+                    </a>
+                    <a asp-action="Rate" asp-route-rate="5" asp-route-productId="@Model.Product.Id">
+                        <i class="fas fa-star"></i>
+                    </a>
+                    <!--Put rating summary in this span-->
+                    <span>@Model.TotalRating (@Model.RatingCount)</span>
                 </div>
                 <!--Rating End (add later)-->
                 <!--Price Start-->
