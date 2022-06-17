@@ -44,9 +44,10 @@
                     @Model.Product.Brand
                 </a>
                 <!--Rating Start (add later)-->
-                @if (userAuthintecated)
+                @if (userAuthintecated && !Model.ProductRatedByUser)
                 {
                     <div class="product-rating">
+                        <span>Rate this Product : </span>
                         <a asp-action="Rate" asp-route-rate="1" asp-route-productId="@Model.Product.Id">
                             <i class="fas fa-star"></i>
                         </a>
@@ -71,6 +72,7 @@
 
                 @if (Model.Product.DiscountPercentage > 0)
                 {
+
                     <div class="product-price">
                         <p class="last-price">Old Price: <span>EGP @Model.Product.Price </span></p>
                         <p class="new-price">
@@ -95,6 +97,28 @@
                 <!--Price End-->
                 <div class="product-detail">
                     <h2>about this item: </h2>
+                    <!--Product Rating start-->
+                    <div class="product-rating">
+                        <span>Rate </span>
+                        <a >
+                            <i class="fas fa-star"></i>
+                        </a>
+                        <a >
+                            <i class="fas fa-star"></i>
+                        </a>
+                        <a >
+                            <i class="fas fa-star"></i>
+                        </a>
+                        <a >
+                            <i class="fas fa-star"></i>
+                        </a>
+                        <a >
+                            <i class="fas fa-star"></i>
+                        </a>
+                        <!--Put rating summary in this span-->
+                        <span>@Model.TotalRating /5  (@Model.RatingCount)</span>
+                    </div>
+                    <!--Product Rating end-->
                     <p>@Model.Product.ShortDescription</p>
                     <h2>Details</h2>
                     <ul>
