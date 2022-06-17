@@ -50,6 +50,7 @@ namespace ITech.Controllers
         {
             try
             {
+                var user = await _userManager.GetUserAsync(HttpContext.User);
                 var product = _productRepository.GetById(id);
                 var model = new ProductDetailViewModel
                 {
@@ -58,19 +59,35 @@ namespace ITech.Controllers
                     RatingCount = _productRepository.GetProductRatingCount(id),
                     YoutubeVideos = await _productRepository.GetYoutubeVideos(product.Title)
                 };
+                if(user != null)
+                {
+                    model.ProductRatedByUser = _productRepository.IsProductRatedByUser(id, user.Id);
+                }
                 return View(model);
             }
             catch (Exception ex)
             {
-                var product = _productRepository.GetById(id);
-                var model = new ProductDetailViewModel
+                if (ex.Message.Contains("No such host is known."))
                 {
-                    Product = product,
-                    TotalRating = _productRepository.GetProductRating(id),
-                    RatingCount = _productRepository.GetProductRatingCount(id),
-                    
-                };
-                return View(model);
+                    var user = await _userManager.GetUserAsync(HttpContext.User);
+                    var product = _productRepository.GetById(id);
+                    var model = new ProductDetailViewModel
+                    {
+                        Product = product,
+                        TotalRating = _productRepository.GetProductRating(id),
+                        RatingCount = _productRepository.GetProductRatingCount(id),
+
+                    };
+                    if (user != null)
+                    {
+                        model.ProductRatedByUser = _productRepository.IsProductRatedByUser(id, user.Id);
+                    }
+                    return View(model);
+                }
+                else
+                {
+                    return BadRequest("Something bad happened!");
+                }
             }
         }
         public IActionResult ManageProduct(int id)

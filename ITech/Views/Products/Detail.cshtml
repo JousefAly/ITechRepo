@@ -130,15 +130,24 @@
 <div class="jumbotron">
     <h3>Video reviews</h3>
     <div class="row">
-        @foreach (var video in Model.YoutubeVideos)
+        @if (Model.YoutubeVideos != null && Model.YoutubeVideos.Any())
+        {
+            @foreach (var video in Model.YoutubeVideos)
+            {
+                <div class="col-md-6">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/@video.Id"
+                            title="YouTube video player" frameborder="0" allow="accelerometer; autoplay;
+                        clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <h4>@video.Title</h4>
+                </div>
+
+            }
+        }
+        else
         {
             <div class="col-md-6">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/@video.Id"
-                        title="YouTube video player" frameborder="0" allow="accelerometer; autoplay;
-                        clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                <h4>@video.Title</h4>
+                <h5>No Videos to display!</h5>
             </div>
-
         }
     </div>
 </div>
