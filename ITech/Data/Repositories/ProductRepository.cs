@@ -462,5 +462,9 @@ namespace ITech.Data.Repositories
         {
             return _context.Ratings.Count(r => r.ProductId == productId);
         }
+        public bool IsProductRatedByUser(int productId, string userId)
+        {
+            return _context.Ratings.Any(r => r.ProductId == productId && r.UserId == userId);
+        }
     }
 }

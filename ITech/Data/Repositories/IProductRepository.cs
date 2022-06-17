@@ -64,5 +64,6 @@ namespace ITech.Data.Repositories
         bool AddRating(Rating rating);
         double GetProductRating(int productId);
         int GetProductRatingCount(int productId);
+        bool IsProductRatedByUser(int productId, string userId);
     }
 }

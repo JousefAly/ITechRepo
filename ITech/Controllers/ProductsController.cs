@@ -62,7 +62,15 @@ namespace ITech.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest("Something went wrong");
+                var product = _productRepository.GetById(id);
+                var model = new ProductDetailViewModel
+                {
+                    Product = product,
+                    TotalRating = _productRepository.GetProductRating(id),
+                    RatingCount = _productRepository.GetProductRatingCount(id),
+                    
+                };
+                return View(model);
             }
         }
         public IActionResult ManageProduct(int id)
