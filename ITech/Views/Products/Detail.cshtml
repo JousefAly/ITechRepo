@@ -101,13 +101,14 @@
                     <p>@Model.Product.ShortDescription</p>
                     <!--Product Rating start-->
                     <span class="font-weight-bold font-italic">Rate: </span>
-                    <div class="product-rating">
+                    <div class="product-rating start_rate">
 
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
+
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
 
                         <!--Put rating summary in this span-->
                         <span>@Model.TotalRating /5  (@Model.RatingCount)</span>
@@ -174,4 +175,23 @@
 
 @section Scripts{
     <script src="~/js/product/ProductDetailScript.js"></script>
+    slicing stars
+    <script>
+
+        $(function () {
+            var ratingValue = @Model.TotalRating;
+            var startlist = $('.start_rate').children();
+            for (var i = 0; i < ratingValue; i++) {
+                startlist[i].classList.remove('far');
+                startlist[i].classList.add('fas');
+                if (i + 1 >= ratingValue) {
+                    if (ratingValue % 1 != 0) {
+                        startlist[i].classList.remove('fa-star');
+                        startlist[i].classList.add('fa-star-half-alt');
+                    }
+                }
+            }
+            
+        })
+    </script>
 }
