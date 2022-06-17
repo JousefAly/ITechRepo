@@ -97,29 +97,22 @@
                 <!--Price End-->
                 <div class="product-detail">
                     <h2>about this item: </h2>
+
+                    <p>@Model.Product.ShortDescription</p>
                     <!--Product Rating start-->
+                    <span class="font-weight-bold font-italic">Rate: </span>
                     <div class="product-rating">
-                        <span>Rate </span>
-                        <a >
-                            <i class="fas fa-star"></i>
-                        </a>
-                        <a >
-                            <i class="fas fa-star"></i>
-                        </a>
-                        <a >
-                            <i class="fas fa-star"></i>
-                        </a>
-                        <a >
-                            <i class="fas fa-star"></i>
-                        </a>
-                        <a >
-                            <i class="fas fa-star"></i>
-                        </a>
+
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+
                         <!--Put rating summary in this span-->
                         <span>@Model.TotalRating /5  (@Model.RatingCount)</span>
                     </div>
                     <!--Product Rating end-->
-                    <p>@Model.Product.ShortDescription</p>
                     <h2>Details</h2>
                     <ul>
                         @foreach (var detail in Model.Product.ProductDetails)
