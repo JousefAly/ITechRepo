@@ -138,5 +138,33 @@ namespace ITech.Controllers
             TempData["StatusMessage"] = "Changed Main Image Successfully!";
             return RedirectToAction(nameof(EditImages), new { productId });
         }
+        public IActionResult ManageStock(int productId)
+        {
+            ViewData["productId"] = productId;
+
+            return View(_productRepository.GetById(productId));
+        }
+        [HttpPost]
+        public IActionResult ManageStock(Product productModel)
+        {
+            var newStock = productModel.Stock;
+            var oldStock = _productRepository.GetById(productModel.Id).Stock;
+            var resultStock = 0;
+            if(newStock == oldStock)
+            {
+                TempData["StatusMessage"] = "Stock was not changed because it is the same.";
+                return View(nameof(ManageStock), new { productId = productModel.Id });
+            }
+            else if( newStock > oldStock)
+            {
+                resultStock = _productRepository.AddToStock(productModel.Id, newStock - oldStock);                
+            }
+            else
+            {
+                resultStock = _productRepository.RemoveFromStock(productModel.Id, oldStock - newStock);
+            }
+            TempData["StatusMessage"] = "Stock changed Successfully to " + resultStock;
+            return View(nameof(ManageStock), new { productId = productModel.Id });
+        }
     }
 }

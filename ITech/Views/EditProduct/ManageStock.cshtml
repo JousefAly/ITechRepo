@@ -1,0 +1,16 @@
+﻿@model Product
+<h1>Manage Stock</h1>
+<partial name="_StatusMessage" model="@TempData["StatusMessage"]" />
+<div>
+    <form asp-action="ManageStock" method="post">
+        <input asp-for="Id" value="@Model.Id" hidden/>
+        <div class="form-group">
+            <label asp-for="Stock" class="col-md-2 control-label"></label>
+            <div class="col-md-5">
+                <input asp-for="Stock" class="form-control" />
+            </div>
+        </div>
+        <input class="btn btn-primary" value="Save" type="submit" />
+
+    </form>
+</div>
