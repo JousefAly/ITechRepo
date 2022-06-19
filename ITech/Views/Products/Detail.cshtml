@@ -1,6 +1,7 @@
 ﻿@model ProductDetailViewModel
 @{
     var userAuthintecated = User.Identity.IsAuthenticated;
+    var totalRatingFormated = string.Format("{0:N1}", Model.TotalRating);
 }
 @section Styles{
     <link href="~/css/product/ProductDetailStyle.css" rel="stylesheet" />
@@ -64,7 +65,7 @@
                             <i class="fas fa-star"></i>
                         </a>
                         <!--Put rating summary in this span-->
-                        <span>@Model.TotalRating (@Model.RatingCount)</span>
+                        <span>@totalRatingFormated (@Model.RatingCount)</span>
                     </div>
                 }
                 <!--Rating End (add later)-->
@@ -111,7 +112,7 @@
                         <i class="far fa-star"></i>
 
                         <!--Put rating summary in this span-->
-                        <span>@Model.TotalRating /5  (@Model.RatingCount)</span>
+                        <span>@totalRatingFormated /5  (@Model.RatingCount)</span>
                     </div>
                     <!--Product Rating end-->
                     <h2>Details</h2>
