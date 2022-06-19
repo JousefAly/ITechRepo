@@ -138,6 +138,7 @@ namespace ITech.Controllers
             TempData["StatusMessage"] = "Changed Main Image Successfully!";
             return RedirectToAction(nameof(EditImages), new { productId });
         }
+        [HttpGet]
         public IActionResult ManageStock(int productId)
         {
             ViewData["productId"] = productId;
@@ -148,12 +149,19 @@ namespace ITech.Controllers
         public IActionResult ManageStock(Product productModel)
         {
             var newStock = productModel.Stock;
+            if(newStock < 0)
+            {
+                ViewData["productId"] = productModel.Id;
+                TempData["StatusMessage"] = "Error: can't enter negative stock.";
+                return RedirectToAction(nameof(ManageStock), new { productId = productModel.Id });
+            }
             var oldStock = _productRepository.GetById(productModel.Id).Stock;
             var resultStock = 0;
             if(newStock == oldStock)
             {
+                ViewData["productId"] = productModel.Id;
                 TempData["StatusMessage"] = "Stock was not changed because it is the same.";
-                return View(nameof(ManageStock), new { productId = productModel.Id });
+                return RedirectToAction(nameof(ManageStock), new { productId = productModel.Id });
             }
             else if( newStock > oldStock)
             {
@@ -163,8 +171,9 @@ namespace ITech.Controllers
             {
                 resultStock = _productRepository.RemoveFromStock(productModel.Id, oldStock - newStock);
             }
+            ViewData["productId"] = productModel.Id;
             TempData["StatusMessage"] = "Stock changed Successfully to " + resultStock;
-            return View(nameof(ManageStock), new { productId = productModel.Id });
+            return RedirectToAction(nameof(ManageStock), new { productId = productModel.Id });
         }
     }
 }
