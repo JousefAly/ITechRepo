@@ -60,6 +60,11 @@ namespace ITech.Controllers
         public async Task<IActionResult> ManageProducts()
         {
             var seller = _sellerRepository.GetUserSeller(await _userManager.GetUserAsync(HttpContext.User));
+            if(seller == null)
+            {
+                TempData["Message"] = "You are not accepted yet";
+                return View(new ManageSellerProductsViewModel());
+            }
             var model = new ManageSellerProductsViewModel 
             {
                 SellerId = seller.Id,

@@ -4,13 +4,29 @@
 }
 <h1>Manage Products</h1>
 <div class="container">
-    <div class="row">
-        @foreach (var p in Model.Products)
-        {
-            <div class="col-6 col-md-3">
-                <partial name="_ProductEditCard" model="p" />
-            </div>
-        }
-    </div>
+    @if (!string.IsNullOrEmpty(Model.SellerId))
+    {
+
+
+        <div class="row">
+            @if (Model.Products.Any())
+            {
+                @foreach (var p in Model.Products)
+                {
+                    <div class="col-6 col-md-3">
+                        <partial name="_ProductEditCard" model="p" />
+                    </div>
+                }
+            }
+                else
+                {
+                    <h2>You have no porducts</h2>
+                }
+        </div>
+    }
+    else
+    {
+        <h2>You are not accepted yet!</h2>
+    }
 
 </div>

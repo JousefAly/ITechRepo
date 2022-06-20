@@ -39,5 +39,10 @@ namespace ITech.Controllers
             _shoppingCart.RemoveFromCart(_productRepository.GetById(productId), amount);
             return RedirectToAction(nameof(Index));
         }
+        public RedirectToActionResult ResetCart(int productId, int amount = 1)
+        {
+            _shoppingCart.ClearCart();
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
