@@ -41,9 +41,10 @@ namespace ITech.Controllers
         {
             if (!string.IsNullOrEmpty(category))
             {
-                return View(_productRepository.GetProductsByCategory(category, includeDetails: true).ToList());
+                return View(_productRepository.GetProductsByCategory(category, includeDetails: true)
+                    .Where( p => p.Activated).ToList());
             }
-            return View(_productRepository.GetAllProducts());
+            return View(_productRepository.GetAllProducts().Where(p => p.Activated).ToList());
         }
 
         public async Task<IActionResult> Detail(int id)

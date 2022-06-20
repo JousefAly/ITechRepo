@@ -45,7 +45,7 @@ namespace ITech.Controllers
             {
                 AllCategories = _categoryRepository.GetAllCategories(),
                 TopSellingProducts = _productRepository.GetTopSellingProducts(10, true)
-                                        .Where(psa => psa.SoldAmount > 0).ToArray()
+                                        .Where(psa => psa.SoldAmount > 0 && psa.Product.Activated).ToArray()
             };
 
             return View(model);
