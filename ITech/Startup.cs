@@ -1,6 +1,7 @@
 using ITech.Data;
 using ITech.Data.Repositories;
 using ITech.Models;
+using ITech.Validators;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -58,6 +59,10 @@ namespace ITech
             services.AddScoped<ISellerRepository, SellerRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<INotificationRepository, NotificationRepository>();
+            
+            
+            services.AddScoped<IOrderValidator, OrderValidator>();
+            services.AddScoped<IGlobalValidator, GlobalValidator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
